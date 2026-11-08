@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.build-venv/
+build/
+dist/
+portable/
+*.spec
+*.res
+*.exe
+*.zip
+*.log
