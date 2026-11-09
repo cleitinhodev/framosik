@@ -138,24 +138,27 @@ class MainWindow(QMainWindow):
         splitter = QSplitter(); work_layout.addWidget(splitter,1)
         side_scroll = QScrollArea(); side_scroll.setWidgetResizable(True); side_scroll.setMinimumWidth(390)
         self.controls = QWidget(); side_scroll.setWidget(self.controls); side = QVBoxLayout(self.controls)
-        side.setContentsMargins(0,0,10,0)
+        side.setContentsMargins(4,8,12,8)
+        side.setSpacing(18)
         interval, form = self.group('interval'); side.addWidget(interval)
         self.first, self.last, self.step = spin(1,1,1), spin(1,1,1), spin(1,120,1)
         for key,control in [('first',self.first),('last',self.last),('step',self.step)]: form.addRow(self.label(key),control)
-        markers = QHBoxLayout()
+        markers = QHBoxLayout(); markers.setSpacing(8)
         markers.addWidget(self.btn('mark_start',lambda:self.first.setValue(self.frame_number.value())))
         markers.addWidget(self.btn('mark_end',lambda:self.last.setValue(self.frame_number.value())))
         form.addRow(markers)
         group, form = self.group('alignment'); side.addWidget(group)
-        self.direction = self.combo([('free','free'),('vertical','vertical'),('horizontal','horizontal')])
+        self.direction = self.combo([('free','free'),('vertical','vertical'),('horizontal','horizontal'),('zoom_motion','zoom')])
         self.scale_box, self.confidence, self.overlap = spin(10,100,100,' %'), spin(10,99,65,' %'), spin(5,90,20,' %')
         self.max_mp = spin(1,100,24,' MP')
-        for key,control in [('movement',self.direction),('resolution',self.scale_box),('similarity',self.confidence),('overlap',self.overlap),('limit',self.max_mp)]: form.addRow(self.label(key),control)
+        form.addRow(self.label('movement'))
+        form.addRow(self.direction)
+        for key,control in [('resolution',self.scale_box),('similarity',self.confidence),('overlap',self.overlap),('limit',self.max_mp)]: form.addRow(self.label(key),control)
         self.skip = self.bind(QCheckBox(),'skip'); form.addRow(self.skip)
         group, form = self.group('mixing'); side.addWidget(group)
         self.blend = self.combo([('preserve','preserve'),('feather','feather'),('average','average')])
         self.feather = spin(1,300,24,' px'); self.feather.setEnabled(False)
-        form.addRow(self.label('mode'),self.blend); form.addRow(self.label('feather_width'),self.feather)
+        form.addRow(self.label('mode')); form.addRow(self.blend); form.addRow(self.label('feather_width'),self.feather)
         self.blend.currentIndexChanged.connect(lambda:self.feather.setEnabled(self.blend.currentData()=='feather'))
         group, form = self.group('crop'); side.addWidget(group)
         self.crops = {}
@@ -209,7 +212,18 @@ class MainWindow(QMainWindow):
         b = self.bind(QPushButton(),key); b.clicked.connect(callback); return b
 
     def group(self,key):
-        group = self.bind(QGroupBox(),key,'setTitle'); form = QFormLayout(group)
+        group = QGroupBox()
+        outer = QVBoxLayout(group)
+        outer.setContentsMargins(14,16,14,16)
+        outer.setSpacing(14)
+        title = self.label(key)
+        title.setObjectName('sectionTitle')
+        title.setWordWrap(True)
+        outer.addWidget(title)
+        form = QFormLayout()
+        form.setVerticalSpacing(12)
+        form.setHorizontalSpacing(14)
+        outer.addLayout(form)
         form.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
         form.setRowWrapPolicy(QFormLayout.WrapLongRows)
         return group,form
@@ -388,7 +402,7 @@ class MainWindow(QMainWindow):
         self.progress_bar.setRange(0,100); self.progress_bar.setValue(round(current/total*100))
         if isinstance(record,dict):
             state = self.tr('accepted' if record.get('accepted') else 'rejected')
-            message = f'{self.tr("frame")} {record["frame"]}: {max(0,record["confidence"]):.0%} · {state} · Δ {record["dx"]:+d}, {record["dy"]:+d} px'
+            message = f'{self.tr("frame")} {record["frame"]}: {max(0,record["confidence"]):.0%} · {state} · Δ {record["dx"]:+.1f}, {record["dy"]:+.1f} px'
         else: message = str(record)
         self.log.appendPlainText(message)
 

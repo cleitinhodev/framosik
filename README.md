@@ -1,4 +1,4 @@
-# Framosik — versão 0.2.0
+# Framosik — versão 0.3.0
 
 Projeto em Python com interface PySide6 para reconstruir uma cena estática a partir de um GIF ou vídeo com movimento da câmera. O código da aplicação foi escrito para este projeto; o processamento usa OpenCV, NumPy, Pillow e Qt. Não é um fork do Overmix e não usa IA generativa.
 
@@ -14,7 +14,7 @@ Inclui Python 3.12.10 x64 e dependências; não exige instalar Python, pip ou us
 
 ## Identidade e visualização
 
-O ícone fornecido pelo autor aparece no cabeçalho, na janela e na aba Sobre. `assets/icons` contém PNGs de 16, 20, 24, 32, 40, 48, 64, 96, 128, 192, 256, 512 e 1024 pixels, além de ICO multirresolução e ICNS. O PNG original foi preservado em `assets/icon_original.png`. A conversão apenas ajusta margens, enquadramento e tamanho; não redesenha a marca.
+O ícone fornecido pelo autor aparece no cabeçalho, na janela e na aba Sobre. `assets/icons` contém PNGs de 16, 20, 24, 32, 40, 48, 64, 96, 128, 192, 256, 512 e 1024 pixels, além de ICO multirresolução e ICNS. O ICO revisado pelo autor foi preservado em `assets/icon_source.ico` e é usado diretamente no executável. Suas camadas nativas são usadas quando disponíveis. Os PNGs maiores são redimensionamentos da camada de 256 px, sem criação de detalhes; o enquadramento original é mantido.
 
 Na aba **Visualização**, escolha tema claro/escuro, idioma e efeitos. Gradientes e animação da borda podem ser desligados. A animação também pausa quando a janela está inativa/minimizada ou durante uma tarefa. As preferências ficam no registro do Windows (QSettings: Bugzinho/Framosik) ou na configuração do usuário em outros sistemas.
 
@@ -49,7 +49,7 @@ O exemplo é uma ilustração sintética própria, estática, com deslocamento v
 |---|---|
 | Primeiro/último frame | Intervalo inclusivo. Um único frame também pode ser exportado. |
 | Usar a cada N frames | 1 analisa todos. 2, 3… aceleram, mas podem perder a sobreposição. O último frame sempre é incluído. |
-| Movimento | Translação livre X/Y ou restrita ao eixo vertical/horizontal. **Não corrige zoom nem rotação.** |
+| Movimento | Translação livre X/Y ou restrita ao eixo vertical/horizontal. Novo modo **Zoom + X/Y (experimental)** para aproximação/afastamento gradual. Não corrige rotação ou perspectiva. |
 | Resolução de trabalho | Reduz os frames antes da montagem. 50% reduz largura e altura pela metade, inclusive na imagem exportada. |
 | Similaridade mínima | Correlação dos pixels compartilhados; não é probabilidade. Aumente para rejeitar montagens duvidosas. Reduzir demais pode juntar cenas erradas. |
 | Sobreposição mínima | Parcela mínima do frame que precisa estar em comum. Se falhar, tente passo menor. |
@@ -67,17 +67,17 @@ Cancelamento é cooperativo: termina o processamento do frame atual e conserva o
 
 1. Lê um frame por vez, aplica recorte e escala.
 2. Localiza detalhes semelhantes por SIFT e filtra correspondências inconsistentes com RANSAC.
-3. Estima a **translação** entre o frame atual e o último aceito. Correlação de fase oferece uma segunda estimativa.
+3. Estima a **translação** entre o frame atual e o último aceito. No modo Zoom + X/Y, estima também uma escala uniforme usando detalhes SIFT; nos modos de translação, correlação de fase oferece uma segunda estimativa.
 4. Valida a semelhança na área sobreposta e escolhe a melhor estimativa.
-5. Soma o deslocamento à posição global e expande a tela apenas quando necessário, inclusive para coordenadas negativas.
+5. Compõe a transformação com a do último frame aceito e expande a tela apenas quando necessário, inclusive para coordenadas negativas.
 6. Insere a área nova e aplica o modo de mesclagem escolhido.
 
-Os deslocamentos são arredondados para pixels inteiros para preservar o traço sem reamostragem em cada passo. Os detalhes para alinhamento são analisados em uma resolução limitada; a exportação usa a resolução de trabalho escolhida. A máscara alpha distingue preto legítimo de área vazia.
+Nos modos sem zoom, os deslocamentos são arredondados para pixels inteiros para preservar o traço sem reamostragem em cada passo. Os detalhes para alinhamento são analisados em uma resolução limitada; a exportação usa a resolução de trabalho escolhida. A máscara alpha distingue preto legítimo de área vazia.
 
 ## Limitações conhecidas
 
 - Melhor resultado: ilustração parada e câmera apenas deslizando. Movimentos do corpo, cabelo e fundo podem causar emendas.
-- Zoom, rotação, perspectiva e parallax não são corrigidos. O algoritmo pode interromper nesses casos ou, se o limiar estiver baixo, produzir alinhamento imperfeito.
+- O modo Zoom + X/Y corrige escala uniforme gradual (0,5–2× por par, 0,05–20× acumulada), com detalhes suficientes e sobreposição. Cada frame original é reamostrado uma vez para a escala do primeiro frame; não recupera detalhes perdidos no vídeo. Rotação, perspectiva e parallax não são corrigidos. O algoritmo pode interromper nesses casos ou, se o limiar estiver baixo, produzir alinhamento imperfeito.
 - Áreas lisas/repetitivas podem impedir o alinhamento. A similaridade não garante uma correspondência correta.
 - Pode acumular erro em sequências longas. Não há otimização global nem editor manual de emendas nesta primeira versão.
 - GIF perde cores por sua própria paleta; vídeo comprimido pode trazer ruído. Não há super-resolução.
@@ -132,3 +132,9 @@ Os testes cobrem deslocamento vertical, horizontal/diagonal, corte de cena, fram
 ## Dependências e autoria
 
 A aplicação é um código novo entregue para você desenvolver e renomear. Nenhuma licença de publicação foi escolhida para o código da aplicação; o repositório inicial é privado. Dependências mantêm suas próprias licenças; consulte `THIRD_PARTY.md` e os arquivos de licença distribuídos junto dos pacotes.
+
+## Zoom / afastamento (0.3.0)
+
+Em **Alinhamento → Movimento**, selecione **Zoom + X/Y (experimental)**. Comece com passo 1 e mesclagem **Preservar existente**; escolha o intervalo de uma mesma cena estática. O modo funciona nos dois sentidos e aceita deslocamento simultâneo. A resolução do primeiro frame é a referência; começar pelo enquadramento mais próximo pode preservar mais detalhe, mas aumenta o tamanho da montagem. O limite em megapixels é verificado antes da transformação. O relatório JSON registra escala relativa, acumulada e matriz por frame aceito. Frames rejeitados não alteram a referência.
+
+A versão v0.2.0 permanece disponível com seu código e executável originais como ponto de retorno.

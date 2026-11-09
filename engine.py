@@ -1,6 +1,6 @@
-"""Montagem incremental por translação, sem geração ou preenchimento por IA.
+"""Montagem incremental por translação ou escala + XY, sem preenchimento por IA.
 
-Cada frame é registrado no último frame aceito; a translação é acumulada
+Cada frame é registrado no último frame aceito; a transformação é acumulada
 no espaço global. Máscaras distinguem pixels pretos de regiões inexistentes.
 """
 from dataclasses import dataclass, asdict
@@ -33,7 +33,7 @@ class Settings:
             raise ValueError('O primeiro frame deve ser menor ou igual ao último, dentro do arquivo.')
         if self.step < 1 or not 0.1 <= self.scale <= 1:
             raise ValueError('Passo ou escala inválidos.')
-        if self.direction not in {'free', 'vertical', 'horizontal'} or self.blend not in {'preserve', 'feather', 'average'}:
+        if self.direction not in {'free', 'vertical', 'horizontal', 'zoom'} or self.blend not in {'preserve', 'feather', 'average'}:
             raise ValueError('Modo de alinhamento/mesclagem inválido.')
         if not 0 <= self.confidence <= 1 or not 0.05 <= self.min_overlap <= .9:
             raise ValueError('Confiança/sobreposição inválida.')
@@ -137,6 +137,54 @@ def align(previous, current, cfg):
     return best
 
 
+def align_zoom(previous, current, cfg):
+    """Fit uniform scale + XY, current -> last accepted frame (no perspective)."""
+    identity = np.eye(3, dtype=np.float64)
+    if previous.shape != current.shape:
+        raise ValueError('As dimensões dos frames mudaram dentro da cena.')
+    if np.array_equal(previous, current):
+        return identity, 1.0, 'repetido'
+    h, w = previous.shape[:2]
+    ratio = min(1.0, 1100/max(h, w))
+    size = (max(16, round(w*ratio)), max(16, round(h*ratio)))
+    detector = cv2.SIFT_create(nfeatures=4000, contrastThreshold=.015)
+    features = []
+    for image in (previous, current):
+        gray = cv2.resize(cv2.cvtColor(image, cv2.COLOR_RGBA2GRAY), size)
+        mask = cv2.resize((image[..., 3] > 200).astype('uint8')*255, size,
+                          interpolation=cv2.INTER_NEAREST)
+        features.append(detector.detectAndCompute(gray, mask))
+    (ka, da), (kb, db) = features
+    failed = (identity, -1.0, 'zoom sem correspondência')
+    if da is None or db is None or min(len(da), len(db)) < 8:
+        return failed
+    pairs = cv2.BFMatcher().knnMatch(db, da, k=2)
+    good = [a for a, *rest in pairs if rest and a.distance < .72*rest[0].distance]
+    if len(good) < 8:
+        return failed
+    src = np.float64([kb[m.queryIdx].pt for m in good])/ratio
+    dst = np.float64([ka[m.trainIdx].pt for m in good])/ratio
+    model, inliers = cv2.estimateAffinePartial2D(src, dst, method=cv2.RANSAC,
+                                                ransacReprojThreshold=2.5/ratio)
+    if model is None or inliers is None or inliers.sum() < max(8, len(good)*.35):
+        return failed
+    # Reject rotation, then refit only scale/translation on the RANSAC consensus.
+    if abs(np.degrees(np.arctan2(model[1, 0], model[0, 0]))) > 2:
+        return failed
+    src, dst = src[inliers.ravel().astype(bool)], dst[inliers.ravel().astype(bool)]
+    if np.ptp(src, axis=0).min() < min(h, w)*.12:
+        return failed
+    a, b = src-src.mean(axis=0), dst-dst.mean(axis=0)
+    scale = float(np.sum(a*b)/max(np.sum(a*a), 1e-9))
+    offset = dst.mean(axis=0)-scale*src.mean(axis=0)
+    if not .5 <= scale <= 2 or np.median(np.linalg.norm(src*scale+offset-dst, axis=1)) > 3/ratio:
+        return failed
+    matrix = np.array([[scale, 0, offset[0]], [0, scale, offset[1]], [0, 0, 1.]])
+    warped = cv2.warpAffine(current, matrix[:2], (w, h), flags=cv2.INTER_LINEAR)
+    score = overlap_score(previous, warped, 0, 0, cfg.min_overlap)
+    return matrix, score, 'escala + XY (SIFT)'
+
+
 class Canvas:
     def __init__(self, image, cfg):
         self.cfg = cfg
@@ -147,6 +195,27 @@ class Canvas:
     def _check(self, w, h):
         if w*h > self.cfg.max_megapixels*1_000_000 or max(w, h) > 60000:
             raise ValueError('Limite de tamanho atingido. Reduza a escala ou o intervalo de frames.')
+
+    def add_transformed(self, frame, matrix):
+        """Warp each original frame once; bound the allocation before warping."""
+        if not np.isfinite(matrix).all() or not .05 <= matrix[0, 0] <= 20:
+            raise ValueError('Escala acumulada fora do limite seguro. Reduza o intervalo.')
+        h, w = frame.shape[:2]
+        corners = np.array([[0, 0, 1], [w, 0, 1], [0, h, 1], [w, h, 1]]) @ matrix.T
+        left, top = np.floor(corners[:, :2].min(axis=0)).astype(int)
+        right, bottom = np.ceil(corners[:, :2].max(axis=0)).astype(int)
+        ch, cw = self.image.shape[:2]
+        self._check(max(self.x+cw, right)-min(self.x, left),
+                    max(self.y+ch, bottom)-min(self.y, top))
+        local = matrix[:2].copy()
+        local[:, 2] -= [left, top]
+        # Premultiplied alpha prevents dark fringes at transparent edges.
+        pixels = frame.astype(np.float32)/255
+        pixels[..., :3] *= pixels[..., 3:4]
+        warped = cv2.warpAffine(pixels, local, (right-left, bottom-top), flags=cv2.INTER_LINEAR)
+        np.divide(warped[..., :3], warped[..., 3:4], out=warped[..., :3],
+                  where=warped[..., 3:4] > 0)
+        self.add(np.clip(np.rint(warped*255), 0, 255).astype(np.uint8), int(left), int(top))
 
     def add(self, frame, x, y):
         h, w = frame.shape[:2]
@@ -192,6 +261,7 @@ def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancell
         previous = prepare(first, cfg)
         canvas = Canvas(previous, cfg)
         x = y = 0
+        transform = np.eye(3, dtype=np.float64)
         accepted, rejected = [indices[0]+1], []
         records = []
         status, reason = 'concluído', ''
@@ -202,7 +272,12 @@ def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancell
                 break
             raw, _ = media.frame(index)
             current = prepare(raw, cfg)
-            dx, dy, confidence, method = align(previous, current, cfg)
+            if cfg.direction == 'zoom':
+                relative, confidence, method = align_zoom(previous, current, cfg)
+                dx, dy = float(relative[0, 2]), float(relative[1, 2])
+            else:
+                dx, dy, confidence, method = align(previous, current, cfg)
+                relative = np.array([[1., 0, dx], [0, 1., dy], [0, 0, 1.]])
             record = dict(frame=index+1, dx=dx, dy=dy, confidence=round(confidence, 4), method=method)
             if confidence < cfg.confidence:
                 rejected.append(index+1)
@@ -215,13 +290,23 @@ def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancell
                     break
                 continue  # A referência continua sendo o último frame ACEITO.
             try:
-                canvas.add(current, x+dx, y+dy)
+                candidate = transform @ relative
+                if cfg.direction == 'zoom':
+                    canvas.add_transformed(current, candidate)
+                else:
+                    canvas.add(current, x+dx, y+dy)
             except ValueError as error:
                 status, reason = 'interrompido', str(error)
                 break
-            x, y, previous = x+dx, y+dy, current
+            transform = candidate
+            x, y = float(transform[0, 2]), float(transform[1, 2])
+            if cfg.direction != 'zoom':
+                x, y = round(x), round(y)
+            previous = current
             accepted.append(index+1)
-            record.update(accepted=True, global_x=x, global_y=y)
+            record.update(accepted=True, global_x=x, global_y=y,
+                          relative_scale=float(relative[0, 0]), global_scale=float(transform[0, 0]),
+                          transform=transform.tolist())
             records.append(record)
             progress(ordinal, len(indices), record)
             if time.monotonic()-last_preview > .4:

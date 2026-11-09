@@ -16,8 +16,9 @@ def stylesheet(theme):
 QWidget {{color:{p['text']}; font-family:"Segoe UI","Noto Sans",sans-serif; font-size:13px;}}
 QMainWindow, QDialog, QWidget#page {{background:{p['bg']};}}
 QScrollArea, QScrollArea > QWidget > QWidget {{background:transparent; border:0;}}
-QGroupBox {{background:{p['panel']}; border:1px solid {p['border']}; border-radius:10px; margin-top:14px; padding:14px 10px 10px; font-weight:600;}}
+QGroupBox {{background:{p['panel']}; border:1px solid {p['border']}; border-radius:10px; margin-top:0; padding:0;}}
 QGroupBox::title {{subcontrol-origin:margin; left:12px; color:{p['accent']};}}
+QLabel#sectionTitle {{color:{p['accent']};font-weight:600;background:transparent;}}
 QLabel#muted {{color:{p['muted']};}}
 QLabel#brand {{font-size:27px; font-weight:700; color:{p['text']};}}
 QLabel#version {{color:{p['accent']}; font-size:14px;}}

@@ -1,3 +1,11 @@
+# 0.3.0 — 2026-11-09
+
+- Ícone revisado do autor em toda a interface e no executável; ICO original preservado.
+- Títulos dentro dos painéis, quebra de linha e espaçamento maior entre campos.
+- Modo experimental Zoom + X/Y: escala uniforme e deslocamento, composição incremental, validação da sobreposição e limite antes da alocação.
+- Testes de afastamento/aproximação, composição, cortes de cena, transparência, cancelamento e limite de memória.
+- v0.2.0 preservada como ponto de retorno; nova versão publicada separadamente.
+
 # Histórico
 
 ## 0.2.0 — Framosik

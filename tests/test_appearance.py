@@ -42,3 +42,21 @@ def test_translations_icons_and_preferences(tmp_path):
     with Image.open(ICONS/'framosik.ico') as icon:
         assert (16,16) in icon.info['sizes'] and (256,256) in icon.info['sizes']
     assert LINKS['repository'] == 'https://github.com/cleitinhodev/framosik'
+
+
+def test_zoom_progress_and_panel_layout(tmp_path):
+    from PySide6.QtWidgets import QGroupBox, QLabel
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow(QSettings(str(tmp_path/'layout.ini'),QSettings.IniFormat))
+    window.resize(1100,760); window.show(); app.processEvents()
+    window.direction.setCurrentIndex(window.direction.findData('zoom'))
+    assert window.direction.currentData() == 'zoom'
+    window.on_progress(2,3,dict(frame=2,confidence=.9,accepted=True,dx=-20.25,dy=4.5))
+    for index in range(window.pages.count()):
+        window.pages.setCurrentIndex(index); app.processEvents()
+    for group in window.findChildren(QGroupBox):
+        title=group.findChild(QLabel,'sectionTitle')
+        assert title is not None and title.wordWrap()
+        assert title.geometry().top() >= 12
+        assert not group.title()  # No title straddles the frame border.
+    window.close()
