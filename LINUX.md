@@ -23,7 +23,7 @@ Compilado e testado em Ubuntu 22.04 x86_64 (glibc 2.35). Destinado a Ubuntu 22.0
 Se aparecer erro de plugin Qt xcb ou biblioteca gráfica ausente, no Ubuntu/Debian instale:
 
 ```sh
-sudo apt install libegl1 libopengl0 libgl1 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libxcb-xkb1
+sudo apt install libegl1 libopengl0 libgl1 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libxcb-xkb1 libxcb-shape0
 ```
 
 Abra pelo terminal para ver o erro completo. Erros Python de inicialização também são registrados em `~/Framosik/erro.log`. Preferências ficam normalmente em `~/.config/Bugzinho/Framosik.conf`.
