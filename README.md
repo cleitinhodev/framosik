@@ -12,6 +12,10 @@ Inclui Python 3.12.10 x64 e dependências; não exige instalar Python, pip ou us
 
 **Distribuições:** a release distingue o pacote portátil (Python embutido, launcher compilado via Zig) e o pacote `Windows-x64` gerado nativamente no GitHub Actions com PyInstaller. O workflow executa testes e um smoke test do EXE antes de anexar o pacote nativo. Consulte o resultado do workflow para verificar o estado da compilação. O comportamento em vídeos reais deve ser testado no seu PC. Erros de inicialização são gravados em `%LOCALAPPDATA%\Framosik\erro.log`.
 
+## Linux portátil
+
+A release v0.3.0 também oferece `Framosik-0.3.0-Linux-x86_64.tar.gz`, com Python e dependências incluídos. Extraia tudo e abra `Framosik` dentro da pasta extraída (ou execute `./Framosik` no terminal). Base de compatibilidade: Ubuntu 22.04 x86_64 / glibc 2.35. Consulte [LINUX.md](LINUX.md) para requisitos gráficos, testes e instruções de compilação.
+
 ## Identidade e visualização
 
 O ícone fornecido pelo autor aparece no cabeçalho, na janela e na aba Sobre. `assets/icons` contém PNGs de 16, 20, 24, 32, 40, 48, 64, 96, 128, 192, 256, 512 e 1024 pixels, além de ICO multirresolução e ICNS. O ICO revisado pelo autor foi preservado em `assets/icon_source.ico` e é usado diretamente no executável. Suas camadas nativas são usadas quando disponíveis. Os PNGs maiores são redimensionamentos da camada de 256 px, sem criação de detalhes; o enquadramento original é mantido.
