@@ -1,0 +1,27 @@
+name: Package and publish preview
+on:
+  push:
+    branches: [main]
+    paths: [app_info.py]
+permissions:
+  contents: write
+jobs:
+  windows:
+    uses: ./.github/workflows/release.yml
+  linux:
+    uses: ./.github/workflows/linux.yml
+  publish:
+    needs: [linux, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: packages
+          merge-multiple: true
+      - name: Publish tested packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(python -c 'from app_info import VERSION; print(VERSION)')
+          gh release create "v$version" --target "$GITHUB_SHA" --prerelease --title "Framosik v$version" --notes-file RELEASE_NOTES.md packages/*

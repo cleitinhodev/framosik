@@ -190,6 +190,7 @@ class Canvas:
         self.cfg = cfg
         self._check(image.shape[1], image.shape[0])
         self.image = image.copy()
+        self.seams = np.zeros(image.shape[:2], np.uint8)
         self.x = self.y = 0
 
     def _check(self, w, h):
@@ -226,11 +227,18 @@ class Canvas:
         if (left, top, right, bottom) != (self.x, self.y, self.x+cw, self.y+ch):
             enlarged = np.zeros((bottom-top, right-left, 4), np.uint8)
             enlarged[self.y-top:self.y-top+ch, self.x-left:self.x-left+cw] = self.image
+            expanded_seams = np.zeros(enlarged.shape[:2], np.uint8)
+            expanded_seams[self.y-top:self.y-top+ch, self.x-left:self.x-left+cw] = self.seams
+            self.seams = expanded_seams
             self.image, self.x, self.y = enlarged, left, top
         roi = self.image[y-self.y:y-self.y+h, x-self.x:x-self.x+w]
         valid = frame[..., 3] > 0
         old = roi[..., 3] > 0
         fresh, overlap = valid & ~old, valid & old
+        if fresh.any() and overlap.any():
+            mask = self.seams[y-self.y:y-self.y+h, x-self.x:x-self.x+w]
+            near_new = cv2.dilate(fresh.astype(np.uint8), np.ones((5, 5), np.uint8))
+            mask[overlap & (near_new > 0)] = 255
         if self.cfg.direction == 'zoom':
             # A warped edge may cover only part of a pixel. Prefer a later
             # observation with better coverage, even in preserve mode.
@@ -254,6 +262,7 @@ class Canvas:
 class Result:
     image: np.ndarray
     report: dict
+    seams: np.ndarray = None
 
 
 def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancelled=lambda: False):
@@ -321,7 +330,7 @@ def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancell
         report = dict(status=status, reason=reason, settings=asdict(cfg), accepted=accepted, rejected=rejected,
                       width=canvas.image.shape[1], height=canvas.image.shape[0],
                       seconds=round(time.monotonic()-started, 2), frames=records)
-        return Result(canvas.image, report)
+        return Result(canvas.image, report, canvas.seams)
 
 
 def thumbnail(image, limit=1400):
@@ -329,3 +338,30 @@ def thumbnail(image, limit=1400):
     if scale < 1:
         return cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
     return image.copy()
+
+
+def finish_image(image, seams, smooth, color):
+    """Filter opaque seam neighborhoods in strips to bound temporary memory."""
+    if not (smooth or color) or seams is None:
+        return image
+    output = image.copy()
+    for top in range(0, len(image), 128):
+        bottom = min(len(image), top + 128)
+        start, stop = max(0, top - 4), min(len(image), bottom + 4)
+        mask = seams[start:stop]
+        if not mask.any():
+            continue
+        rgba = image[start:stop]
+        strength = cv2.GaussianBlur(mask, (5, 5), 1)
+        opaque = cv2.erode(rgba[..., 3], np.ones((5, 5), np.uint8)) == 255
+        weight = (strength * (1.0 / 255) * opaque).astype(np.float32)[..., None]
+        rgb = np.ascontiguousarray(rgba[..., :3])
+        mixed = rgb.astype(np.float32)
+        if color:
+            median = cv2.medianBlur(rgb, 3)
+            mixed += (median - mixed) * weight * (color / 100)
+        if smooth:
+            soft = cv2.bilateralFilter(rgb, 5, 24, 2)
+            mixed += (soft - mixed) * weight * (smooth / 100)
+        output[top:bottom, :, :3] = np.rint(mixed[top-start:bottom-start]).astype(np.uint8)
+    return output

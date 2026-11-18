@@ -35,14 +35,20 @@ def test_load_stitch_export(tmp_path, monkeypatch):
     w.frame_number.setValue(3)
     assert w.slider.value() == 3
     assert w.start_button.isEnabled()
+    assert w.finish_panel.isHidden()
     w.start_stitch()
     wait(app, w)
     assert w.result is not None
     assert w.result.image.shape == (500, 440, 4)
     assert w.save_button.isEnabled()
+    assert not w.finish_panel.isHidden()
+    w.color.setValue(50)
+    w.apply_finish()
+    wait(app, w)
+    assert w.result.report["finish"]["color"] == 50
     output = tmp_path/'exportado.png'
     monkeypatch.setattr(QFileDialog, 'getSaveFileName', lambda *a, **k: (str(output), 'PNG'))
     w.save_png()
     wait(app, w)
-    assert np.array_equal(np.array(Image.open(output)), w.result.image)
+    assert np.array_equal(np.array(Image.open(output)), w.finished_image)
     w.close()

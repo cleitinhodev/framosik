@@ -17,5 +17,5 @@ for name in ['README.md','THIRD_PARTY.md','CHANGELOG.md']:
     shutil.copy2(ROOT/name,out/name)
 # Testa a versão empacotada, não apenas os módulos do ambiente de desenvolvimento.
 subprocess.run([str(out/'Framosik.exe'),'--smoke-test'],check=True,timeout=60)
-shutil.make_archive(str(ROOT/'dist/Framosik-0.3.0-Windows-x64'),'zip',out.parent,out.name)
+shutil.make_archive(str(ROOT/'dist/Framosik-0.4.0-Windows-x64'),'zip',out.parent,out.name)
 print('Windows build and executable smoke test passed.')

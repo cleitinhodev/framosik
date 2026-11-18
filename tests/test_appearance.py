@@ -54,6 +54,10 @@ def test_zoom_progress_and_panel_layout(tmp_path):
     window.on_progress(2,3,dict(frame=2,confidence=.9,accepted=True,dx=-20.25,dy=4.5))
     for index in range(window.pages.count()):
         window.pages.setCurrentIndex(index); app.processEvents()
+    window.pages.setCurrentIndex(0)
+    window.tabs.setCurrentIndex(1)
+    window.finish_panel.show()
+    app.processEvents()
     for group in window.findChildren(QGroupBox):
         title=group.findChild(QLabel,'sectionTitle')
         assert title is not None and title.wordWrap()

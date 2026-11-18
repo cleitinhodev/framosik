@@ -11,7 +11,7 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
     QGroupBox, QSlider, QSplitter, QProgressBar, QPlainTextEdit, QTabWidget, QCheckBox,
     QScrollArea, QGraphicsView, QGraphicsScene)
 from media import Media
-from engine import Settings, stitch, thumbnail
+from engine import finish_image, Settings, stitch, thumbnail
 
 
 class _ClickEdit:
@@ -188,6 +188,21 @@ class MainWindow(QMainWindow):
         self.tabs = QTabWidget()
         self.source_view, self.result_view = ImageView(''), ImageView('')
         self.tabs.addTab(self.source_view,self.tr('original')); self.tabs.addTab(self.result_view,self.tr('result'))
+        result_page = QWidget()
+        result_row = QHBoxLayout(result_page)
+        result_row.setContentsMargins(0, 0, 0, 0)
+        self.tabs.removeTab(1)
+        result_row.addWidget(self.result_view, 1)
+        self.finish_panel, form = self.group('finish')
+        self.finish_panel.setMaximumWidth(195)
+        self.smooth = spin(0, 100, 0, '%')
+        self.color = spin(0, 100, 0, '%')
+        form.addRow(self.label('seam_soft'), self.smooth)
+        form.addRow(self.label('seam_color'), self.color)
+        form.addRow(self.btn('apply_finish', self.apply_finish))
+        result_row.addWidget(self.finish_panel, 0, Qt.AlignTop)
+        self.tabs.addTab(result_page, self.tr('result'))
+        self.clear_finish()
         right_layout.addWidget(self.tabs,1)
         views = QHBoxLayout(); views.addWidget(self.btn('fit',lambda:self.active_view().fit_image()))
         views.addWidget(self.btn('zoom',lambda:self.active_view().actual_size())); views.addStretch()
@@ -328,6 +343,7 @@ class MainWindow(QMainWindow):
         return self.source_view if self.tabs.currentIndex()==0 else self.result_view
 
     def set_busy(self,busy):
+        self.finish_panel.setEnabled(not busy)
         self.open_button.setEnabled(not busy); self.controls.setEnabled(not busy and self.media is not None)
         self.navigation.setEnabled(not busy and self.media is not None); self.start_button.setEnabled(not busy and self.media is not None)
         self.save_button.setEnabled(not busy and self.result is not None); self.report_button.setEnabled(not busy and self.result is not None)
@@ -368,6 +384,7 @@ class MainWindow(QMainWindow):
         try: new_media = Media(filename)
         except Exception: self.job_error(traceback.format_exc()); return
         if self.media: self.media.close()
+        self.clear_finish()
         self.media,self.path,self.result = new_media,filename,None
         self.file_label.setText(f'{Path(filename).name} · {w} × {h} · {count} {self.tr("frame")}'); self.file_label.setToolTip(filename)
         self.frame_number.blockSignals(True); self.slider.blockSignals(True)
@@ -412,6 +429,7 @@ class MainWindow(QMainWindow):
         cfg = self.settings()
         try: cfg.validate(self.media.count,self.media.width,self.media.height)
         except ValueError as error: self.error_dialog('invalid',str(error)); return
+        self.clear_finish()
         self.result = None; self.log.clear(); self.result_view.scene().clear(); self.result_view.item = None
         self.pages.setCurrentIndex(0); self.tabs.setCurrentIndex(1); path = self.path
         self.launch(lambda job:stitch(path,cfg,job.progress.emit,job.preview.emit,job.isInterruptionRequested),self.stitched,'stitch')
@@ -424,7 +442,26 @@ class MainWindow(QMainWindow):
         else: message = str(record)
         self.log.appendPlainText(message)
 
+    def clear_finish(self):
+        self.finished_image = None
+        self.smooth.setValue(0)
+        self.color.setValue(0)
+        self.finish_panel.hide()
+
+    def apply_finish(self):
+        if self.job or self.result is None:
+            return
+        result = self.result
+        smooth, color = self.smooth.value(), self.color.value()
+        def display(image):
+            self.finished_image = image
+            self.result_view.show_image(image)
+            result.report['finish'] = dict(smooth=smooth, color=color)
+        self.launch(lambda job: finish_image(result.image, result.seams, smooth, color),
+                    display, 'finish')
+
     def stitched(self,result):
+        self.finish_panel.show()
         self.result = result; self.result_view.show_image(result.image,reset=True); r = result.report
         status = {'concluído':'completed','interrompido':'stopped','cancelado':'cancelled'}[r['status']]
         text = f'{self.tr(status)} · {r["width"]} × {r["height"]} px · {len(r["accepted"])} {self.tr("accepted")} · {len(r["rejected"])} {self.tr("rejected")} · {r["seconds"]} s'
@@ -443,7 +480,7 @@ class MainWindow(QMainWindow):
         filename,_ = QFileDialog.getSaveFileName(self,self.tr('export'),default,'PNG (*.png)')
         if filename:
             if not filename.lower().endswith('.png'): filename += '.png'
-            image = self.result.image
+            image = self.result.image if self.finished_image is None else self.finished_image
             def save(job): Image.fromarray(image).save(filename); return filename
             self.launch(save,lambda name:self.statusBar().showMessage(f'{self.tr("saved")}: {name}'),'save')
 

@@ -1,10 +1,6 @@
 name: Linux build and release
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/linux.yml'
-      - 'build_tools/build_linux.py'
+  workflow_call:
   release:
     types: [published]
   workflow_dispatch:
@@ -12,23 +8,23 @@ on:
       tag:
         description: Existing release tag to package
         required: true
-        default: v0.3.0
+        default: v0.4.0
 permissions:
   contents: write
 concurrency:
-  group: linux-release-${{ inputs.tag || github.event.release.tag_name || 'v0.3.0' }}
+  group: linux-release-${{ inputs.tag || github.event.release.tag_name || 'v0.4.0' }}
   cancel-in-progress: false
 jobs:
   linux:
     runs-on: ubuntu-22.04
     env:
-      RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name || 'v0.3.0' }}
+      RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name || 'v0.4.0' }}
     steps:
       - uses: actions/checkout@v4
       - name: Check out the exact release source
         uses: actions/checkout@v4
         with:
-          ref: ${{ env.RELEASE_TAG }}
+          ref: ${{ github.event_name == 'push' && github.sha || env.RELEASE_TAG }}
           path: release-source
       - uses: actions/setup-python@v5
         with:
@@ -56,6 +52,7 @@ jobs:
             release-source/dist/*.sha256
           if-no-files-found: error
       - name: Attach Linux package and checksum to existing release
+        if: github.event_name != 'push'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "$RELEASE_TAG" release-source/dist/*.tar.gz release-source/dist/*.sha256

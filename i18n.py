@@ -3,6 +3,10 @@ LANGUAGES = {'pt':'Português (Brasil)', 'en':'English', 'es':'Español', 'fr':'
              'de':'Deutsch', 'it':'Italiano', 'ja':'日本語', 'ko':'한국어', 'zh':'简体中文', 'ru':'Русский'}
 # Ordem: português, inglês, espanhol, francês, alemão, italiano, japonês, coreano, chinês, russo.
 ROWS = '''
+finish|Acabamento|Finishing|Acabado|Finition|Nachbearbeitung|Finitura|仕上げ|마무리|后期调整|Обработка
+seam_soft|Suavização|Smoothing|Suavizado|Lissage|Glättung|Levigatura|平滑化|부드럽게|平滑|Сглаживание
+seam_color|Correção de cor local|Local color repair|Corrección de color local|Correction de couleur locale|Lokale Farbkorrektur|Correzione colore locale|局所色補正|국소 색상 보정|局部颜色修复|Коррекция цвета стыков
+apply_finish|Aplicar à prévia|Apply to preview|Aplicar a la vista|Appliquer à l’aperçu|Vorschau anwenden|Applica all’anteprima|プレビューに適用|미리보기에 적용|应用到预览|Применить к просмотру
 zoom_motion|Zoom + X/Y (experimental)|Zoom + X/Y (experimental)|Zoom + X/Y (experimental)|Zoom + X/Y (expérimental)|Zoom + X/Y (experimentell)|Zoom + X/Y (sperimentale)|ズーム + X/Y（実験的）|줌 + X/Y (실험적)|缩放 + X/Y（实验性）|Масштаб + X/Y (экспериментально)
 open|Abrir GIF / vídeo|Open GIF / video|Abrir GIF / vídeo|Ouvrir GIF / vidéo|GIF / Video öffnen|Apri GIF / video|GIF / 動画を開く|GIF / 동영상 열기|打开 GIF / 视频|Открыть GIF / видео
 subtitle|Reconstrua a cena, quadro a quadro.|Rebuild the scene, frame by frame.|Reconstruye la escena, cuadro a cuadro.|Reconstruisez la scène, image par image.|Die Szene Bild für Bild zusammensetzen.|Ricostruisci la scena, fotogramma per fotogramma.|フレームをつなぎ、シーンを再構成。|프레임을 이어 장면을 재구성하세요.|逐帧拼接，还原完整场景。|Соберите сцену кадр за кадром.
