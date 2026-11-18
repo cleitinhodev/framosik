@@ -1,6 +1,6 @@
 from pathlib import Path
 NAME = 'Framosik'
-VERSION = '0.4.0'
+VERSION = '0.4.1'
 ROOT = Path(__file__).resolve().parent
 ICONS = ROOT / 'assets' / 'icons'
 LINKS = {

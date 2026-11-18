@@ -35,13 +35,40 @@ def test_load_stitch_export(tmp_path, monkeypatch):
     w.frame_number.setValue(3)
     assert w.slider.value() == 3
     assert w.start_button.isEnabled()
-    assert w.finish_panel.isHidden()
+    assert not w.finish_panel.isEnabled()
+    assert w.controls.isAncestorOf(w.finish_panel)
+    assert w.tabs.widget(1) is w.result_view
+    import gui
+    from threading import Event
+    release = Event()
+    original_stitch = gui.stitch
+    def gated_stitch(path, settings, progress, preview, cancelled):
+        def observe(image):
+            preview(image)
+            if image.shape[0] > 300:
+                assert release.wait(15)
+        return original_stitch(path, settings, progress, observe, cancelled)
+    monkeypatch.setattr(gui, 'stitch', gated_stitch)
     w.start_stitch()
+    try:
+        deadline = time.monotonic() + 10
+        while time.monotonic() < deadline:
+            app.processEvents()
+            item = w.result_view.item
+            if item is not None and item.pixmap().height() > 300:
+                break
+            time.sleep(.01)
+        assert w.job and w.result is None
+        assert w.result_view.isVisible() and w.tabs.currentWidget() is w.result_view
+        assert item is not None and item.pixmap().height() > 300
+        assert not w.finish_panel.isEnabled()
+    finally:
+        release.set()
     wait(app, w)
     assert w.result is not None
     assert w.result.image.shape == (500, 440, 4)
     assert w.save_button.isEnabled()
-    assert not w.finish_panel.isHidden()
+    assert w.finish_panel.isEnabled()
     w.color.setValue(50)
     w.apply_finish()
     wait(app, w)

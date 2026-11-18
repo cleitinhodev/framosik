@@ -25,3 +25,6 @@ jobs:
         run: |
           version=$(python -c 'from app_info import VERSION; print(VERSION)')
           gh release create "v$version" --target "$GITHUB_SHA" --prerelease --title "Framosik v$version" --notes-file RELEASE_NOTES.md packages/*
+          if [ "$version" = "0.4.1" ]; then
+            gh release delete v0.4.0 --yes
+          fi

@@ -183,26 +183,19 @@ class MainWindow(QMainWindow):
         for key in ['left','top','right','bottom']:
             self.crops[key] = spin(0,10000,0,' px'); form.addRow(self.label(key),self.crops[key])
         tip = self.label('crop_tip'); tip.setWordWrap(True); form.addRow(tip)
-        side.addStretch(); splitter.addWidget(side_scroll)
-        right = QWidget(); right_layout = QVBoxLayout(right); right_layout.setContentsMargins(8,0,0,0)
-        self.tabs = QTabWidget()
-        self.source_view, self.result_view = ImageView(''), ImageView('')
-        self.tabs.addTab(self.source_view,self.tr('original')); self.tabs.addTab(self.result_view,self.tr('result'))
-        result_page = QWidget()
-        result_row = QHBoxLayout(result_page)
-        result_row.setContentsMargins(0, 0, 0, 0)
-        self.tabs.removeTab(1)
-        result_row.addWidget(self.result_view, 1)
         self.finish_panel, form = self.group('finish')
-        self.finish_panel.setMaximumWidth(195)
         self.smooth = spin(0, 100, 0, '%')
         self.color = spin(0, 100, 0, '%')
         form.addRow(self.label('seam_soft'), self.smooth)
         form.addRow(self.label('seam_color'), self.color)
         form.addRow(self.btn('apply_finish', self.apply_finish))
-        result_row.addWidget(self.finish_panel, 0, Qt.AlignTop)
-        self.tabs.addTab(result_page, self.tr('result'))
+        side.addWidget(self.finish_panel)
         self.clear_finish()
+        side.addStretch(); splitter.addWidget(side_scroll)
+        right = QWidget(); right_layout = QVBoxLayout(right); right_layout.setContentsMargins(8,0,0,0)
+        self.tabs = QTabWidget()
+        self.source_view, self.result_view = ImageView(''), ImageView('')
+        self.tabs.addTab(self.source_view,self.tr('original')); self.tabs.addTab(self.result_view,self.tr('result'))
         right_layout.addWidget(self.tabs,1)
         views = QHBoxLayout(); views.addWidget(self.btn('fit',lambda:self.active_view().fit_image()))
         views.addWidget(self.btn('zoom',lambda:self.active_view().actual_size())); views.addStretch()
@@ -343,7 +336,7 @@ class MainWindow(QMainWindow):
         return self.source_view if self.tabs.currentIndex()==0 else self.result_view
 
     def set_busy(self,busy):
-        self.finish_panel.setEnabled(not busy)
+        self.finish_panel.setEnabled(not busy and self.result is not None)
         self.open_button.setEnabled(not busy); self.controls.setEnabled(not busy and self.media is not None)
         self.navigation.setEnabled(not busy and self.media is not None); self.start_button.setEnabled(not busy and self.media is not None)
         self.save_button.setEnabled(not busy and self.result is not None); self.report_button.setEnabled(not busy and self.result is not None)
@@ -352,8 +345,11 @@ class MainWindow(QMainWindow):
     def launch(self,function,callback,kind):
         self.stop_play(); self.job_kind = kind; self.job = Job(function)
         self.job.completed.connect(callback); self.job.failed.connect(self.job_error); self.job.finished.connect(self.job_finished)
-        self.job.progress.connect(self.on_progress); self.job.preview.connect(lambda image:self.result_view.show_image(image))
+        self.job.progress.connect(self.on_progress); self.job.preview.connect(self.show_stitch_preview, Qt.QueuedConnection)
         self.progress_bar.setRange(0,0); self.set_busy(True); self.job.start()
+
+    def show_stitch_preview(self, image):
+        self.result_view.show_image(image)
 
     def job_finished(self):
         self.progress_bar.setRange(0,100)
@@ -446,7 +442,7 @@ class MainWindow(QMainWindow):
         self.finished_image = None
         self.smooth.setValue(0)
         self.color.setValue(0)
-        self.finish_panel.hide()
+        self.finish_panel.setEnabled(False)
 
     def apply_finish(self):
         if self.job or self.result is None:
@@ -461,7 +457,6 @@ class MainWindow(QMainWindow):
                     display, 'finish')
 
     def stitched(self,result):
-        self.finish_panel.show()
         self.result = result; self.result_view.show_image(result.image,reset=True); r = result.report
         status = {'concluído':'completed','interrompido':'stopped','cancelado':'cancelled'}[r['status']]
         text = f'{self.tr(status)} · {r["width"]} × {r["height"]} px · {len(r["accepted"])} {self.tr("accepted")} · {len(r["rejected"])} {self.tr("rejected")} · {r["seconds"]} s'

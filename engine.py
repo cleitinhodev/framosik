@@ -280,6 +280,7 @@ def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancell
         accepted, rejected = [indices[0]+1], []
         records = []
         status, reason = 'concluído', ''
+        preview(thumbnail(canvas.image).copy())
         last_preview = 0.0
         for ordinal, index in enumerate(indices[1:], 2):
             if cancelled():
@@ -325,7 +326,7 @@ def stitch(path, cfg, progress=lambda *_: None, preview=lambda *_: None, cancell
             records.append(record)
             progress(ordinal, len(indices), record)
             if time.monotonic()-last_preview > .4:
-                preview(thumbnail(canvas.image))
+                preview(thumbnail(canvas.image).copy())
                 last_preview = time.monotonic()
         report = dict(status=status, reason=reason, settings=asdict(cfg), accepted=accepted, rejected=rejected,
                       width=canvas.image.shape[1], height=canvas.image.shape[0],
