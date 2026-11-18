@@ -61,3 +61,14 @@ def test_zoom_transparency_has_no_black_fringe():
     canvas.add_transformed(im,np.array([[1.23,0,-5.4],[0,1.23,4.6],[0,0,1.]]))
     valid=canvas.image[...,3]>0
     assert np.all(canvas.image[valid,:3]==(250,100,50))
+
+
+@pytest.mark.parametrize('blend', ['preserve', 'feather', 'average'])
+def test_wider_zoom_frame_fills_partial_edges(blend):
+    im = np.full((32, 32, 4), 255, np.uint8)
+    canvas = Canvas(im, Settings(direction='zoom', blend=blend))
+    for scale in (1.2, 1.5):
+        offset = (1 - scale) * 16
+        canvas.add_transformed(im, np.array([[scale, 0, offset],
+                                             [0, scale, offset], [0, 0, 1]]))
+    assert np.all(canvas.image[2:-2, 2:-2, 3] == 255)

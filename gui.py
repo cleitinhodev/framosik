@@ -14,6 +14,24 @@ from media import Media
 from engine import Settings, stitch, thumbnail
 
 
+class _ClickEdit:
+    def wheelEvent(self, event):
+        # Let the containing scroll area handle wheel and touchpad gestures.
+        event.ignore()
+
+
+class OptionSpinBox(_ClickEdit, QSpinBox):
+    pass
+
+
+class OptionComboBox(_ClickEdit, QComboBox):
+    pass
+
+
+class FrameSlider(_ClickEdit, QSlider):
+    pass
+
+
 class ImageView(QGraphicsView):
     def __init__(self, empty):
         super().__init__()
@@ -81,7 +99,7 @@ class Job(QThread):
 
 
 def spin(minimum, maximum, value, suffix=''):
-    box = QSpinBox()
+    box = OptionSpinBox()
     box.setRange(minimum, maximum)
     box.setValue(value)
     box.setSuffix(suffix)
@@ -176,7 +194,7 @@ class MainWindow(QMainWindow):
         nav_hint = self.label('navigate'); nav_hint.setObjectName('muted'); views.addWidget(nav_hint)
         right_layout.addLayout(views)
         self.navigation = QWidget(); nav_layout = QVBoxLayout(self.navigation); nav_layout.setContentsMargins(0,0,0,0)
-        self.slider = QSlider(Qt.Horizontal); self.slider.setRange(1,1); nav_layout.addWidget(self.slider)
+        self.slider = FrameSlider(Qt.Horizontal); self.slider.setRange(1,1); nav_layout.addWidget(self.slider)
         nav = QHBoxLayout()
         nav.addWidget(button('‹',lambda:self.frame_number.setValue(self.frame_number.value()-1)))
         self.play_button = button('',self.toggle_play); nav.addWidget(self.play_button)
@@ -229,7 +247,7 @@ class MainWindow(QMainWindow):
         return group,form
 
     def combo(self,items):
-        combo = QComboBox()
+        combo = OptionComboBox()
         for key,data in items: combo.addItem(self.tr(key),data)
         self.choices.append((combo,items)); return combo
 
@@ -238,7 +256,7 @@ class MainWindow(QMainWindow):
         group, form = self.group('view'); group.setMaximumWidth(720)
         self.theme_box = self.combo([('dark','dark'),('light','light')])
         theme = str(self.prefs.value('theme','dark')); self.theme_box.setCurrentIndex(max(0,self.theme_box.findData(theme)))
-        self.language_box = QComboBox()
+        self.language_box = OptionComboBox()
         for code,name in LANGUAGES.items(): self.language_box.addItem(name,code)
         self.language_box.setCurrentIndex(self.language_box.findData(self.language))
         self.gradient_box = self.bind(QCheckBox(),'gradients'); self.gradient_box.setChecked(self.prefs.value('gradients',True,type=bool))

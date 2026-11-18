@@ -231,6 +231,12 @@ class Canvas:
         valid = frame[..., 3] > 0
         old = roi[..., 3] > 0
         fresh, overlap = valid & ~old, valid & old
+        if self.cfg.direction == 'zoom':
+            # A warped edge may cover only part of a pixel. Prefer a later
+            # observation with better coverage, even in preserve mode.
+            better = overlap & (frame[..., 3] > roi[..., 3])
+            roi[better] = frame[better]
+            overlap &= frame[..., 3] == roi[..., 3]
         if self.cfg.blend == 'average':
             roi[overlap, :3] = ((roi[overlap, :3].astype('uint16') + frame[overlap, :3])/2).astype('uint8')
             roi[overlap, 3] = np.maximum(roi[overlap, 3], frame[overlap, 3])
