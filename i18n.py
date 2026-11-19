@@ -60,8 +60,8 @@ theme|Tema|Theme|Tema|Thème|Design|Tema|テーマ|테마|主题|Тема
 dark|Escuro|Dark|Oscuro|Sombre|Dunkel|Scuro|ダーク|어둡게|深色|Тёмная
 light|Claro|Light|Claro|Clair|Hell|Chiaro|ライト|밝게|浅色|Светлая
 language|Idioma|Language|Idioma|Langue|Sprache|Lingua|言語|언어|语言|Язык
-gradients|Gradientes decorativos|Decorative gradients|Degradados decorativos|Dégradés décoratifs|Dekorative Farbverläufe|Sfumature decorative|装飾グラデーション|장식 그라데이션|装饰渐变|Декоративные градиенты
-animations|Animação das bordas|Animated borders|Animación de bordes|Animation des bordures|Animierte Ränder|Bordi animati|枠のアニメーション|테두리 애니메이션|边框动画|Анимация рамок
+gradients|Gradientes e brilho|Gradients and glow|Degradados y brillo|Dégradés et lueurs|Farbverläufe und Leuchten|Sfumature e bagliori|グラデーションと光彩|그라데이션 및 발광|渐变与辉光|Градиенты и свечение
+animations|Animar nome e controles|Animate title and controls|Animar nombre y controles|Animer le titre et les commandes|Titel und Bedienelemente animieren|Anima titolo e controlli|タイトルと操作部のアニメーション|제목 및 컨트롤 애니메이션|为标题和控件启用动画|Анимация названия и элементов управления
 appearance_note|As preferências são salvas automaticamente. Desative as animações para reduzir o movimento e o uso de CPU.|Preferences are saved automatically. Turn off animations to reduce motion and CPU use.|Las preferencias se guardan automáticamente. Desactiva las animaciones para reducir movimiento y uso de CPU.|Les préférences sont enregistrées automatiquement. Désactivez les animations pour réduire les mouvements et l’utilisation du processeur.|Einstellungen werden automatisch gespeichert. Animationen deaktivieren, um Bewegung und CPU-Last zu reduzieren.|Le preferenze vengono salvate automaticamente. Disattiva le animazioni per ridurre movimento e uso della CPU.|設定は自動保存されます。動きや CPU 使用量を減らすにはアニメーションを無効にしてください。|설정은 자동 저장됩니다. 애니메이션을 끄면 움직임과 CPU 사용량이 줄어듭니다.|偏好设置自动保存。关闭动画可减少动态效果和 CPU 使用量。|Настройки сохраняются автоматически. Отключите анимацию, чтобы уменьшить движение и нагрузку на процессор.
 version|Versão|Version|Versión|Version|Version|Versione|バージョン|버전|版本|Версия
 repository|Repositório|Repository|Repositorio|Dépôt|Repository|Repository|リポジトリ|저장소|代码仓库|Репозиторий

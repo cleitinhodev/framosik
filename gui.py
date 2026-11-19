@@ -7,7 +7,7 @@ from PIL import Image
 from PySide6.QtCore import Qt, QThread, Signal, QTimer, QSettings, QUrl, QEvent
 from PySide6.QtGui import QImage, QPixmap, QPainter, QColor, QKeySequence, QShortcut, QIcon, QDesktopServices
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QLabel, QPushButton, QFileDialog, QMessageBox, QSpinBox, QComboBox, QFormLayout,
+    QLabel, QFileDialog, QMessageBox, QSpinBox, QComboBox, QFormLayout,
     QGroupBox, QSlider, QSplitter, QProgressBar, QPlainTextEdit, QTabWidget, QCheckBox,
     QScrollArea, QGraphicsView, QGraphicsScene)
 from media import Media
@@ -107,7 +107,7 @@ def spin(minimum, maximum, value, suffix=''):
 
 
 def button(text, callback):
-    b = QPushButton(text)
+    b = NeonButton(text)
     b.clicked.connect(callback)
     return b
 
@@ -115,7 +115,8 @@ def button(text, callback):
 
 from i18n import translate, LANGUAGES
 from app_info import NAME, VERSION, ICONS, LINKS
-from appearance import AccentFrame, stylesheet, qt_palette, PALETTES
+from appearance import (AccentFrame, NeonButton, NeonScrollBar, PixelWordmark,
+                        stylesheet, qt_palette, PALETTES)
 
 class MainWindow(QMainWindow):
     def __init__(self, preferences=None):
@@ -142,10 +143,12 @@ class MainWindow(QMainWindow):
         logo = QLabel(); logo.setPixmap(QPixmap(str(ICONS/'framosik_128.png')).scaled(68,68,Qt.KeepAspectRatio,Qt.SmoothTransformation))
         header.addWidget(logo)
         branding = QVBoxLayout(); branding.setSpacing(0)
-        title = QLabel(NAME); title.setObjectName('brand'); branding.addWidget(title)
+        self.wordmark = PixelWordmark(NAME)
+        self.header.assembly.connect(self.wordmark.set_progress)
+        branding.addWidget(self.wordmark)
         tagline = self.label('subtitle'); tagline.setObjectName('muted'); branding.addWidget(tagline)
         header.addLayout(branding); header.addStretch()
-        version = QLabel('v'+VERSION); version.setObjectName('version'); header.addWidget(version)
+        version = QLabel('v'+VERSION); version.setObjectName('version'); header.addWidget(version, 0, Qt.AlignVCenter)
         self.open_button = self.btn('open',self.choose_file); header.addWidget(self.open_button)
         layout.addWidget(self.header)
         self.pages = QTabWidget(); layout.addWidget(self.pages,1)
@@ -221,7 +224,12 @@ class MainWindow(QMainWindow):
         for b in [self.start_button,self.cancel_button,self.save_button,self.report_button]: actions.addWidget(b)
         work_layout.addLayout(actions)
         self.progress_bar = QProgressBar(); self.progress_bar.setValue(0); work_layout.addWidget(self.progress_bar)
+        for area in (side_scroll, self.source_view, self.result_view, self.log):
+            area.setHorizontalScrollBar(NeonScrollBar(Qt.Horizontal, area))
+            area.setVerticalScrollBar(NeonScrollBar(Qt.Vertical, area))
         self.build_appearance(); self.build_about()
+        self.lights = [widget.light for kind in (NeonButton, NeonScrollBar)
+                       for widget in self.findChildren(kind)]
         self.retranslate(); self.apply_appearance(); self.set_busy(False)
         QShortcut(QKeySequence('Ctrl+O'),self,self.choose_file); QShortcut(QKeySequence('Ctrl+S'),self,self.save_png)
 
@@ -235,7 +243,7 @@ class MainWindow(QMainWindow):
         return self.bind(QLabel(),key)
 
     def btn(self,key,callback):
-        b = self.bind(QPushButton(),key); b.clicked.connect(callback); return b
+        b = self.bind(NeonButton(),key); b.clicked.connect(callback); return b
 
     def group(self,key):
         group = QGroupBox()
@@ -319,18 +327,24 @@ class MainWindow(QMainWindow):
 
     def apply_appearance(self):
         theme = self.theme_box.currentData()
-        self.setStyleSheet(stylesheet(theme)); self.setPalette(qt_palette(theme))
+        self.setStyleSheet(stylesheet(theme, self.gradient_box.isChecked())); self.setPalette(qt_palette(theme))
         for view in [self.source_view,self.result_view]: view.setBackgroundBrush(QColor(PALETTES[theme]['input']))
         self.animation_box.setEnabled(self.gradient_box.isChecked())
         self.update_effects(); self.empty_views()
 
     def update_effects(self):
-        self.header.configure(self.theme_box.currentData(),self.gradient_box.isChecked(),self.animation_box.isChecked(),
-            paused=self.job is not None or self.isMinimized() or not self.isActiveWindow())
+        theme = self.theme_box.currentData()
+        decorated = self.gradient_box.isChecked()
+        animated = self.animation_box.isChecked()
+        paused = self.job is not None or self.isMinimized() or not self.isActiveWindow()
+        self.wordmark.configure(theme, decorated)
+        self.header.configure(theme, decorated, animated, paused)
+        for light in self.lights:
+            light.configure(theme, decorated, animated and decorated and not paused)
 
     def changeEvent(self,event):
         super().changeEvent(event)
-        if hasattr(self,'theme_box') and event.type() in [QEvent.ActivationChange,QEvent.WindowStateChange]: self.update_effects()
+        if hasattr(self,'lights') and event.type() in [QEvent.ActivationChange,QEvent.WindowStateChange]: self.update_effects()
 
     def active_view(self):
         return self.source_view if self.tabs.currentIndex()==0 else self.result_view
