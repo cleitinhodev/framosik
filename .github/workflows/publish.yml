@@ -1,7 +1,7 @@
-name: Package and publish preview
+name: Publish style beta
 on:
   push:
-    branches: [main]
+    branches: [estilo]
     paths: [app_info.py]
 permissions:
   contents: write
@@ -19,12 +19,20 @@ jobs:
         with:
           path: packages
           merge-multiple: true
-      - name: Publish tested packages
+      - name: Publish beta from the tested commit
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           version=$(python -c 'from app_info import VERSION; print(VERSION)')
-          gh release create "v$version" --target "$GITHUB_SHA" --prerelease --title "Framosik v$version" --notes-file RELEASE_NOTES.md packages/*
-          if [ "$version" = "0.4.1" ]; then
-            gh release delete v0.4.0 --yes
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]
+          prefix="Framosik-$version"
+          (cd packages && sha256sum -c "$prefix-Linux-x86_64.tar.gz.sha256")
+          files=("packages/$prefix-Windows-x64.zip" "packages/$prefix-Linux-x86_64.tar.gz"
+                 "packages/$prefix-Linux-x86_64.tar.gz.sha256" "packages/$prefix-aparencia.gif")
+          for file in "${files[@]}"; do test -s "$file"; done
+          if [[ "$version" == "0.5.0-beta.1" ]]; then
+            gh release edit v0.4.1 --prerelease=false --latest
           fi
+          gh release create "v$version" --target "$GITHUB_SHA" --prerelease --latest=false \
+            --title "Framosik v$version · Estilo" --notes-file RELEASE_NOTES.md "${files[@]}"

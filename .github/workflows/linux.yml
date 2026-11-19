@@ -8,23 +8,23 @@ on:
       tag:
         description: Existing release tag to package
         required: true
-        default: v0.4.1
+        default: v0.5.0-beta.1
 permissions:
   contents: write
 concurrency:
-  group: linux-release-${{ inputs.tag || github.event.release.tag_name || 'v0.4.1' }}
+  group: linux-release-${{ inputs.tag || github.event.release.tag_name || github.sha }}
   cancel-in-progress: false
 jobs:
   linux:
     runs-on: ubuntu-22.04
     env:
-      RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name || 'v0.4.1' }}
+      RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v4
       - name: Check out the exact release source
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'push' && github.sha || env.RELEASE_TAG }}
+          ref: ${{ env.RELEASE_TAG || github.sha }}
           path: release-source
       - uses: actions/setup-python@v5
         with:
@@ -44,12 +44,19 @@ jobs:
         run: python -m pytest -q tests
       - name: Build, extract and smoke-test Linux executable
         run: python build_tools/build_linux.py --source release-source
+      - name: Capture the style beta for its release page
+        if: github.ref == 'refs/heads/estilo' && github.event_name == 'push'
+        working-directory: release-source
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python build_tools/style_preview.py
       - uses: actions/upload-artifact@v4
         with:
           name: Framosik-Linux-x86_64
           path: |
             release-source/dist/*.tar.gz
             release-source/dist/*.sha256
+            release-source/dist/*-aparencia.gif
           if-no-files-found: error
       - name: Attach Linux package and checksum to existing release
         if: github.event_name != 'push'

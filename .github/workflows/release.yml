@@ -26,10 +26,11 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Framosik-Windows-x64
-          path: dist/Framosik-0.4.1-Windows-x64.zip
+          path: dist/Framosik-*-Windows-x64.zip
+          if-no-files-found: error
       - name: Attach executable to release
         if: github.event_name == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: gh release upload "$env:RELEASE_TAG" dist/Framosik-0.4.1-Windows-x64.zip
+        run: gh release upload "$env:RELEASE_TAG" "dist/Framosik-$($env:RELEASE_TAG.Substring(1))-Windows-x64.zip"

@@ -4,7 +4,7 @@ Pacote portátil com Python e bibliotecas incluídos. Não precisa instalar Pyth
 
 ## Abrir
 
-1. Baixe `Framosik-0.3.0-Linux-x86_64.tar.gz` na release v0.3.0.
+1. Baixe `Framosik-0.5.0-beta.1-Linux-x86_64.tar.gz` na release v0.5.0-beta.1.
 2. Extraia o arquivo inteiro pelo gerenciador de arquivos.
 3. Abra o executável `Framosik` dentro da pasta `Framosik`.
 
@@ -33,7 +33,7 @@ Abra pelo terminal para ver o erro completo. Erros Python de inicialização tam
 O arquivo `.sha256` acompanha o pacote. Na pasta dos downloads:
 
 ```sh
-sha256sum -c Framosik-0.3.0-Linux-x86_64.tar.gz.sha256
+sha256sum -c Framosik-0.5.0-beta.1-Linux-x86_64.tar.gz.sha256
 ```
 
 O GitHub Actions executa os testes do algoritmo/interface, abre o executável empacotado e repete a abertura após extrair o tar para outra pasta (com espaços), usando X11 virtual. Isso não substitui testes com vídeos reais e drivers da sua máquina.

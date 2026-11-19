@@ -1,3 +1,7 @@
+# 0.5.0-beta.1 — 2026-11-19
+
+Beta da branch `estilo`, baseada na v0.4.1. O título se recompõe em pixels. Botões e barras de rolagem ganham brilho nos temas claro e escuro. Os controles de Visualização permitem usar o estilo estático ou desligar os efeitos.
+
 # 0.3.0 — 2026-11-09
 
 - Ícone revisado do autor em toda a interface e no executável; ICO original preservado.

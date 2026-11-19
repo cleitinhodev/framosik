@@ -1,26 +1,23 @@
-# Framosik — versão 0.3.0
+# Framosik — beta visual 0.5.0-beta.1
 
 Projeto em Python com interface PySide6 para reconstruir uma cena estática a partir de um GIF ou vídeo com movimento da câmera. O código da aplicação foi escrito para este projeto; o processamento usa OpenCV, NumPy, Pillow e Qt. Não é um fork do Overmix e não usa IA generativa.
 
 ## Abrir a versão Windows portátil
 
-1. Extraia **todo** o arquivo `Framosik_Windows.zip` para uma pasta local.
-2. Abra `Framosik.exe` dentro da pasta extraída.
-3. Mantenha as pastas `runtime` e `app` junto do executável. Não execute de dentro do ZIP.
+1. Baixe `Framosik-0.5.0-beta.1-Windows-x64.zip` na release beta.
+2. Extraia o ZIP em uma pasta e abra `Framosik.exe`. Mantenha a pasta `_internal` ao lado do executável.
 
-Inclui Python 3.12.10 x64 e dependências; não exige instalar Python, pip ou usar internet. Destinado a Windows 10/11 de 64 bits (x64). Não é um arquivo único: o EXE é um iniciador nativo que abre o Python incluído. Não possui assinatura digital.
-
-**Distribuições:** a release distingue o pacote portátil (Python embutido, launcher compilado via Zig) e o pacote `Windows-x64` gerado nativamente no GitHub Actions com PyInstaller. O workflow executa testes e um smoke test do EXE antes de anexar o pacote nativo. Consulte o resultado do workflow para verificar o estado da compilação. O comportamento em vídeos reais deve ser testado no seu PC. Erros de inicialização são gravados em `%LOCALAPPDATA%\Framosik\erro.log`.
+O pacote inclui Python e as dependências para Windows x64. A versão estável para comparação está na [release v0.4.1](https://github.com/cleitinhodev/framosik/releases/tag/v0.4.1).
 
 ## Linux portátil
 
-A release v0.3.0 também oferece `Framosik-0.3.0-Linux-x86_64.tar.gz`, com Python e dependências incluídos. Extraia tudo e abra `Framosik` dentro da pasta extraída (ou execute `./Framosik` no terminal). Base de compatibilidade: Ubuntu 22.04 x86_64 / glibc 2.35. Consulte [LINUX.md](LINUX.md) para requisitos gráficos, testes e instruções de compilação.
+Extraia `Framosik-0.5.0-beta.1-Linux-x86_64.tar.gz` e execute `./Framosik` dentro da pasta extraída. A base de compatibilidade é Ubuntu 22.04 x86_64 com glibc 2.35. Consulte [LINUX.md](LINUX.md) para as bibliotecas gráficas e a verificação do download.
 
 ## Identidade e visualização
 
 O ícone fornecido pelo autor aparece no cabeçalho, na janela e na aba Sobre. `assets/icons` contém PNGs de 16, 20, 24, 32, 40, 48, 64, 96, 128, 192, 256, 512 e 1024 pixels, além de ICO multirresolução e ICNS. O ICO revisado pelo autor foi preservado em `assets/icon_source.ico` e é usado diretamente no executável. Suas camadas nativas são usadas quando disponíveis. Os PNGs maiores são redimensionamentos da camada de 256 px, sem criação de detalhes; o enquadramento original é mantido.
 
-Na aba **Visualização**, escolha tema claro/escuro, idioma e efeitos. Gradientes e animação da borda podem ser desligados. A animação também pausa quando a janela está inativa/minimizada ou durante uma tarefa. As preferências ficam no registro do Windows (QSettings: Bugzinho/Framosik) ou na configuração do usuário em outros sistemas.
+Na aba **Visualização**, escolha tema claro/escuro, idioma e efeitos. **Gradientes e brilho** controla o acabamento neon. **Animar nome e controles** controla a formação periódica do título em pixels e as transições de brilho dos botões e barras de rolagem. A animação também pausa quando a janela está inativa/minimizada ou durante uma tarefa. As preferências ficam no registro do Windows (QSettings: Bugzinho/Framosik) ou na configuração do usuário em outros sistemas.
 
 Idiomas da interface: português, inglês, espanhol, francês, alemão, italiano, japonês, coreano, chinês simplificado e russo. Traduções são locais e podem precisar de revisão por falantes nativos. Detalhes técnicos de exceções/relatórios podem permanecer em português ou inglês. Diálogos nativos de arquivo seguem o idioma do sistema operacional.
 
