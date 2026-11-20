@@ -12,11 +12,56 @@ from app_info import VERSION
 from i18n import CATALOGS, LANGUAGES
 
 
+def verify_demo():
+    from engine import Settings, stitch
+
+    sample = ROOT / "examples" / "demo_vertical.gif"
+    for first, last, step, scale, frames, size in (
+        (2, 9, 3, 1, [2, 5, 8, 9], (480, 500)),
+        (1, 37, 1, 1, list(range(1, 38)), (480, 1080)),
+        (1, 37, 1, .5, list(range(1, 38)), (240, 540)),
+    ):
+        cfg = Settings(first=first - 1, last=last - 1, step=step, scale=scale,
+                       direction="vertical", blend="preserve")
+        result = stitch(sample, cfg)
+        assert result.report["status"] == "concluído"
+        assert result.report["accepted"] == frames
+        assert not result.report["rejected"]
+        assert result.image.shape[:2] == size[::-1]
+        print(f"Bundled demo, frames {first}–{last}, step {step}, scale {scale}: {size}")
+
+
+def verify_reference(page, code):
+    groups = page.locator("#referenceGroups details")
+    rows = page.locator(".ref-row")
+    search = page.locator("#controlSearch")
+    assert groups.count() == 7 and rows.count() == 41
+    assert page.locator("#workshops article").count() == 3
+    assert page.locator(".ref-row dd").evaluate_all("(cells) => cells.every(c => c.textContent.trim().length > 0)")
+    page.locator("#range .step-reference").click()
+    page.locator("#control-step").wait_for(state="visible")
+    search.fill("local color repair")
+    assert page.locator("#control-seam_color").is_visible()
+    assert page.locator("#group-finish").get_attribute("open") is not None
+    search.fill(CATALOGS[code]["similarity"])
+    assert page.locator("#control-similarity").is_visible()
+    assert "65%" in page.locator("#control-similarity .ref-meta").inner_text()
+    search.fill("zzzz_nonexistent_parameter")
+    assert page.locator(".ref-group:visible").count() == 0
+    assert page.locator("#matchCount").inner_text().strip()
+    search.fill("")
+    assert page.locator("#group-scene").get_attribute("open") is not None
+    page.locator("#group-finish summary").click()
+    assert page.locator("#control-apply_finish").is_visible()
+    page.locator("#group-finish summary").click()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("html", type=Path)
     parser.add_argument("--screens", type=Path)
     args = parser.parse_args()
+    verify_demo()
     errors, external = [], []
     with sync_playwright() as driver:
         chrome = shutil.which("google-chrome") or shutil.which("chromium")
@@ -45,14 +90,20 @@ def main():
                 assert page.locator("#fullshot").evaluate("(img) => img.naturalWidth") == 1250
                 page.keyboard.press("Escape")
                 assert not page.locator("#viewer").is_visible()
-            page.locator("summary").first.click()
-            assert page.locator("details[open]").count() == 1
+            verify_reference(page, code)
+            page.locator("#questions summary").first.click()
+            assert page.locator("#questions details[open]").count() == 1
             for width in (360, 1280):
                 page.set_viewport_size({"width":width,"height":850})
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), code
         page.select_option("#language","pt")
         page.reload()
         assert page.locator("#language").input_value() == "pt"
+        page.goto(args.html.resolve().as_uri() + "?lang=pt#control-seam_soft")
+        assert page.locator("#control-seam_soft").is_visible()
+        page.locator("#controlSearch").fill("suavizacao")
+        assert page.locator("#control-seam_soft").is_visible()
+        page.locator("#controlSearch").fill("")
         assert page.locator("#get").get_attribute("href").endswith("/releases/tag/v"+VERSION)
         for selector, suffix in ((".packages a:first-child", "Windows-x64.zip"), (".packages a:last-child", "Linux-x86_64.tar.gz")):
             assert page.locator(selector).get_attribute("href").endswith(f"/v{VERSION}/Framosik-{VERSION}-{suffix}")
@@ -69,11 +120,15 @@ def main():
         assert page.locator("#band").evaluate("(el) => parseFloat(el.style.top)") == 0
         if args.screens:
             args.screens.mkdir(parents=True, exist_ok=True)
-            page.reload()
+            page.goto(args.html.resolve().as_uri() + "?lang=pt")
             for name, width, height in (("desktop",1400,900),("mobile",390,844)):
                 page.set_viewport_size({"width":width,"height":height})
                 page.evaluate("window.scrollTo(0,0)")
                 page.screenshot(path=args.screens / f"{name}.png")
+                page.locator("#controlSearch").fill("sobreposição")
+                page.locator("#reference").evaluate("(el) => el.scrollIntoView()")
+                page.screenshot(path=args.screens / f"{name}-reference.png")
+                page.locator("#controlSearch").fill("")
         browser.close()
     assert not errors and not external, (errors, external)
     print("Offline tutorial passed in all ten languages on desktop and mobile widths.")

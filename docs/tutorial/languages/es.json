@@ -84,5 +84,91 @@
     "Controles de alineación, mezcla y recorte con el ancho de suavizado visible.",
     "Robot completo en el montaje, con los controles de acabado y el registro.",
     "Pestaña de apariencia con el tema claro, el idioma y los controles de animación."
-  ]
+  ],
+  "reference": {
+    "ui": {
+      "title": "Referencia de parámetros",
+      "intro": "Abre un grupo para ver qué cambia cada control. Los valores iniciales corresponden a una instalación nueva. Busca por la etiqueta en inglés o español, o por el efecto que quieres ajustar.",
+      "search": "Buscar un control",
+      "example": "Ej.: solapamiento, subtítulos, 24 px",
+      "empty": "No se encontraron controles. Prueba otro término o borra la búsqueda.",
+      "matches": "Controles encontrados",
+      "range": "Intervalo",
+      "initial": "Valor inicial",
+      "on": "Activado",
+      "off": "Desactivado",
+      "workshop": "Experimentos guiados",
+      "expect": "Qué observar",
+      "jump": "Consultar los controles de este paso"
+    },
+    "groups": {
+      "scene": "Archivo e intervalo",
+      "motion": "Movimiento y alineación",
+      "blend": "Mezcla de imágenes",
+      "crop": "Recorte de los cuatro bordes",
+      "preview": "Montaje y navegación",
+      "finish": "Acabado y exportación",
+      "appearance": "Apariencia, idioma y enlaces"
+    },
+    "entries": {
+      "open": "Abre GIF, WebP animado y vídeos MP4, MKV, AVI, MOV, WebM o M4V, según el códec. PNG y JPEG se abren como imágenes fijas. Exporta el montaje que quieras conservar antes de cargar otro archivo.",
+      "original": "Inspecciona un fotograma arrastrando la barra, pulsando ‹ y › o escribiendo su número. La cifra tras la barra indica el total de fotogramas. Esta vista muestra los bordes originales aunque hayas configurado un recorte.",
+      "play": "Reproduce desde la posición actual. Pausa donde empieza o acaba el movimiento. La reproducción puede superar el fin marcado y termina en el último fotograma del archivo. Retrocede con la barra para repetir el tramo.",
+      "first": "Incluye este fotograma como inicio. N es el total del archivo y la numeración empieza en 1. Introduce el número o marca la posición actual. En una toma con zoom, este fotograma también establece la escala de referencia.",
+      "last": "Incluye este fotograma como final. Si el fotograma 90 ya pertenece al plano siguiente, termina en el 89. Usa el mismo número en ambos campos para obtener un resultado de un solo fotograma.",
+      "step": "Indica la distancia entre muestras. Del 2 al 9 con paso 3 se intentan 2, 5, 8 y 9. El extremo final entra aunque el paso lo salte. Usa 1 en movimientos rápidos o con zoom y aumenta el paso si abundan los fotogramas repetidos.",
+      "movement": "Observa un detalle fijo en dos fotogramas. Si cambia de posición y conserva el tamaño, elige un modo de desplazamiento. Si crece o mengua, prueba el zoom. Vuelve a montar para aplicar el cambio.",
+      "free": "Admite desplazamiento en X e Y. Sirve para recorridos diagonales o un ascenso con deriva lateral. Sigue un punto fijo del fondo para distinguir el movimiento de cámara del de un personaje.",
+      "vertical": "Limita la alineación al eje vertical. Funciona si un punto del fondo permanece en la misma columna al subir o bajar. Si una deriva lateral provoca rechazos, prueba el movimiento libre.",
+      "horizontal": "Limita la alineación al eje horizontal. Úsalo cuando el horizonte mantiene su altura durante el desplazamiento lateral. Si la cámara también sube o baja, permite ambos ejes.",
+      "zoom_motion": "Calcula escala uniforme y desplazamiento entre fotogramas aceptados. Al alejarse la cámara, el lienzo puede crecer mucho para conservar la escala inicial. Empieza con paso 1. Dos capas que se mueven por separado pueden dejar contornos dobles.",
+      "resolution": "Redimensiona tras el recorte y cambia el tamaño real del PNG. Al 50%, se reducen a la mitad el ancho y el alto, y el área queda aproximadamente en un cuarto. Ensaya a baja resolución y vuelve a montar al 100% para conservar el detalle.",
+      "similarity": "Fija la puntuación mínima de coincidencia en la región compartida. Sube el valor si un patrón repetido encaja en el lugar equivocado. Antes de bajarlo por un rechazo, revisa el recorte, el movimiento y el paso. Compara el contorno con la fuente.",
+      "overlap": "Exige una fracción mínima de píxeles compartidos suficientemente opacos. Al 20% se necesita aproximadamente un quinto del fotograma de trabajo. Sube el valor para descartar coincidencias pequeñas y ambiguas. Si la cámara avanza mucho entre muestras, acorta primero el paso.",
+      "limit": "Limita el rectángulo que contiene el mosaico, incluidos huecos transparentes. Un rectángulo de 6000 × 4000 ocupa 24 MP. Elevar el límite admite imágenes mayores y consume más memoria. Si la imagen deja de crecer, reduce la resolución o divide la escena.",
+      "skip": "Al activarlo, el siguiente candidato se compara con el último aceptado después de un fallo. Ayuda con un fotograma borroso aislado. Desactivado, el primer rechazo detiene el proceso y conserva el parcial. Un salto largo puede interrumpir la cobertura.",
+      "mode": "Decide cómo combinar los píxeles ya alineados. Vuelve a montar el mismo tramo a la misma resolución con cada modo. Amplía una línea fina que cruce la unión y comprueba si se mantiene única y nítida.",
+      "preserve": "Rellena las áreas nuevas y conserva lo ya cubierto. Suele preservar bien los trazos de dibujo. En modo zoom, un fotograma posterior también puede completar un píxel de borde parcialmente cubierto.",
+      "feather": "Mezcla gradualmente la zona compartida junto al área recién descubierta. Pruébalo si una pared cambia ligeramente de tono. Si se ven dos siluetas separadas, revisa la alineación antes de ensanchar la transición.",
+      "feather_width": "Se habilita al suavizar uniones y se mide en píxeles de trabajo. Compara 8 y 32 px sobre el mismo contorno. Una banda corta protege los trazos finos y una ancha reparte el cambio de tono.",
+      "average": "En cada paso combina a partes iguales el mosaico actual y el fotograma nuevo en el área común. Los puntos cubiertos varias veces se mezclan repetidamente. Atenúa diferencias de color, pero una mano en movimiento puede aparecer dos veces.",
+      "left": "Quita columnas desde la izquierda antes de alinear. Si hay una franja negra fija de 12 px, introduce 12. Mide sobre el original y conserva detalles fijos cercanos que ayuden a alinear.",
+      "top": "Quita filas de arriba, por ejemplo para ocultar una barra superior fija. Se usan píxeles de la fuente incluso al trabajar al 50%. El recorte afecta a todos los fotogramas al volver a montar.",
+      "right": "Quita columnas desde la derecha. Para un marco simétrico de 8 px, introduce 8 a la izquierda y a la derecha. De una fuente de 480 px quedarán 464 antes de escalar.",
+      "bottom": "Quita filas desde abajo. Para subtítulos en los últimos 32 px, prueba 32 y busca letras residuales en el mosaico. Entre los cuatro márgenes deben quedar al menos 32 × 32 px de la fuente. La vista original sigue completa.",
+      "stitch": "Inicia un montaje con los ajustes actuales y abre la pestaña de resultado. Durante el cálculo se bloquean temporalmente los controles de edición. Exporta cualquier versión que quieras comparar antes de iniciar otra.",
+      "result": "Muestra avances periódicos. Durante la operación la vista previa puede reducirse a 1400 px en el lado mayor. Al finalizar se carga el resultado a resolución completa. Examina entonces las uniones.",
+      "fit": "Ajusta toda la imagen al espacio visible. Úsalo tras ampliar una unión o cambiar el tamaño de la ventana. Con el ajuste activo, la vista sigue el crecimiento del mosaico.",
+      "zoom": "Restablece la vista al 100% para revisar píxeles. La rueda sobre la imagen acerca o aleja y el arrastre desplaza la vista. Sobre las opciones, la rueda recorre el panel. La ampliación en pantalla conserva las dimensiones del PNG.",
+      "log": "Lee juntos el número de fotograma, la confianza y el desplazamiento Δ en X e Y. Un fotograma aceptado con Δ casi cero puede añadir poca área. Varios rechazos consecutivos señalan un tramo que conviene revisar.",
+      "cancel": "Solicita la parada entre fotogramas. Espera a que termine la tarea para exportar. Si se obtuvo un mosaico parcial, puedes examinarlo, aplicar acabado y guardarlo. Un vídeo largo puede continuarse en otro tramo.",
+      "seam_soft": "Atenúa variaciones finas cerca de las uniones con un filtro sensible a los bordes. Compara 0% y 10% con el zoom al 100%. Aumenta poco a poco y reduce si los trazos finos pierden definición.",
+      "seam_color": "Acerca el color de la unión a la mediana de sus vecinos. Ayuda con una franja estrecha de otro tono en un fondo uniforme. Prueba 10–20% con el suavizado a cero. Se aplica en zonas opacas cercanas a las uniones marcadas.",
+      "apply_finish": "Recalcula ambos ajustes desde el mosaico original. Aplicar dos veces los mismos valores da el mismo resultado. Para comparar, vuelve a cero y aplica otra vez. Aplica los nuevos valores antes de exportar.",
+      "export": "Guarda un PNG con el último acabado aplicado y transparencia en las zonas sin cobertura. Compara sus bordes sobre fondos distintos y usa nombres diferentes para conservar tus pruebas. Atajo {ctrlS}.",
+      "report": "Guarda un JSON. accepted y rejected enumeran los fotogramas, frames registra confianza y desplazamiento, y reason indica la causa de una parada. Las listas cuentan desde 1. En settings, first y last cuentan desde 0.",
+      "theme": "Elige {dark} o {light} según la iluminación. El tema cambia los paneles y el fondo visible alrededor de la imagen. Alterna entre ambos para inspeccionar un borde transparente.",
+      "language": "Cambia los textos del programa y recuerda la elección. Esta guía tiene su propio selector arriba, así que puedes leer en español aunque la aplicación muestre las etiquetas en inglés.",
+      "gradients": "Activa los degradados y el brillo del título y de los controles. Al desactivarlos, la apariencia queda estática y se deshabilita la casilla de animaciones. La preferencia se guarda.",
+      "animations": "Con los degradados activos, anima el título en píxeles y los controles. Desactívalo para conservar los colores con menos movimiento. Los efectos se pausan durante el procesamiento o si la ventana está inactiva.",
+      "about": "Muestra la versión instalada y enlaces al repositorio, sitio y donaciones. Si comparas resultados de dos instalaciones, comprueba la versión antes de comparar sus ajustes."
+    },
+    "workshops": [
+      {
+        "title": "Ver qué fotogramas selecciona el paso",
+        "try": "Abre {demoFile}. Usa del 2 al 9, paso 3, {vertical}, resolución al 100% y {preserve}. Monta y abre el informe JSON.",
+        "expect": "La lista accepted contiene 2, 5, 8 y 9. El 9 demuestra que el extremo final se incluye aunque no coincida con el paso."
+      },
+      {
+        "title": "Medir la resolución de salida",
+        "try": "Usa el GIF entero, de 1 a 37, con paso 1 y {vertical}. Monta al 100% y después al 50% de resolución de trabajo. Compara las dimensiones finales.",
+        "expect": "El robot mide 480 × 1080 px y después 240 × 540 px. El zoom de la vista previa conserva estas medidas. Cambiar la resolución y montar de nuevo modifica el PNG."
+      },
+      {
+        "title": "Investigar una raya al alejarse la cámara",
+        "try": "Aísla un tramo corto de tu vídeo y usa {zoom_motion} con paso 1. Compara {preserve} y {feather}. Sobre la mejor alineación prueba solo corrección de color al 15%, luego solo suavizado al 10%, aplicando por separado.",
+        "expect": "Si la raya se atenúa y el contorno se mantiene único, compara y exporta. Si el contorno está duplicado, revisa intervalo, recorte o alineación. El acabado local apenas afecta a objetos en posiciones diferentes."
+      }
+    ]
+  }
 }

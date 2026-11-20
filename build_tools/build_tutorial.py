@@ -35,9 +35,23 @@ def load_guide():
     guides = {lang: json.loads((directory / f"{lang}.json").read_text(encoding="utf-8"))
               for lang in LANGUAGES}
     base = guides["en"]
+    controls = json.loads((directory.parent / "controls.json").read_text(encoding="utf-8"))
+    group_ids = {group["id"] for group in controls}
+    items = [item for group in controls for item in group["items"]]
+    entry_ids = {item["labels"][0] for item in items}
     keys = {"website", "repository", "donate", "play", "pause"}
+    keys.update(label for item in items for label in item["labels"])
+    keys.update(TOKEN.findall(json.dumps(controls)))
     reference_tokens = set(TOKEN.findall(json.dumps(base)))
     for lang, guide in guides.items():
+        reference = guide["reference"]
+        if (set(reference["groups"]) != group_ids or set(reference["entries"]) != entry_ids
+                or set(reference["ui"]) != set(base["reference"]["ui"])
+                or len(reference["workshops"]) != len(base["reference"]["workshops"])
+                or not all(text.strip() for text in reference["entries"].values())
+                or not all(all(exercise.get(k) for k in ("title", "try", "expect"))
+                           for exercise in reference["workshops"])):
+            raise ValueError(f"Incomplete parameter reference in {lang}")
         if (set(guide["ui"]) != set(base["ui"]) or len(guide["sections"]) != 6
                 or len(guide["captions"]) != len(SHOTS) or len(guide["faq"]) != 3):
             raise ValueError(f"Incomplete tutorial in {lang}")
@@ -49,7 +63,7 @@ def load_guide():
             raise ValueError(f"Control references differ in {lang}: {tokens ^ reference_tokens}")
         keys.update(tokens - LITERALS)
     app = {lang: {k: CATALOGS[lang][k] for k in sorted(keys)} for lang in LANGUAGES}
-    return {"names": LANGUAGES, "app": app, "guides": guides}
+    return {"names": LANGUAGES, "app": app, "guides": guides, "controls": controls}
 
 
 def build(output):

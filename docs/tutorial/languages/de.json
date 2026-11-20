@@ -84,5 +84,91 @@
     "Ausrichtung, Überblendung und Beschnitt mit sichtbarer Übergangsbreite.",
     "Vollständiger Roboter im Mosaik mit aktivierter Nachbearbeitung und Protokoll.",
     "Darstellung im hellen Design mit Sprache, Leuchteffekten und Animationen."
-  ]
+  ],
+  "reference": {
+    "ui": {
+      "title": "Nachschlagewerk für Einstellungen",
+      "intro": "Öffne eine Gruppe, um die Wirkung der einzelnen Bedienelemente nachzulesen. Die Vorgaben gelten für eine neue Installation. Suche nach einem englischen oder deutschen Namen oder nach dem gewünschten Effekt.",
+      "search": "Bedienelement suchen",
+      "example": "Zum Beispiel Überlappung, Untertitel, 24 px",
+      "empty": "Kein Treffer. Probiere einen anderen Begriff oder leere die Suche.",
+      "matches": "Gefundene Bedienelemente",
+      "range": "Bereich",
+      "initial": "Vorgabe",
+      "on": "Ein",
+      "off": "Aus",
+      "workshop": "Praktische Übungen",
+      "expect": "Darauf kannst du achten",
+      "jump": "Bedienelemente zu diesem Schritt"
+    },
+    "groups": {
+      "scene": "Datei und Bildbereich",
+      "motion": "Bewegung und Ausrichtung",
+      "blend": "Zusammenfügen der Pixel",
+      "crop": "Beschnitt an vier Seiten",
+      "preview": "Zusammenfügen und Navigation",
+      "finish": "Nachbearbeitung und Export",
+      "appearance": "Darstellung, Sprache und Links"
+    },
+    "entries": {
+      "open": "Öffnet GIFs, animierte WebPs und Videos wie MP4, MKV, AVI, MOV, WebM und M4V, sofern der Codec unterstützt wird. PNG und JPEG öffnen sich als Einzelbilder. Exportiere dein Mosaik, bevor du eine andere Datei lädst.",
+      "original": "Untersuche ein Quellbild mit dem Regler, den Pfeilen ‹ und › oder durch Eingabe der Bildnummer. Hinter dem Schrägstrich steht die Gesamtzahl. Die Ansicht zeigt auch bei eingestelltem Beschnitt die ursprünglichen Ränder.",
+      "play": "Spiele ab der aktuellen Position ab und pausiere am Beginn oder Ende der Bewegung. Die Wiedergabe kann über das markierte Ende hinauslaufen und stoppt am Dateiende. Schiebe den Regler zum Wiederholen zurück.",
+      "first": "Bestimmt das erste einbezogene Bild. N ist die Bildanzahl der Datei, die Zählung beginnt bei 1. Gib die Nummer ein oder markiere die aktuelle Position. Dieses Bild bestimmt beim Zoom auch den Bezugsmaßstab.",
+      "last": "Bestimmt das letzte einbezogene Bild. Gehört Bild 90 bereits zur nächsten Einstellung, beende den Bereich bei 89. Gleiche Nummern in beiden Feldern wählen ein einzelnes Bild aus.",
+      "step": "Bestimmt den Abstand der untersuchten Bilder. Von 2 bis 9 mit Schrittweite 3 werden 2, 5, 8 und 9 versucht. Der Endpunkt ist immer dabei. Beginne bei Zoom oder schneller Bewegung mit 1. Erhöhe den Abstand bei vielen nahezu gleichen Bildern.",
+      "movement": "Beobachte ein festes Detail in zwei Bildern. Wandert es bei gleichbleibender Größe, wähle einen Verschiebungsmodus. Wird es größer oder kleiner, probiere Zoom. Eine Änderung greift beim nächsten Zusammenfügen.",
+      "free": "Erlaubt Verschiebungen in X und Y. Geeignet für diagonale Fahrten oder eine Aufwärtsfahrt mit seitlicher Drift. Ein fester Hintergrundpunkt hilft, Kamerabewegung und Figurenbewegung zu unterscheiden.",
+      "vertical": "Beschränkt die Verschiebung auf die Senkrechte. Nutze dies, wenn ein Hintergrundpunkt beim Auf- oder Abwärtsschwenk in derselben Spalte bleibt. Führt seitliche Drift zu Ablehnungen, probiere die freie Bewegung.",
+      "horizontal": "Beschränkt die Verschiebung auf die Waagerechte. Nützlich, wenn der Horizont bei einem Schwenk nach links oder rechts auf gleicher Höhe bleibt. Bei gleichzeitiger Höhenänderung brauchst du beide Achsen.",
+      "zoom_motion": "Schätzt eine einheitliche Skalierung und die Verschiebung auf beiden Achsen. Beim Herauszoomen kann die Arbeitsfläche stark wachsen, um den Maßstab des ersten Bildes zu halten. Verwende Schrittweite 1. Unabhängig bewegte Ebenen können Doppelkonturen erzeugen.",
+      "resolution": "Skaliert die Bilder nach dem Beschnitt und verändert damit die PNG-Abmessungen. Bei 50 % halbieren sich Breite und Höhe, die Fläche beträgt etwa ein Viertel. Teste lange Szenen verkleinert und berechne für den Export erneut bei 100 %.",
+      "similarity": "Verlangt eine Mindestähnlichkeit im gemeinsamen Ausschnitt. Erhöhe den Wert bei falsch zugeordneten Wiederholungsmustern. Prüfe bei einem plausiblen, aber abgelehnten Bild zuerst Beschnitt, Bewegung und Schrittweite. Senke erst danach um einige Punkte und vergleiche die Konturen.",
+      "overlap": "Verlangt einen Mindestanteil gemeinsam sichtbarer, ausreichend deckender Pixel. Bei 20 % muss ungefähr ein Fünftel des Arbeitsbilds überlappen. Ein höherer Wert schließt kleine, mehrdeutige Treffer aus. Bei großen Sprüngen reduziere zuerst die Schrittweite.",
+      "limit": "Begrenzt die Fläche des umschließenden Rechtecks einschließlich transparenter Lücken. 6000 × 4000 Pixel ergeben 24 MP. Eine höhere Grenze erlaubt größere Bilder und benötigt mehr Speicher. Bei einem Stopp kannst du die Auflösung senken oder den Bereich teilen.",
+      "skip": "Aktiviert vergleicht das Programm nach einem Fehlschlag das nächste Bild mit dem letzten angenommenen. Das hilft bei einem einzelnen unscharfen Bild. Deaktiviert stoppt es beim ersten verworfenen Bild mit einem Teilergebnis. Große Lücken bleiben problematisch.",
+      "mode": "Legt fest, wie ausgerichtete Pixel kombiniert werden. Vergleiche die Modi mit identischem Bereich und identischer Auflösung. Vergrößere eine feine Linie, die einen Übergang kreuzt, und prüfe, ob sie einfach und scharf bleibt.",
+      "preserve": "Füllt neu sichtbare Flächen und bewahrt bereits vorhandene Pixel. Gut für klare Zeichnungskonturen. Beim Zoom kann ein späteres Bild auch einen zuvor nur teilweise gedeckten Randpixel ergänzen.",
+      "feather": "Überblendet die Überlappung neben neu sichtbaren Flächen. Probiere es bei leichten Farbwechseln auf einer Wand. Erkennst du zwei versetzte Umrisse, kontrolliere die Ausrichtung vor dem Verbreitern der Übergangszone.",
+      "feather_width": "Nur beim Überblenden verfügbar. Gibt die Übergangsbreite in Arbeitspixeln an. Vergleiche 8 und 32 px an derselben Linie. Schmale Bänder bewahren feine Striche, breite verteilen einen Farbwechsel über mehr Pixel.",
+      "average": "Mischt bei jedem Schritt Mosaik und neues Bild in der Überlappung zu gleichen Teilen. Mehrfach bedeckte Punkte werden wiederholt gemischt. Das kann Farbschwankungen mildern oder eine bewegte Hand doppelt sichtbar machen.",
+      "left": "Entfernt vor der Ausrichtung Spalten am linken Rand. Trage für einen festen schwarzen Streifen von 12 px den Wert 12 ein. Miss im Original und erhalte benachbarte feste Merkmale für die Zuordnung.",
+      "top": "Entfernt Zeilen am oberen Rand, etwa für eine feste Leiste. Die Einheit ist der Quellpixel, auch bei 50 % Arbeitsauflösung. Der Beschnitt gilt beim nächsten Durchlauf für jedes ausgewählte Bild.",
+      "right": "Entfernt Spalten von rechts. Bei einem symmetrischen Rand von 8 px trägst du links und rechts je 8 ein. Von ursprünglich 480 px Breite bleiben vor der Skalierung 464 px.",
+      "bottom": "Entfernt Zeilen von unten. Für Untertitel in den untersten 32 px probiere 32 und prüfe die Montage auf Schriftreste. Nach allen vier Rändern müssen mindestens 32 × 32 Quellpixel übrig sein. Die Originalansicht zeigt weiterhin das ganze Bild.",
+      "stitch": "Startet eine neue Montage mit den aktuellen Einstellungen. Die Ergebnisansicht öffnet sich, während der Berechnung sind die Einstellungen gesperrt. Sichere Vergleichsversionen vor dem nächsten Durchlauf.",
+      "result": "Zeigt regelmäßig eine wachsende Vorschau. Während der Verarbeitung kann die längste Seite auf 1400 px reduziert sein. Am Ende erscheint das Ergebnis in seiner vollen Auflösung. Beurteile Übergänge dann.",
+      "fit": "Passt das gesamte Mosaik in den sichtbaren Bereich ein. Nutze dies nach dem Vergrößern einer Naht oder einer Größenänderung des Fensters. Die automatische Anpassung folgt der wachsenden Arbeitsfläche.",
+      "zoom": "Setzt die Ansicht auf 100 % zur Pixelkontrolle. Mit dem Mausrad zoomst du über dem Bild, durch Ziehen verschiebst du es. Über den Einstellungen scrollt das Rad durch die Optionen. Die PNG-Größe bleibt beim Ansichtszoom gleich.",
+      "log": "Lies Bildnummer, Übereinstimmung und Versatz Δ in X und Y zusammen. Ein angenommenes Bild mit fast keinem Versatz kann eine Wiederholung sein und kaum neue Fläche zeigen. Mehrere Ablehnungen weisen auf einen zu prüfenden Abschnitt hin.",
+      "cancel": "Fordert den Abbruch zwischen Bildern an. Warte vor dem Export auf das Ende der Aufgabe. Ein vorhandenes Teilergebnis lässt sich prüfen, nachbearbeiten und speichern. Lange Videos kannst du in weiteren Bereichen fortsetzen.",
+      "seam_soft": "Glättet feine Abweichungen nahe erkannten Übergängen mit einem kantensensitiven Filter. Vergleiche 0 % und 10 % bei 100 % Ansichtszoom. Erhöhe vorsichtig und senke den Wert, wenn feine Linien weich werden.",
+      "seam_color": "Nähert die Farbe am Übergang dem Median der Nachbarpixel an. Geeignet für eine schmale andersfarbige Linie vor ruhigem Hintergrund. Probiere 10–20 % bei Glättung null. Bearbeitet werden deckende Bereiche nahe markierten Nähten.",
+      "apply_finish": "Berechnet beide Effekte vom ursprünglichen Mosaik aus. Zweimaliges Anwenden identischer Werte ergibt dasselbe Bild. Setze zum Vergleich beide auf null und wende sie erneut an. Übernimm geänderte Werte vor dem Export.",
+      "export": "Speichert ein PNG mit der zuletzt angewendeten Nachbearbeitung. Ungedeckte Bereiche können transparent sein. Prüfe Kanten vor verschiedenen Hintergründen und speichere Vergleichsfassungen unter verschiedenen Namen. Tastenkürzel {ctrlS}.",
+      "report": "Schreibt einen JSON-Bericht. accepted und rejected enthalten Bildnummern, frames enthält einzelne Bewertungen und Verschiebungen, reason den Abbruchgrund. Die Listen zählen ab 1. In settings zählen first und last ab 0.",
+      "theme": "Wähle {dark} oder {light} passend zum Umgebungslicht. Das Design verändert die Bedienfläche und den Hintergrund um das Bild. Wechsle es, um transparente Kanten vor verschiedenen Hintergründen zu betrachten.",
+      "language": "Ändert Beschriftungen und Meldungen und merkt sich die Wahl beim nächsten Start. Dieses Handbuch hat oben eine eigene Sprachauswahl. Du kannst auf Deutsch lesen und gleichzeitig die englische Programmoberfläche verwenden.",
+      "gradients": "Aktiviert Verläufe und Leuchtränder an Titel und Bedienelementen. Beim Ausschalten wird die Darstellung statisch und die Animationsoption inaktiv. Die Auswahl bleibt gespeichert.",
+      "animations": "Animiert bei aktiven Verläufen den Pixeltitel und die Hervorhebungen. Schalte es für weniger Bewegung bei gleicher Farbgestaltung aus. Die Effekte pausieren während der Verarbeitung oder bei inaktivem Fenster.",
+      "about": "Zeigt installierte Version und Links zu Website, Repository und Spendenseite. Vergleiche bei unterschiedlichen Ergebnissen zweier Installationen zuerst die Versionsangaben und danach die Einstellungen."
+    },
+    "workshops": [
+      {
+        "title": "Die Bildauswahl prüfen",
+        "try": "Öffne {demoFile}. Wähle 2 bis 9, Schrittweite 3, {vertical}, 100 % Auflösung und {preserve}. Erstelle das Mosaik und öffne den JSON-Bericht.",
+        "expect": "In accepted stehen 2, 5, 8 und 9. Die 9 zeigt, dass der Endpunkt auch zwischen zwei regulären Schritten einbezogen wird."
+      },
+      {
+        "title": "Die Ausgabeauflösung messen",
+        "try": "Wähle das gesamte GIF von 1 bis 37 mit Schrittweite 1 und {vertical}. Berechne es bei 100 % und erneut bei 50 % Arbeitsauflösung. Vergleiche die Endmaße.",
+        "expect": "Der Roboter misst zuerst 480 × 1080 px, dann 240 × 540 px. Der Ansichtszoom lässt diese Maße bestehen. Arbeitsauflösung ändern und neu berechnen verändert das PNG."
+      },
+      {
+        "title": "Einen Streifen beim Herauszoomen untersuchen",
+        "try": "Wähle einen kurzen Zoom aus deinem Video, {zoom_motion} und Schrittweite 1. Vergleiche {preserve} und {feather}. Probiere am besser ausgerichteten Ergebnis erst nur 15 % Farbkorrektur, dann nur 10 % Glättung, jeweils separat anwenden.",
+        "expect": "Wird der Streifen schwächer und bleibt die Kontur einfach, vergleiche mit dem Original und exportiere. Bei Doppelkonturen prüfe Bereich, Beschnitt und Ausrichtung. Lokale Filter können versetzte Objekte kaum zusammenführen."
+      }
+    ]
+  }
 }

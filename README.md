@@ -2,7 +2,7 @@
 
 **Transforme um movimento de câmera em uma imagem inteira.** O Framosik encontra detalhes em comum entre os quadros de um GIF ou vídeo, posiciona cada quadro e amplia a imagem com as áreas que a câmera revelou. Uma cena que vai dos pés à cabeça de um personagem pode virar um retrato de corpo inteiro. A montagem roda localmente no computador.
 
-[Baixar a versão 1.0.0](https://github.com/cleitinhodev/framosik/releases/tag/v1.0.0) · [Tutorial ilustrado em 10 idiomas (HTML)](https://github.com/cleitinhodev/framosik/releases/download/v1.0.0/Framosik-Tutorial.html) · [Site](https://www.bugzinho.com/) · [Apoiar o projeto](https://www.bugzinho.com/donate)
+[Baixar a versão 1.0.0](https://github.com/cleitinhodev/framosik/releases/tag/v1.0.0) · [Baixar o tutorial detalhado em 10 idiomas (HTML)](https://github.com/cleitinhodev/framosik/raw/refs/heads/main/docs/Framosik-Tutorial.html) · [Site](https://www.bugzinho.com/) · [Apoiar o projeto](https://www.bugzinho.com/donate)
 
 ![Framosik 1.0.0 em inglês. A imagem montada mostra o robô inteiro, ao lado dos controles de acabamento.](docs/images/result.webp)
 
@@ -13,7 +13,7 @@
 | Windows x64 | [Framosik-1.0.0-Windows-x64.zip](https://github.com/cleitinhodev/framosik/releases/download/v1.0.0/Framosik-1.0.0-Windows-x64.zip) | Extraia o ZIP inteiro e abra `Framosik.exe` dentro da pasta `Framosik`. |
 | Linux x86_64 | [Framosik-1.0.0-Linux-x86_64.tar.gz](https://github.com/cleitinhodev/framosik/releases/download/v1.0.0/Framosik-1.0.0-Linux-x86_64.tar.gz) | Extraia o arquivo e abra `Framosik`, ou execute `./Framosik` na pasta extraída. Base de compatibilidade: Ubuntu 22.04 e glibc 2.35. |
 
-Os dois pacotes incluem o aplicativo, as dependências, o exemplo e o tutorial offline. Mantenha a pasta `_internal` ao lado do executável. Há instruções de dependências gráficas, execução e verificação do pacote no [guia Linux](https://github.com/cleitinhodev/framosik/blob/main/LINUX.md).
+Os dois pacotes incluem o aplicativo, as dependências, o exemplo e a edição do tutorial publicada com o executável. O guia avulso acima traz uma referência pesquisável de 41 controles e três experimentos guiados. Mantenha a pasta `_internal` ao lado do executável. Há instruções de dependências gráficas, execução e verificação do pacote no [guia Linux](https://github.com/cleitinhodev/framosik/blob/main/LINUX.md).
 
 ## Sua primeira montagem
 
@@ -103,7 +103,7 @@ python main.py --smoke-test
 python build_tools/build_tutorial.py
 ```
 
-O último comando gera `dist/Framosik-Tutorial.html`. O HTML é independente, com capturas WebP incorporadas. Para usá-lo no seu site, basta publicar esse arquivo. Para trocar links ou versão, edite **FRAMOSIK_CONFIG**, no início do HTML. Para editar o guia no repositório, altere [o modelo e os textos](https://github.com/cleitinhodev/framosik/tree/main/docs/tutorial) e gere o arquivo novamente. As capturas podem ser refeitas com `python build_tools/capture_docs.py`.
+O último comando gera `dist/Framosik-Tutorial.html`. O HTML é independente, com capturas WebP incorporadas. Para usá-lo no seu site, basta publicar esse arquivo. Para trocar links ou versão, edite **FRAMOSIK_CONFIG**, no início do HTML. Para editar o guia no repositório, altere [o modelo e os textos](https://github.com/cleitinhodev/framosik/tree/main/docs/tutorial) e atualize o download com `python build_tools/build_tutorial.py --output docs/Framosik-Tutorial.html`. As capturas podem ser refeitas com `python build_tools/capture_docs.py`.
 
 Os builds nativos usam `pyinstaller==6.22.3` e os scripts `build_tools/build_windows.py` e `build_tools/build_linux.py`. O fluxo de release testa a interface e o algoritmo nos dois sistemas, monta os pacotes e abre os executáveis produzidos antes da publicação.
 

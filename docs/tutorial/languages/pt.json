@@ -84,5 +84,91 @@
     "Painéis de alinhamento, mesclagem e recorte, com a faixa de suavização visível.",
     "Robô inteiro na imagem montada, com o acabamento habilitado e o registro da montagem.",
     "Aba de visualização em tema claro, com idioma, gradientes e animações."
-  ]
+  ],
+  "reference": {
+    "ui": {
+      "title": "Referência de parâmetros",
+      "intro": "Abra um grupo para ver o que cada controle muda. Os padrões valem para uma instalação nova. Busque pelo nome em inglês, em português ou pelo efeito que você quer ajustar.",
+      "search": "Buscar um controle",
+      "example": "Ex.: sobreposição, legenda, 24 px",
+      "empty": "Nenhum controle encontrado. Tente outro termo ou limpe a busca.",
+      "matches": "Controles encontrados",
+      "range": "Faixa",
+      "initial": "Padrão",
+      "on": "Ligado",
+      "off": "Desligado",
+      "workshop": "Experimentos guiados",
+      "expect": "O que observar",
+      "jump": "Consultar os controles desta etapa"
+    },
+    "groups": {
+      "scene": "Arquivo e intervalo da cena",
+      "motion": "Movimento e alinhamento",
+      "blend": "Mesclagem da imagem",
+      "crop": "Recorte nas quatro bordas",
+      "preview": "Montagem e navegação",
+      "finish": "Acabamento e exportação",
+      "appearance": "Aparência, idioma e links"
+    },
+    "entries": {
+      "open": "Abre GIF, WebP animado e vídeos como MP4, MKV, AVI, MOV, WebM e M4V. O codec precisa ser legível no computador. PNG e JPEG também abrem como imagens estáticas. Ao carregar outro arquivo, a montagem anterior é descartada da janela. Exporte antes de trocar.",
+      "original": "Mostra um quadro da fonte. Arraste a régua, use as setas ‹ e › ou digite o número do quadro para inspecionar um detalhe. A indicação “/ N” mostra quantos quadros há no arquivo. Esta vista mantém as bordas originais, mesmo com recorte configurado.",
+      "play": "Reproduz a fonte a partir do quadro atual. Pause quando a câmera começar ou terminar o movimento. A reprodução pode passar do fim marcado e para no último quadro do arquivo. Para rever o trecho, volte ao início na régua.",
+      "first": "Define o primeiro quadro incluído. N representa o total do arquivo e a numeração começa em 1. Digite o número ou navegue até a pose desejada e marque o início. Esse quadro também define a escala de referência para uma montagem com zoom.",
+      "last": "Define o último quadro incluído. Pare no último instante em que o desenho e o fundo ainda pertencem à mesma cena. Se o corte entra no quadro 90, marque 89. Use o mesmo número no início e no fim para trabalhar com um único quadro.",
+      "step": "Define a distância entre os quadros usados. De 2 a 9 com passo 3, o programa tenta 2, 5, 8 e 9. O último entra mesmo fora da sequência. Comece em 1 para zoom ou movimentos rápidos. Suba para reduzir o trabalho quando houver muita repetição.",
+      "movement": "Escolha observando um detalhe fixo em dois quadros distantes. Se ele anda e mantém o tamanho, use um modo de deslocamento. Se o próprio detalhe cresce ou encolhe, experimente o modo com zoom. Uma mudança desse campo vale na próxima montagem.",
+      "free": "Permite deslocamento simultâneo em X e Y. É a escolha para um passeio diagonal ou uma câmera que sobe e deriva um pouco de lado. Detalhes fixos do fundo ajudam a distinguir o movimento da câmera do movimento do personagem.",
+      "vertical": "Restringe a montagem ao eixo vertical. Use se um ponto do cenário permanece na mesma coluna enquanto sobe ou desce. Se quadros bons começam a ser rejeitados quando a câmera deriva de lado, experimente o modo livre.",
+      "horizontal": "Restringe a montagem ao eixo horizontal. Use quando o horizonte permanece na mesma altura e a câmera vai para a esquerda ou a direita. Uma tomada que também sobe ou desce pede os dois eixos.",
+      "zoom_motion": "Estima mudança uniforme de escala e deslocamento nos dois eixos, quadro a quadro. Ao afastar a câmera, a moldura pode crescer bastante para preservar a escala do primeiro quadro. Use passo 1. Se o fundo se alinha, mas o personagem se duplica, verifique se as camadas se movem separadamente.",
+      "resolution": "Redimensiona cada quadro depois do recorte e afeta a resolução final do PNG. A 50%, largura e altura caem pela metade e a área fica em torno de um quarto. Use para ensaiar um trecho longo. Volte a 100% e monte de novo para exportar mais detalhes.",
+      "similarity": "Exige uma pontuação mínima de semelhança entre as regiões comparadas. Aumente se padrões repetidos forem aceitos no lugar errado. Se um par legítimo falhar, confira o recorte, o movimento e o passo antes de reduzir alguns pontos. Compare o contorno obtido com a fonte.",
+      "overlap": "Exige que uma parte mínima da área do quadro de trabalho seja compartilhada por pixels suficientemente opacos. Com 20%, é preciso aproximadamente um quinto da área. Aumentar descarta correspondências pequenas e ambíguas. Se a câmera percorre muito espaço entre quadros, reduza primeiro o passo.",
+      "limit": "Limita a área do retângulo que contém o mosaico, inclusive espaços transparentes. Um retângulo de 6000 × 4000 ocupa 24 MP. Aumentar o limite permite imagens maiores e exige mais memória. Se o crescimento parar, reduza a resolução de trabalho ou divida o intervalo.",
+      "skip": "Com a opção ligada, uma falha de alinhamento é registrada e o próximo candidato é comparado ao último quadro aceito. Pode salvar um trecho com um único quadro borrado. Desligada, a primeira rejeição encerra a tentativa e conserva o parcial. Um salto longo pode deixar uma lacuna na cobertura.",
+      "mode": "Controla como combinar pixels de quadros já alinhados. Compare os modos no mesmo trecho e na mesma resolução, montando novamente a cada mudança. Para escolher, amplie uma linha fina que atravesse a emenda e observe se permanece única e nítida.",
+      "preserve": "Preenche as áreas novas e mantém os pixels já cobertos. Costuma conservar melhor os contornos de anime. No modo com zoom, um quadro posterior também pode completar um pixel de borda que antes tinha cobertura parcial.",
+      "feather": "Faz uma transição gradual na sobreposição junto à área recém-revelada. Ajuda quando a mesma parede muda levemente de tom entre quadros. Se aparecem dois contornos distantes, reveja o alinhamento antes de aumentar a faixa.",
+      "feather_width": "Só fica disponível no modo de suavizar emendas. Mede, em pixels de trabalho, a largura da transição. Compare 8 e 32 px ao redor do mesmo contorno. Uma faixa curta preserva o traço, uma mais larga espalha a mudança de tom por mais pixels.",
+      "average": "Em cada passo, combina meio a meio o mosaico atual e o novo quadro na área comum. Um ponto coberto várias vezes recebe misturas sucessivas. Pode suavizar diferenças de cor, mas uma mão que muda de posição pode aparecer duas vezes.",
+      "left": "Remove uma faixa da esquerda de cada quadro antes de procurar correspondências. Um trilho preto de 12 px pede 12 aqui. Meça na fonte e preserve detalhes fixos próximos à margem que possam ajudar no alinhamento.",
+      "top": "Remove linhas do topo, por exemplo uma barra fixa na borda superior. A medida usa os pixels originais, inclusive se a resolução de trabalho for 50%. Aplique o mesmo valor a todo o intervalo selecionado por meio de uma nova montagem.",
+      "right": "Remove colunas contadas a partir da direita. Para uma moldura simétrica de 8 px, coloque 8 à esquerda e 8 à direita. Se um quadro tem 480 px de largura, sobram 464 antes da redução de escala.",
+      "bottom": "Remove linhas de baixo para cima. Se uma legenda ocupa os 32 px inferiores, comece em 32 e confira se as letras sumiram na montagem. As quatro margens juntas precisam preservar pelo menos 32 × 32 px da fonte. O quadro original continua inteiro na prévia.",
+      "stitch": "Inicia uma nova montagem com o intervalo e os ajustes atuais. A aba de resultado abre automaticamente e os controles de edição ficam ocupados durante o cálculo. Salve um resultado que deseja comparar antes de montar de novo.",
+      "result": "Mostra a imagem crescendo em atualizações periódicas. A prévia em andamento pode ser reduzida para caber em até 1400 px no maior lado. Ao terminar, a vista recebe a imagem na resolução final. Avalie o acabamento nessa etapa.",
+      "fit": "Enquadra toda a imagem na área visível. Use depois de ampliar uma emenda ou redimensionar a janela. Com o ajuste ativo, o enquadramento acompanha o crescimento do mosaico.",
+      "zoom": "Retorna a vista à escala de 100% para inspecionar detalhes. Sobre a imagem, a roda altera o zoom e o arraste move a vista. Sobre o painel de opções, a roda percorre o painel. Ampliar a vista só muda a inspeção na tela.",
+      "log": "Leia em conjunto o número do quadro, a confiança e o deslocamento Δ em X e Y. Um quadro aceito com Δ próximo de zero pode repetir o anterior e acrescentar pouca área. Uma sequência de rejeições indica onde rever o trecho ou o movimento escolhido.",
+      "cancel": "Solicita a parada na próxima verificação entre quadros. Aguarde o fim da tarefa antes de exportar. Se já houver uma imagem parcial, você pode inspecioná-la, aplicar acabamento e salvá-la. Divida um vídeo longo nesse ponto se quiser trabalhar por partes.",
+      "seam_soft": "Suaviza variações finas perto das emendas detectadas com um filtro que leva as bordas em conta. Comece comparando 0% e 10% a 100% de zoom. Suba aos poucos se o risco persistir e reduza se linhas finas perderem definição.",
+      "seam_color": "Aproxima a cor dos pixels da emenda da mediana dos vizinhos. É útil para um filete de cor destoante num fundo quase uniforme. Experimente 10–20% mantendo a suavização em zero para enxergar o efeito isolado. Atua na vizinhança opaca das emendas marcadas.",
+      "apply_finish": "Recalcula a partir do mosaico original com os dois valores atuais. Repetir a mesma aplicação produz o mesmo resultado. Para comparar com o original, zere ambos e aplique outra vez. Alterar os números só aparece no PNG depois de aplicar.",
+      "export": "Grava o mosaico em PNG com o último acabamento aplicado. Onde nenhum quadro chegou, o arquivo pode conter transparência. Confira o resultado sobre fundos de cores diferentes e dê nomes diferentes às exportações que quiser comparar. Atalho {ctrlS}.",
+      "report": "Salva um JSON para reproduzir e investigar a tentativa. Veja accepted e rejected para os números dos quadros, frames para confiança e deslocamento, e reason para a causa de uma parada. As listas usam numeração a partir de 1. Em settings, first e last contam a partir de 0.",
+      "theme": "Escolha {dark} ou {light} conforme a iluminação do ambiente. O tema afeta os painéis e o fundo ao redor da imagem. Para avaliar uma borda transparente em outro fundo, alterne o tema e compare o mesmo resultado.",
+      "language": "Troca os rótulos e mensagens da interface. As preferências de idioma ficam salvas para a próxima abertura. Este guia tem um seletor próprio no topo, então você pode ler em português e acompanhar o aplicativo em inglês.",
+      "gradients": "Ativa os gradientes e brilhos do título e dos controles. Ao desligar, o visual fica estático e a caixa de animações deixa de estar disponível. A escolha é salva entre sessões.",
+      "animations": "Com os gradientes ativos, anima a formação do nome em pixels e os realces dos controles. Desligue para manter as cores com menos movimento. Os efeitos animados também pausam durante tarefas de processamento ou quando a janela fica inativa.",
+      "about": "Mostra a versão instalada e os botões do repositório, site e página de apoio. Se comparar resultados entre duas instalações, confira aqui o número da versão antes de comparar os parâmetros."
+    },
+    "workshops": [
+      {
+        "title": "Ver quais quadros o passo escolhe",
+        "try": "Abra {demoFile}. Selecione os quadros 2 a 9, passo 3, {vertical}, resolução 100% e {preserve}. Monte e abra o relatório JSON.",
+        "expect": "A lista accepted permite conferir 2, 5, 8 e 9. Procure o 9 no final. Ele mostra como o programa inclui o último quadro quando o passo não chega exatamente nele."
+      },
+      {
+        "title": "Medir a resolução de saída",
+        "try": "Use o mesmo GIF completo, de 1 a 37, passo 1 e {vertical}. Monte uma vez a 100% e outra a 50% de resolução de trabalho. Compare as dimensões indicadas ao fim de cada montagem.",
+        "expect": "O robô inteiro ocupa 480 × 1080 px na primeira e 240 × 540 px na segunda. Usar o zoom da prévia mantém essas dimensões. Mudar a resolução de trabalho e remontar é o que altera o PNG."
+      },
+      {
+        "title": "Investigar uma listra no afastamento",
+        "try": "Num trecho seu em que a câmera se afasta, isole poucos quadros e use {zoom_motion} com passo 1. Compare {preserve} e {feather}. No resultado mais alinhado, teste primeiro só 15% de correção de cor e depois só 10% de suavização, aplicando cada vez.",
+        "expect": "Se a linha de cor diminui e o contorno continua único, compare com o original e exporte sua opção preferida. Se o próprio contorno está duplicado, volte ao intervalo, recorte ou alinhamento. Um acabamento local tem pouca ação sobre objetos em posições diferentes."
+      }
+    ]
+  }
 }

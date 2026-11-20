@@ -34,6 +34,31 @@ dialog{color:var(--ink);background:#191524;border:1px solid #756186;border-radiu
 @media(max-width:680px){.wrap{width:calc(100% - 34px)}.top-inner{min-height:62px}.brand{font-size:19px}.brand img{width:33px;height:33px}.nav>a{display:none}.nav select{font-size:.88rem;max-width:155px}.hero-inner,.chapter,.chapter.plain{grid-template-columns:minmax(0,1fr)}.hero-inner{padding:38px 0 26px}.hero h1{font-size:clamp(2.55rem,10.8vw,4rem)}.actions{margin-top:19px}.demo-stage{grid-template-columns:minmax(0,1fr) 20px minmax(0,.8fr);padding:14px 24px}.map{width:74px}.chapter,.chapter.plain{gap:13px;padding:32px 0}.chapter.plain .stephead{margin-bottom:0}.index ol{grid-template-columns:repeat(2,minmax(0,1fr))}.index a{height:100%}.stephead{margin-bottom:10px}.lead{font-size:1rem}.footerline{flex-wrap:wrap}}
 @media(max-width:375px){.index ol{grid-template-columns:1fr}.demo-bar{padding-inline:10px}.actions{gap:8px}.action{padding:8px 10px}}
 @media(prefers-reduced-motion:no-preference){.hero h1 em{animation:assemble .68s steps(12,end) both}@keyframes assemble{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}}.shot{transition:filter .18s,box-shadow .18s}.shot:hover{box-shadow:0 5px 24px #bd8dfa22}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}@media print{.nav,.actions,.packages,.skip,.demo-bar,.dots,.footerline,.index,dialog{display:none}.wrap{width:100%}.hero-inner,.chapter,.chapter.plain{display:block}.hero-inner,.chapter{padding:12px 0}body{color:#111;background:white}.copy p,.answer,.control,.localized,figcaption{color:#222}figure{break-inside:avoid;max-width:55%}.hero,.project{background:white}.hero h1 em{color:#422471;-webkit-text-fill-color:currentColor}.faq details>.answer{display:block}}
+/* Extend the guide with the same surfaces, type and accent colours as the chapters. */
+.reference{padding:38px 0;border-bottom:1px solid var(--line)}
+.reference h2{font-size:clamp(1.6rem,2.7vw,2.32rem);letter-spacing:-.04em;line-height:1.18;margin:0 0 14px}
+.reference>p{color:var(--muted);max-width:77ch;margin:0 0 16px}
+.reference-links{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
+.reference-links a,.step-reference{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.step-reference{display:inline-block;margin-top:12px;font-size:.9rem}
+#searchLabel{display:block;margin:0 0 5px;font-weight:650}
+#controlSearch{width:min(100%,470px);padding:9px 12px;border:1px solid #665475;border-radius:8px;background:var(--panel);color:var(--ink);font:inherit}
+#controlSearch::placeholder{color:var(--muted)}
+#matchCount{margin:8px 0;font-size:.85rem;min-height:1.4em}
+.ref-group{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin:7px 0;overflow-wrap:anywhere}
+.ref-group>summary{padding:12px 15px;color:var(--ink)}
+.ref-group>summary::marker{color:var(--accent)}
+.ref-group dl{margin:0 15px}
+.ref-row{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2fr);gap:8px 24px;border-top:1px solid var(--line);padding:12px 0}
+.ref-row dt{font-weight:650;line-height:1.45}.ref-row dd{margin:0;color:var(--muted)}
+.ref-meta{display:block;color:var(--gold);font-size:.8rem;font-weight:500;margin-top:4px}
+.ref-meta .control,.ref-meta .localized{color:inherit}
+.ref-row[hidden],.ref-group[hidden]{display:none}
+.exercise{padding:16px 0;max-width:80ch}.exercise+.exercise{border-top:1px solid var(--line)}
+.exercise h3{font-size:1.12rem;margin:0 0 6px}.exercise p{margin:4px 0;color:var(--muted)}
+.exercise strong{color:var(--gold);font-weight:600}
+@media(max-width:680px){.ref-row{grid-template-columns:1fr;gap:5px}.reference{padding:30px 0}}
+@media print{#controlSearch,#searchLabel,#matchCount,.reference-links,.step-reference{display:none}.ref-row dt,.ref-row dd,.exercise p{color:#222}.ref-group{break-inside:auto}}
 </style>
 </head>
 <body id="top">
@@ -41,7 +66,16 @@ dialog{color:var(--ink);background:#191524;border:1px solid #756186;border-radiu
 <header class="top"><div class="wrap top-inner"><a class="brand" href="#top"><img id="brandicon" alt="" width="40" height="40"><span>Framosik</span></a><nav class="nav"><a href="#guide" id="navguide"></a><a href="#help" id="navhelp"></a><label><span class="sr" id="langlabel"></span><select id="language"></select></label></nav></div></header>
 <div class="hero"><div class="wrap hero-inner"><div><div class="kicker"><span id="guideName"></span><span class="ver" id="version"></span></div><h1><span id="hero1"></span> <em id="hero2"></em></h1><p class="lead" id="intro"></p><div class="actions"><a class="action primary" href="#install" id="start"></a><a class="action" id="get"></a></div></div>
 <div class="demo"><div class="demo-top"><strong id="demoName"></strong><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div><div class="demo-stage"><div class="station"><span id="sourceLabel"></span><div class="tile" id="tile" aria-hidden="true"></div></div><span class="arrow" aria-hidden="true">→</span><div class="station"><span id="panLabel"></span><div class="map" aria-hidden="true"><b id="band"></b></div></div></div><div class="demo-bar"><label for="scrub" id="scrubLabel"></label><span class="transport"><output for="scrub" id="position"></output><button id="demoPlay" type="button"></button></span><input id="scrub" type="range" min="1" max="37" value="30"></div></div></div></div>
-<main class="wrap" id="guide" tabindex="-1"><nav class="index" aria-labelledby="indexHeading"><h2 id="indexHeading"></h2><ol id="chapters"></ol></nav><div id="steps"></div><section class="faq" id="help" aria-labelledby="helpHeading"><h2 id="helpHeading"></h2><div id="questions"></div></section></main>
+<main class="wrap" id="guide" tabindex="-1"><nav class="index" aria-labelledby="indexHeading"><h2 id="indexHeading"></h2><ol id="chapters"></ol><div class="reference-links"><a href="#reference" id="referenceLink"></a><a href="#workshops" id="workshopLink"></a></div></nav><div id="steps"></div>
+<section id="reference" class="reference" aria-labelledby="referenceTitle">
+<h2 id="referenceTitle"></h2><p id="referenceIntro"></p>
+<label for="controlSearch" id="searchLabel"></label>
+<input type="search" id="controlSearch" aria-controls="referenceGroups" autocomplete="off">
+<p id="matchCount" role="status" aria-live="polite"></p>
+<div id="referenceGroups"></div>
+</section>
+<section id="workshops" class="reference" aria-labelledby="workshopTitle"><h2 id="workshopTitle"></h2><div id="exercises"></div></section>
+<section class="faq" id="help" aria-labelledby="helpHeading"><h2 id="helpHeading"></h2><div id="questions"></div></section></main>
 <footer class="project"><div class="wrap"><h2 id="linkHeading"></h2><nav class="links footlinks" id="external"></nav><p class="footerline"><span>Framosik · CleitinhoDEV / Bugzinho</span><a href="#top" id="back"></a></p></div></footer>
 <dialog id="viewer" aria-labelledby="viewerCaption"><div class="dialogbar"><button type="button" id="close"></button></div><img id="fullshot" alt=""><p id="viewerCaption"></p></dialog>
 <noscript>Ative o JavaScript para usar o guia interativo. Enable JavaScript to use this interactive guide.</noscript>
@@ -49,7 +83,7 @@ dialog{color:var(--ink);background:#191524;border:1px solid #756186;border-radiu
 <script type="application/json" id="assets">@@images@@</script>
 <script>
 'use strict';
-const {names, app, guides} = JSON.parse(document.getElementById('texts').textContent);
+const {names, app, guides, controls} = JSON.parse(document.getElementById('texts').textContent);
 const assets = JSON.parse(document.getElementById('assets').textContent);
 const $ = id => document.getElementById(id);
 const sectionIds = ['install','range','alignment','stitch','finish','appearance'];
@@ -120,6 +154,83 @@ function setFrame() {
   $('tile').style.backgroundPosition = 'center ' + (ratio*100) + '%';
   $('band').style.top = (ratio*100*2/3) + '%';
 }
+function searchText(value) {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
+}
+function applySearch() {
+  const reference = guides[$('language').value].reference;
+  const terms = searchText($('controlSearch').value.trim()).split(/\s+/).filter(Boolean);
+  let count = 0;
+  for (const group of $('referenceGroups').children) {
+    const name = searchText(group.querySelector('summary').textContent);
+    let visible = 0;
+    for (const row of group.querySelectorAll('.ref-row')) {
+      const text = name + ' ' + row.dataset.search;
+      row.hidden = !terms.every(term => text.includes(term));
+      if (!row.hidden) visible++;
+    }
+    count += visible;
+    group.hidden = visible === 0;
+    if (terms.length) {
+      if (!group.hasAttribute('data-previous')) group.dataset.previous = String(group.open);
+      group.open = visible > 0;
+    } else if (group.hasAttribute('data-previous')) {
+      group.open = group.dataset.previous === 'true';
+      delete group.dataset.previous;
+    }
+  }
+  $('matchCount').textContent = count ? reference.ui.matches + ' · ' + count : reference.ui.empty;
+}
+function renderReference(lang) {
+  const ref = guides[lang].reference, ui = ref.ui;
+  const labels = {referenceTitle:'title',referenceIntro:'intro',referenceLink:'title',searchLabel:'search',
+                  workshopTitle:'workshop',workshopLink:'workshop'};
+  for (const [id,key] of Object.entries(labels)) $(id).textContent = ui[key];
+  $('controlSearch').placeholder = ui.example;
+  const host = $('referenceGroups');
+  const expanded = new Set(Array.from(host.querySelectorAll('details')).filter(g =>
+    g.hasAttribute('data-previous') ? g.dataset.previous === 'true' : g.open).map(g => g.id));
+  host.replaceChildren();
+  for (const {id,items} of controls) {
+    const group = element('details',null,'ref-group'), dl = element('dl');
+    group.id = 'group-' + id; group.open = expanded.has(group.id);
+    group.append(element('summary',ref.groups[id]),dl);
+    for (const item of items) {
+      const key = item.labels[0];
+      const row = element('div',null,'ref-row'), title = element('dt'), desc = element('dd');
+      row.id = 'control-' + key;
+      fillText(title,item.labels.map(label => '{'+label+'}').join(' · '),lang);
+      const meta = [];
+      if (item.range) meta.push(ui.range + ' ' + item.range);
+      if (Object.hasOwn(item,'initial')) {
+        const value = typeof item.initial === 'boolean' ? ui[item.initial ? 'on' : 'off'] : item.initial;
+        meta.push(ui.initial + ' ' + value);
+      }
+      if (meta.length) {
+        const values = element('span',null,'ref-meta'); fillText(values,meta.join(' · '),lang); title.append(values);
+      }
+      fillText(desc,ref.entries[key],lang);
+      row.dataset.search = searchText(title.textContent + ' ' + desc.textContent);
+      row.append(title,desc); dl.append(row);
+    }
+    host.append(group);
+  }
+  $('exercises').replaceChildren();
+  for (const ex of ref.workshops) {
+    const article = element('article',null,'exercise'), steps = element('p'), outcome = element('p');
+    fillText(steps,ex.try,lang); outcome.append(element('strong',ui.expect + ' · ')); fillText(outcome,ex.expect,lang);
+    article.append(element('h3',ex.title),steps,outcome); $('exercises').append(article);
+  }
+  applySearch();
+}
+function openReferenceTarget(hash) {
+  if (!/^#(?:group|control)-[a-z_]+$/.test(hash)) return;
+  const target = document.getElementById(hash.slice(1));
+  if (!target) return;
+  if ($('controlSearch').value) { $('controlSearch').value = ''; applySearch(); }
+  const group = target.closest('details'); group.open = true;
+  target.scrollIntoView({block:'start'});
+}
 function render(lang) {
   const {ui,sections,faq,captions} = guides[lang];
   document.documentElement.lang = tag[lang] || lang;
@@ -137,10 +248,14 @@ function render(lang) {
     if (shots[i]) copy.append(h); else s.append(h);
     for (const line of p) { const para = element('p'); fillText(para,line,lang); copy.append(para); }
     if (i === 0) { const d = element('div',null,'packages'); d.append(link('Windows x64 · ZIP',urls.windows),link('Linux x86_64 · tar.gz',urls.linux)); copy.append(d); }
+    const related = ['scene','scene','motion','preview','finish','appearance'][i];
+    const refLink = link(guides[lang].reference.ui.jump, '#group-'+related);
+    refLink.className = 'step-reference'; copy.append(refLink);
     s.append(copy);
     if (shots[i]) { const [key,index] = shots[i]; s.append(figure(key,captions[index],ui)); }
     $('steps').append(s);
   });
+  renderReference(lang);
   $('questions').replaceChildren();
   for (const [q,a] of faq) { const d=element('details'), p=element('p',null,'answer'); fillText(p,a,lang); d.append(element('summary',q),p); $('questions').append(d); }
   $('external').replaceChildren(...['website','repository','releases','donate'].map(k=>link(k==='releases'?ui.releases:app[lang][k],urls[k])));
@@ -163,6 +278,12 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden) stopDemo()
 $('viewer').addEventListener('click',e=>{ if(e.target === $('viewer')) { const r=$('viewer').getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) $('viewer').close(); } });
 $('brandicon').src=document.querySelector('link[rel="icon"]').href;
 document.querySelector('.demo-stage').style.setProperty('--art','url("'+assets.robot+'")');
-render(initial); setFrame();
+$('controlSearch').oninput = applySearch;
+window.addEventListener('hashchange',()=>openReferenceTarget(location.hash));
+$('steps').addEventListener('click',e=>{
+  const a=e.target.closest('.step-reference');
+  if(a && a.hash === location.hash) openReferenceTarget(a.hash);
+});
+render(initial); setFrame(); openReferenceTarget(location.hash);
 </script>
 </body></html>

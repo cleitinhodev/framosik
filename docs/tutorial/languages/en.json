@@ -84,5 +84,91 @@
     "Alignment, blending and crop controls with the feather width visible.",
     "The complete robot in the stitched view with finishing controls enabled and the processing log below.",
     "The Appearance tab in the light theme, with language, glow and animation controls."
-  ]
+  ],
+  "reference": {
+    "ui": {
+      "title": "Parameter reference",
+      "intro": "Open a group to see what each control changes. Defaults refer to a fresh installation. Search by the label on screen or the effect you want to adjust.",
+      "search": "Find a control",
+      "example": "Try overlap, subtitles or 24 px",
+      "empty": "No matching controls. Try another term or clear the search.",
+      "matches": "Matching controls",
+      "range": "Range",
+      "initial": "Default",
+      "on": "On",
+      "off": "Off",
+      "workshop": "Guided experiments",
+      "expect": "What to look for",
+      "jump": "Explore the controls for this step"
+    },
+    "groups": {
+      "scene": "File and scene range",
+      "motion": "Motion and alignment",
+      "blend": "Image blending",
+      "crop": "Cropping the four edges",
+      "preview": "Stitching and navigation",
+      "finish": "Finishing and export",
+      "appearance": "Appearance, language and links"
+    },
+    "entries": {
+      "open": "Open a GIF, animated WebP, or a video such as MP4, MKV, AVI, MOV, WebM or M4V. Video decoding depends on the codec. A PNG or JPEG opens as a single frame. Export any mosaic you want to keep before loading another file.",
+      "original": "Inspect one source frame. Scrub the timeline, click ‹ or ›, or enter a frame number to check a specific detail. The number after the slash is the total frame count. This view shows the original edges even when a crop is set.",
+      "play": "Play from the current frame and pause where the camera starts or stops moving. Playback continues through the source file, even beyond the marked end. Move the slider back to review the same passage.",
+      "first": "Choose the first frame to include. N is the number of frames in the file and numbering starts at 1. Type its number or mark the current pose as the start. This frame also establishes the reference scale for a zoom.",
+      "last": "Choose the last frame to include. If frame 90 is the first shot of a new scene, end the range at 89. Set both endpoints to the same number to inspect a single-frame result.",
+      "step": "Set the interval between sampled frames. From 2 through 9 with a step of 3, the app tries 2, 5, 8 and 9. It includes the endpoint even when the step misses it. Start at 1 for fast motion or zoom. Increase it for a clip with many near-duplicates.",
+      "movement": "Watch one stationary detail in two different frames. If its position changes while its size stays constant, choose a translation mode. If it grows or shrinks, try zoom. Changing the mode takes effect the next time you stitch.",
+      "free": "Allow both horizontal and vertical displacement. Use this for a diagonal pan or an upward pan that drifts sideways. Check a fixed detail in the background to tell camera motion from a character moving independently.",
+      "vertical": "Constrain displacement to the vertical axis. Use it when a background point stays in the same column as it travels up or down. If sideways drift causes good frames to be rejected, try free movement.",
+      "horizontal": "Constrain displacement to the horizontal axis. Use it when the horizon stays at the same height in a left or right pan. A shot that also climbs or falls needs both axes.",
+      "zoom_motion": "Estimate uniform scale and displacement on both axes between consecutive accepted frames. A pullback can grow the canvas considerably to retain the scale of the opening frame. Use step 1. Different motion in the subject and background can leave double outlines.",
+      "resolution": "Resize each frame after cropping. This changes the actual PNG dimensions. At 50%, both dimensions are halved and the pixel area is about one quarter. Try a long scene at reduced resolution, then return to 100% and stitch again for the final export.",
+      "similarity": "Require a minimum match score for the shared region. Raise it if a repeating pattern is accepted in the wrong place. If a good pair is rejected, check the crop, motion mode and step before lowering the threshold a few points. Compare the resulting linework with the source.",
+      "overlap": "Require a minimum fraction of the working frame to contain shared, sufficiently opaque pixels. At 20%, about one fifth must overlap. Raising it rejects tiny, ambiguous matches. If the camera jumps far between samples, first try a smaller frame step.",
+      "limit": "Limit the area of the rectangle enclosing the mosaic, including transparent gaps. A 6000 × 4000 rectangle is 24 MP. A higher cap allows a larger mosaic and uses more memory. If growth stops, reduce working resolution or split the range.",
+      "skip": "When enabled, a failed alignment is logged and the next candidate is compared with the last accepted frame. This helps with an isolated blurred frame. When disabled, the first rejection stops the run and keeps the partial mosaic. A long gap can still break coverage.",
+      "mode": "Choose how to combine pixels once frames have aligned. Rebuild the same range at the same resolution for each comparison. Magnify a thin line that crosses a seam and check whether it remains a single sharp contour.",
+      "preserve": "Fill newly revealed areas and retain existing pixels. This usually keeps drawn outlines crisp. In zoom mode, a later frame can also complete a partially covered edge pixel.",
+      "feather": "Blend overlap gradually near newly exposed areas. Try it where a wall changes shade slightly between frames. If two distinct outlines are visible, revisit alignment before increasing the transition width.",
+      "feather_width": "Available with seam softening. Sets the transition width in working pixels. Compare 8 and 32 px at the same contour. Narrow bands protect fine strokes, while wider bands spread a tonal change over more pixels.",
+      "average": "At each step, mix the current mosaic and incoming frame equally in the overlap. A point covered several times is mixed repeatedly. This can soften colour fluctuations or double a hand that has moved between frames.",
+      "left": "Remove columns from the left before matching. For a stationary 12 px black strip, enter 12 here. Measure against the source and keep nearby fixed details that can help with matching.",
+      "top": "Remove rows from the top, for example a fixed upper bar. Values always use source pixels, including at 50% working resolution. The crop applies to every selected frame when you stitch again.",
+      "right": "Remove columns measured from the right edge. For an 8 px border on both sides, set left and right to 8. A 480 px source will have 464 px of width before scaling.",
+      "bottom": "Remove rows from the bottom. If subtitles occupy the bottom 32 px, try 32 and inspect the mosaic for leftover lettering. Together the four margins must leave at least 32 × 32 source pixels. The original-frame view still shows the full frame.",
+      "stitch": "Start a new mosaic with the current range and settings. The result tab opens automatically and editing controls are temporarily disabled during processing. Save a version you want to compare before starting another run.",
+      "result": "Follow periodic updates as the mosaic grows. While running, preview images can be reduced to a maximum of 1400 px on their longer side. On completion, the view receives the full result. Inspect seams at this point.",
+      "fit": "Fit the whole mosaic in the available space. Use this after enlarging a seam or resizing the window. With automatic fitting active, the view follows the expanding canvas.",
+      "zoom": "Restore the view to 100% for a pixel-level inspection. Scroll over the picture to zoom or drag to pan. Over the controls the wheel scrolls the panel. Magnifying the view changes only what you see on screen.",
+      "log": "Read the frame number, confidence and X/Y displacement Δ together. An accepted frame with near-zero displacement may repeat the previous frame and add little area. Several rejections in a row identify a range worth reviewing.",
+      "cancel": "Request a stop between frames. Wait for the current task to end before exporting. If a partial mosaic is available, you can inspect, finish and save it. You can start a second range at that point when processing a long clip.",
+      "seam_soft": "Soften fine variations near detected seams with an edge-aware filter. Compare 0% and 10% at 100% zoom. Increase gradually if the line remains, and reduce the value if fine strokes lose definition.",
+      "seam_color": "Bring seam colours closer to the median of nearby pixels. Try it on a narrow off-colour stripe in a fairly uniform background. Start at 10–20% with smoothing at zero to isolate its effect. It acts in opaque areas near marked seams.",
+      "apply_finish": "Recalculate both settings from the original mosaic. Applying the same values twice gives the same result. To compare with the original, set both to zero and apply again. Apply edited values before exporting the PNG.",
+      "export": "Save the mosaic as PNG with the last finish you applied. Areas no frame reached may be transparent. Inspect edges over different background colours and give comparisons separate filenames. Shortcut {ctrlS}.",
+      "report": "Save a JSON record of the run. Use accepted and rejected for frame numbers, frames for individual scores and displacements, and reason for an interruption. The frame lists start at 1. In settings, first and last are stored starting at 0.",
+      "theme": "Choose {dark} or {light} for the lighting in your room. The theme changes the panels and the background surrounding the image. Switch between them to inspect a transparent edge against different backgrounds.",
+      "language": "Change the interface labels and messages. The language is remembered for the next launch. This guide has a separate selector at the top, so you can read in one language while using the app in another.",
+      "gradients": "Enable colour gradients and glow on the title and controls. Turning them off gives a static appearance and disables the animation checkbox. This preference is saved between sessions.",
+      "animations": "With gradients enabled, animate the pixel title and control highlights. Turn this off to keep the colours with less motion. The effects also pause while a task runs or the window is inactive.",
+      "about": "Find the installed version and links to the repository, website and donation page. When comparing output from two installations, check the version here before comparing settings."
+    },
+    "workshops": [
+      {
+        "title": "See which frames the step selects",
+        "try": "Open {demoFile}. Use frames 2 through 9, step 3, {vertical}, 100% resolution and {preserve}. Stitch and open the JSON report.",
+        "expect": "The accepted list shows 2, 5, 8 and 9. The last entry demonstrates that the endpoint is included even when the regular step would miss it."
+      },
+      {
+        "title": "Measure the output resolution",
+        "try": "Use the whole GIF, frames 1 through 37, step 1 and {vertical}. Stitch once at 100% and again at 50% working resolution. Compare the dimensions reported after each run.",
+        "expect": "The full robot measures 480 × 1080 px in the first run and 240 × 540 px in the second. The preview zoom leaves those numbers alone. Changing working resolution and rebuilding changes the PNG."
+      },
+      {
+        "title": "Inspect a stripe during a pullback",
+        "try": "Choose a short pullback from your own clip. Use {zoom_motion} with step 1 and compare {preserve} with {feather}. On the better-aligned result, try colour repair alone at 15%, then smoothing alone at 10%, applying each separately.",
+        "expect": "If the stripe fades while the outline stays single, compare with the original and export the version you prefer. If the outline itself is doubled, revisit the range, crop or alignment. Local finishing has little effect on objects in different positions."
+      }
+    ]
+  }
 }

@@ -84,5 +84,91 @@
     "Réglages d’alignement, de fusion et de recadrage avec la largeur de transition visible.",
     "Robot assemblé en entier avec les réglages de finition et le journal.",
     "Onglet d’apparence en thème clair, avec les réglages de langue, de lueur et d’animation."
-  ]
+  ],
+  "reference": {
+    "ui": {
+      "title": "Référence des réglages",
+      "intro": "Ouvrez un groupe pour découvrir l’effet de chaque commande. Les valeurs initiales correspondent à une installation neuve. Recherchez un libellé anglais ou français, ou l’effet recherché.",
+      "search": "Rechercher une commande",
+      "example": "Par exemple, recouvrement, sous-titres, 24 px",
+      "empty": "Aucun résultat. Essayez un autre terme ou effacez la recherche.",
+      "matches": "Commandes trouvées",
+      "range": "Plage",
+      "initial": "Par défaut",
+      "on": "Activé",
+      "off": "Désactivé",
+      "workshop": "Exercices guidés",
+      "expect": "Résultat à observer",
+      "jump": "Consulter les commandes de cette étape"
+    },
+    "groups": {
+      "scene": "Fichier et intervalle",
+      "motion": "Mouvement et alignement",
+      "blend": "Fusion des images",
+      "crop": "Recadrage des quatre bords",
+      "preview": "Assemblage et navigation",
+      "finish": "Finition et exportation",
+      "appearance": "Apparence, langue et liens"
+    },
+    "entries": {
+      "open": "Ouvre les GIF, WebP animés et vidéos MP4, MKV, AVI, MOV, WebM ou M4V selon le codec. Un PNG ou un JPEG apparaît comme une image fixe. Exportez tout assemblage à conserver avant d’ouvrir un autre fichier.",
+      "original": "Examinez une image source avec le curseur, les flèches ‹ et › ou son numéro. Le nombre après la barre indique le total. Cette vue conserve les bords d’origine, même si un recadrage est défini.",
+      "play": "Lancez la lecture à partir de la position actuelle. Faites une pause au début ou à la fin du mouvement. La lecture peut dépasser la fin marquée et s’arrête à la dernière image du fichier. Reculez le curseur pour revoir le passage.",
+      "first": "Inclut cette image au début. N est le nombre total d’images, numérotées à partir de 1. Saisissez le numéro ou marquez la position courante. Cette image fixe aussi l’échelle de référence du zoom.",
+      "last": "Inclut cette image à la fin. Si l’image 90 appartient au plan suivant, arrêtez-vous à 89. Choisir le même numéro aux deux extrémités donne un résultat à une seule image.",
+      "step": "Règle l’intervalle entre échantillons. De 2 à 9 avec un pas de 3, les images 2, 5, 8 et 9 sont essayées. La dernière est incluse même hors de la progression. Commencez à 1 pour un zoom ou un mouvement rapide. Augmentez le pas si les images se répètent.",
+      "movement": "Observez un détail immobile sur deux images. S’il change de position en gardant sa taille, choisissez une translation. S’il grandit ou rétrécit, essayez le zoom. Relancez l’assemblage pour appliquer ce choix.",
+      "free": "Autorise les déplacements en X et en Y. Convient aux diagonales ou à une montée avec dérive latérale. Suivez un détail fixe du décor pour distinguer le mouvement de la caméra de celui du personnage.",
+      "vertical": "Limite la recherche à l’axe vertical. Utilisez-le si un point reste dans la même colonne en montant ou descendant. Si une dérive latérale provoque des rejets, essayez le déplacement libre.",
+      "horizontal": "Limite la recherche à l’axe horizontal. Convient aux panoramiques latéraux dont l’horizon reste à la même hauteur. Une trajectoire qui monte ou descend en même temps demande les deux axes.",
+      "zoom_motion": "Estime un changement d’échelle uniforme et un déplacement entre images acceptées. Lors d’un recul, le canevas peut beaucoup grandir pour garder l’échelle initiale. Utilisez un pas de 1. Des plans qui bougent indépendamment peuvent créer des contours doubles.",
+      "resolution": "Redimensionne chaque image après recadrage et change les dimensions du PNG. À 50 %, la hauteur et la largeur sont divisées par deux, et la surface environ par quatre. Essayez d’abord une longue scène à petite échelle puis recalculez à 100 %.",
+      "similarity": "Fixe le score minimal sur la région commune. Augmentez-le si un motif répétitif est accepté au mauvais endroit. Avant de le réduire de quelques points, vérifiez le recadrage, le mouvement et le pas. Comparez le tracé obtenu à la source.",
+      "overlap": "Exige une fraction minimale de pixels communs suffisamment opaques. À 20 %, environ un cinquième de l’image de travail doit se recouvrir. Augmentez pour écarter les petites correspondances ambiguës. Si les positions sont très éloignées, diminuez d’abord le pas.",
+      "limit": "Limite la surface du rectangle englobant la mosaïque, vides transparents compris. Une image de 6000 × 4000 représente 24 MP. Relever la limite permet des images plus grandes et demande davantage de mémoire. En cas d’arrêt, réduisez la résolution ou divisez le passage.",
+      "skip": "Si cette option est active, après un échec l’image suivante est comparée à la dernière acceptée. C’est utile pour une image floue isolée. Sinon, le premier rejet arrête le calcul et conserve le résultat partiel. Un grand saut peut laisser un manque.",
+      "mode": "Détermine comment combiner les pixels déjà alignés. Recalculez le même passage à résolution identique pour comparer les modes. Agrandissez un trait fin traversant un raccord et vérifiez qu’il reste net et unique.",
+      "preserve": "Remplit les nouvelles zones en conservant les pixels déjà couverts. Convient aux dessins au trait. En mode zoom, une image ultérieure peut aussi compléter un pixel de bord partiellement couvert.",
+      "feather": "Fond progressivement le recouvrement près de la nouvelle zone. Essayez-le si un mur change légèrement de teinte. Si deux silhouettes distinctes apparaissent, revoyez d’abord l’alignement.",
+      "feather_width": "Disponible pour le fondu des raccords. La largeur est mesurée en pixels de travail. Comparez 8 et 32 px au même endroit. Une bande étroite préserve mieux les traits fins, une bande large étale la transition de couleur.",
+      "average": "À chaque étape, mélange à parts égales les pixels communs de la mosaïque actuelle et de l’image entrante. Une zone vue plusieurs fois est donc mélangée plusieurs fois. Cela peut atténuer une variation de teinte ou dédoubler une main en mouvement.",
+      "left": "Retire des colonnes depuis la gauche avant l’alignement. Saisissez 12 pour une bande noire fixe de 12 px. Mesurez sur l’original en conservant les détails fixes voisins qui facilitent les correspondances.",
+      "top": "Retire des lignes depuis le haut, par exemple une barre fixe. Les valeurs se mesurent en pixels source, même à une résolution de travail de 50 %. Le recadrage affecte chaque image du prochain assemblage.",
+      "right": "Retire des colonnes depuis la droite. Pour une bordure symétrique de 8 px, saisissez 8 à gauche et à droite. Une source de 480 px conserve 464 px de largeur avant redimensionnement.",
+      "bottom": "Retire des lignes depuis le bas. Pour des sous-titres occupant les 32 derniers pixels, essayez 32 et cherchez les lettres restantes dans la mosaïque. Les quatre marges doivent laisser au moins 32 × 32 px dans la source. La vue originale reste entière.",
+      "stitch": "Lance un nouvel assemblage avec l’intervalle et les paramètres actuels. La vue de résultat s’ouvre et les réglages sont temporairement désactivés. Exportez le résultat à comparer avant de recommencer.",
+      "result": "Montre la mosaïque à intervalles réguliers. Pendant le calcul, l’aperçu peut être réduit à 1400 px sur le plus grand côté. À la fin, la vue reçoit l’image à sa résolution finale. Examinez alors les raccords.",
+      "fit": "Cadre toute l’image dans l’espace disponible. Utilisez cette commande après avoir agrandi un raccord ou redimensionné la fenêtre. Le cadrage automatique suit la croissance de la mosaïque.",
+      "zoom": "Rétablit l’échelle de 100 % pour inspecter les pixels. Sur l’image, la molette zoome et le glisser déplace la vue. Sur les options, la molette fait défiler le panneau. Le zoom de la vue agit sur l’affichage.",
+      "log": "Lisez ensemble numéro d’image, confiance et décalage Δ en X et Y. Une image acceptée avec un décalage proche de zéro peut être un doublon et ajouter peu de surface. Plusieurs rejets successifs indiquent un passage à examiner.",
+      "cancel": "Demande l’arrêt entre deux images. Attendez la fin de la tâche avant d’exporter. Si une mosaïque partielle existe, vous pouvez l’inspecter, la retoucher et l’enregistrer. Un autre intervalle peut prendre le relais pour une longue vidéo.",
+      "seam_soft": "Atténue les variations fines près des raccords détectés avec un filtre sensible aux contours. Comparez 0 % et 10 % au zoom 100 %. Augmentez progressivement et revenez en arrière si des traits s’effacent.",
+      "seam_color": "Rapproche la couleur du raccord de la médiane de ses voisins. Utile contre un filet de couleur isolé sur un fond uniforme. Essayez 10–20 % avec le lissage à zéro. Le traitement vise les zones opaques près des raccords marqués.",
+      "apply_finish": "Recalcule les deux effets à partir de la mosaïque originale. Deux applications avec les mêmes valeurs donnent le même résultat. Pour comparer, remettez les valeurs à zéro et appliquez. Appliquez les modifications avant l’export.",
+      "export": "Enregistre le PNG avec la dernière finition appliquée. Les zones restées hors champ peuvent être transparentes. Comparez les bords sur plusieurs fonds et donnez des noms différents à vos essais. Raccourci {ctrlS}.",
+      "report": "Produit un JSON. accepted et rejected listent les images, frames décrit les scores et décalages individuels, reason explique un arrêt. Les listes numérotent à partir de 1. Dans settings, first et last commencent à 0.",
+      "theme": "Choisissez {dark} ou {light} selon la lumière ambiante. Le thème modifie les panneaux et le fond autour de l’image. Passez de l’un à l’autre pour voir un bord transparent sur des fonds différents.",
+      "language": "Change les libellés et les messages, avec mémorisation au prochain lancement. Ce guide possède son propre sélecteur en haut de page. Vous pouvez le lire en français avec l’application en anglais.",
+      "gradients": "Active les dégradés et l’éclat du titre et des commandes. Les désactiver rend l’apparence statique et désactive la case d’animation. Ce réglage est mémorisé.",
+      "animations": "Avec les dégradés actifs, anime le titre en pixels et les reflets des commandes. Désactivez pour conserver les couleurs avec moins de mouvement. Les effets se mettent aussi en pause pendant le calcul ou lorsque la fenêtre est inactive.",
+      "about": "Indique la version installée avec les liens du dépôt, du site et des dons. Si vous comparez deux installations, vérifiez leur version avant leurs paramètres."
+    },
+    "workshops": [
+      {
+        "title": "Vérifier les images choisies par le pas",
+        "try": "Ouvrez {demoFile}. Choisissez 2 à 9, pas de 3, {vertical}, résolution à 100 % et {preserve}. Assemblez et ouvrez le rapport JSON.",
+        "expect": "La liste accepted contient 2, 5, 8 et 9. Le 9 montre que la borne finale est incluse même quand elle tombe entre deux pas."
+      },
+      {
+        "title": "Mesurer la résolution de sortie",
+        "try": "Prenez tout le GIF, de 1 à 37, avec un pas de 1 et {vertical}. Assemblez à 100 %, puis à 50 % de résolution de travail. Comparez les dimensions finales.",
+        "expect": "Le robot mesure 480 × 1080 px puis 240 × 540 px. Le zoom d’affichage conserve ces valeurs. Un changement de résolution suivi d’un nouvel assemblage modifie le PNG."
+      },
+      {
+        "title": "Examiner une rayure lors d’un recul",
+        "try": "Isolez un court recul dans votre vidéo. Essayez {zoom_motion} au pas de 1 et comparez {preserve} à {feather}. Sur le meilleur alignement, appliquez la correction de couleur seule à 15 %, puis le lissage seul à 10 %.",
+        "expect": "Si la rayure se réduit et que le contour reste unique, comparez à l’original et exportez. Si le contour est dédoublé, revoyez l’intervalle, le recadrage ou l’alignement. Une finition locale agit peu sur deux objets décalés."
+      }
+    ]
+  }
 }

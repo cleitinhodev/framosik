@@ -1,0 +1,282 @@
+[
+  {
+    "id": "scene",
+    "items": [
+      {
+        "labels": [
+          "open"
+        ]
+      },
+      {
+        "labels": [
+          "original",
+          "frame"
+        ]
+      },
+      {
+        "labels": [
+          "play",
+          "pause"
+        ]
+      },
+      {
+        "labels": [
+          "first",
+          "mark_start"
+        ],
+        "range": "1–N",
+        "initial": "1"
+      },
+      {
+        "labels": [
+          "last",
+          "mark_end"
+        ],
+        "range": "1–N",
+        "initial": "N"
+      },
+      {
+        "labels": [
+          "step"
+        ],
+        "range": "1–120",
+        "initial": "1"
+      }
+    ]
+  },
+  {
+    "id": "motion",
+    "items": [
+      {
+        "labels": [
+          "movement"
+        ],
+        "initial": "{free}"
+      },
+      {
+        "labels": [
+          "free"
+        ]
+      },
+      {
+        "labels": [
+          "vertical"
+        ]
+      },
+      {
+        "labels": [
+          "horizontal"
+        ]
+      },
+      {
+        "labels": [
+          "zoom_motion"
+        ]
+      },
+      {
+        "labels": [
+          "resolution"
+        ],
+        "range": "10–100%",
+        "initial": "100%"
+      },
+      {
+        "labels": [
+          "similarity"
+        ],
+        "range": "10–99%",
+        "initial": "65%"
+      },
+      {
+        "labels": [
+          "overlap"
+        ],
+        "range": "5–90%",
+        "initial": "20%"
+      },
+      {
+        "labels": [
+          "limit"
+        ],
+        "range": "1–100 MP",
+        "initial": "24 MP"
+      },
+      {
+        "labels": [
+          "skip"
+        ],
+        "initial": false
+      }
+    ]
+  },
+  {
+    "id": "blend",
+    "items": [
+      {
+        "labels": [
+          "mode"
+        ],
+        "initial": "{preserve}"
+      },
+      {
+        "labels": [
+          "preserve"
+        ]
+      },
+      {
+        "labels": [
+          "feather"
+        ]
+      },
+      {
+        "labels": [
+          "feather_width"
+        ],
+        "range": "1–300 px",
+        "initial": "24 px"
+      },
+      {
+        "labels": [
+          "average"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "crop",
+    "items": [
+      {
+        "labels": [
+          "left"
+        ],
+        "range": "0–10 000 px",
+        "initial": "0 px"
+      },
+      {
+        "labels": [
+          "top"
+        ],
+        "range": "0–10 000 px",
+        "initial": "0 px"
+      },
+      {
+        "labels": [
+          "right"
+        ],
+        "range": "0–10 000 px",
+        "initial": "0 px"
+      },
+      {
+        "labels": [
+          "bottom"
+        ],
+        "range": "0–10 000 px",
+        "initial": "0 px"
+      }
+    ]
+  },
+  {
+    "id": "preview",
+    "items": [
+      {
+        "labels": [
+          "stitch",
+          "workspace"
+        ]
+      },
+      {
+        "labels": [
+          "result"
+        ]
+      },
+      {
+        "labels": [
+          "fit"
+        ]
+      },
+      {
+        "labels": [
+          "zoom"
+        ]
+      },
+      {
+        "labels": [
+          "log"
+        ]
+      },
+      {
+        "labels": [
+          "cancel"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "finish",
+    "items": [
+      {
+        "labels": [
+          "seam_soft"
+        ],
+        "range": "0–100%",
+        "initial": "0%"
+      },
+      {
+        "labels": [
+          "seam_color"
+        ],
+        "range": "0–100%",
+        "initial": "0%"
+      },
+      {
+        "labels": [
+          "apply_finish"
+        ]
+      },
+      {
+        "labels": [
+          "export"
+        ]
+      },
+      {
+        "labels": [
+          "report"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "appearance",
+    "items": [
+      {
+        "labels": [
+          "theme"
+        ],
+        "initial": "{dark}"
+      },
+      {
+        "labels": [
+          "language"
+        ],
+        "initial": "Português (Brasil)"
+      },
+      {
+        "labels": [
+          "gradients"
+        ],
+        "initial": true
+      },
+      {
+        "labels": [
+          "animations"
+        ],
+        "initial": true
+      },
+      {
+        "labels": [
+          "about"
+        ]
+      }
+    ]
+  }
+]
