@@ -1,0 +1,88 @@
+{
+  "ui": {
+    "guide": "Guida all’uso",
+    "hero1": "Dal movimento",
+    "hero2": "all’immagine intera.",
+    "intro": "Unisci i fotogrammi per rivelare tutta la scena percorsa dalla camera. Esplora la demo, poi ripeti i passaggi con un tuo GIF o video.",
+    "start": "Inizia il tutorial",
+    "download": "Scarica Framosik",
+    "demo": "Demo interattiva",
+    "source": "Fotogramma originale",
+    "panorama": "Immagine composta",
+    "scrub": "Trascina per esplorare i 37 fotogrammi.",
+    "contents": "In questa guida",
+    "help": "Domande frequenti",
+    "close": "Chiudi",
+    "enlarge": "Ingrandisci schermata",
+    "releases": "Versioni",
+    "links": "Link del progetto",
+    "skip": "Vai al tutorial",
+    "language": "Lingua del tutorial",
+    "back": "Torna in alto"
+  },
+  "sections": [
+    {
+      "title": "Apri Framosik",
+      "p": [
+        "Su Windows x64, estrai tutto lo ZIP e apri {exe}. Su Linux x86_64, estrai il file .tar.gz ed esegui {bin} dentro la cartella Framosik. Mantieni {internal} accanto all’eseguibile.",
+        "Seleziona {open} o premi {ctrlO} e apri {demoFile}, incluso nel pacchetto. Il primo fotogramma mostra i piedi del robot. La camera risale la stessa illustrazione in 37 fotogrammi."
+      ]
+    },
+    {
+      "title": "Delimita una sola scena",
+      "p": [
+        "In {original}, trascina il cursore oppure usa {play} e le frecce per individuare gli estremi. Premi {mark_start} e {mark_end}, oppure inserisci i numeri in {first} e {last}. Entrambi gli estremi sono inclusi.",
+        "Per la demo scegli da 1 a 37 e lascia {step} a 1. Nel tuo filmato fermati prima di uno stacco o di una transizione. Un passo maggiore riduce il lavoro ma lascia meno dettagli comuni per l’allineamento."
+      ]
+    },
+    {
+      "title": "Scegli allineamento e fusione",
+      "p": [
+        "In {movement}, usa {vertical} per il robot, {horizontal} per uno spostamento laterale o {free} per una diagonale. Scegli {zoom_motion} quando l’inquadratura si avvicina o si allontana con una variazione di scala uniforme.",
+        "In {mode}, {preserve} conserva i tratti già composti. {feather} sfuma i bordi per la larghezza impostata in {feather_width}. {average} mescola i pixel sovrapposti e può raddoppiare i contorni se il soggetto si muove.",
+        "Inizia con {similarity} al 65% e {overlap} al 20%. Il primo valore regola la somiglianza richiesta, il secondo l’area comune minima. Usa {crop} per togliere una fascia fissa di sottotitoli da ogni fotogramma, in pixel della sorgente."
+      ]
+    },
+    {
+      "title": "Segui la composizione",
+      "p": [
+        "Premi {stitch}. La scheda {result} mostra l’immagine che cresce durante l’elaborazione. Il registro indica la confidenza e lo spostamento di ogni fotogramma. Usa {fit} per l’intera scena o {zoom} per esaminare i pixel.",
+        "La rotella sull’immagine cambia lo zoom e il trascinamento sposta la vista. Sul pannello delle opzioni la rotella scorre i controlli. {cancel} conserva il risultato parziale. La demo completa al 100% produce un’immagine di 480 × 1080 px."
+      ]
+    },
+    {
+      "title": "Rifinisci ed esporta",
+      "p": [
+        "Al termine si attiva {finish} sulla sinistra. Esamina una giunzione al 100%. Prova un valore basso di {seam_soft} per attenuare una linea o di {seam_color} per correggere una differenza di colore locale. Premi {apply_finish}.",
+        "Ogni applicazione riparte dal mosaico originale. Per confrontare, riporta entrambi i valori a zero e applica di nuovo. {export} o {ctrlS} salva l’ultima rifinitura applicata, con trasparenza dove nessun fotogramma ha fornito pixel. {report} salva un JSON con parametri, fotogrammi accettati e scartati e motivo di un’interruzione."
+      ]
+    },
+    {
+      "title": "Personalizza l’interfaccia",
+      "p": [
+        "In {view}, scegli {theme} e {language}. {gradients} controlla i bagliori. Con le sfumature attive, {animations} permette di attivare o disattivare il movimento del titolo e dei controlli. Le preferenze vengono salvate automaticamente.",
+        "Apri {about} per controllare la versione installata e accedere al sito, al repository e alla pagina delle donazioni. La lingua di questa guida si sceglie in alto ed è indipendente da quella dell’app."
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "La composizione si ferma su un fotogramma. Come continuo?",
+      "Controlla l’ultimo fotogramma accettato, accorcia l’intervallo e riporta il passo a 1. Per un errore isolato, {skip} confronta i fotogrammi successivi con l’ultimo accettato. Dopo un vero cambio di scena inizia un altro mosaico."
+    ],
+    [
+      "Perché lo zoom lascia righe o contorni doppi?",
+      "Prova {zoom_motion} con fotogrammi ravvicinati e {feather}. Esamina le giunzioni e applica una rifinitura leggera. Rotazione, prospettiva, parallasse ed elementi animati possono impedire un allineamento unico per tutta la scena."
+    ],
+    [
+      "Ho raggiunto il limite di dimensione o il video non si apre.",
+      "Riduci {resolution} o dividi l’intervallo. {limit} imposta la dimensione massima del mosaico in megapixel. La lettura video dipende dal codec. Prova una copia MP4 codificata in H.264."
+    ]
+  ],
+  "captions": [
+    "Fotogramma originale della demo con l’intervallo impostato da 1 a 37.",
+    "Controlli di allineamento, fusione e ritaglio con la larghezza della sfumatura visibile.",
+    "Il robot completo nel mosaico, con i controlli di rifinitura e il registro.",
+    "Scheda dell’aspetto in tema chiaro con lingua, bagliori e animazioni."
+  ]
+}

@@ -4,7 +4,7 @@ Pacote portátil com Python e bibliotecas incluídos. Não precisa instalar Pyth
 
 ## Abrir
 
-1. Baixe `Framosik-0.5.0-beta.3-Linux-x86_64.tar.gz` na release v0.5.0-beta.3.
+1. Baixe `Framosik-1.0.0-Linux-x86_64.tar.gz` na release v1.0.0.
 2. Extraia o arquivo inteiro pelo gerenciador de arquivos.
 3. Abra o executável `Framosik` dentro da pasta `Framosik`.
 
@@ -33,11 +33,11 @@ Abra pelo terminal para ver o erro completo. Erros Python de inicialização tam
 O arquivo `.sha256` acompanha o pacote. Na pasta dos downloads:
 
 ```sh
-sha256sum -c Framosik-0.5.0-beta.3-Linux-x86_64.tar.gz.sha256
+sha256sum -c Framosik-1.0.0-Linux-x86_64.tar.gz.sha256
 ```
 
 O GitHub Actions executa os testes do algoritmo/interface, abre o executável empacotado e repete a abertura após extrair o tar para outra pasta (com espaços), usando X11 virtual. Isso não substitui testes com vídeos reais e drivers da sua máquina.
 
 Para compilar, use Python 3.12 em ambiente virtual, instale `requirements.txt` e `pyinstaller==6.22.3`; instale também `xvfb` e `xauth` além das bibliotecas gráficas acima. Execute `python build_tools/build_linux.py`.
 
-O workflow pode adicionar o port a uma release existente: ele obtém o código da tag indicada e usa o script de empacotamento da revisão que disparou o workflow. A tag e o pacote Windows não são alterados. Não sobrescreve assets existentes. A v0.2.0 permanece como ponto de retorno.
+O workflow pode adicionar o port a uma release existente: ele obtém o código da tag indicada e usa o script de empacotamento da revisão que disparou o workflow. A tag e o pacote Windows não são alterados. Não sobrescreve assets existentes. A versão estável anterior está preservada na branch `legado` e na release v0.4.1.

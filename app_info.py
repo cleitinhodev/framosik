@@ -1,7 +1,7 @@
 from pathlib import Path
 NAME = 'Framosik'
-# A version change on estilo starts the Windows and Linux beta release workflow.
-VERSION = '0.5.0-beta.3'
+# The stable release, window header and About tab use this version.
+VERSION = '1.0.0'
 ROOT = Path(__file__).resolve().parent
 ICONS = ROOT / 'assets' / 'icons'
 LINKS = {

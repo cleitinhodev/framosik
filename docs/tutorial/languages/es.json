@@ -1,0 +1,88 @@
+{
+  "ui": {
+    "guide": "Guía de uso",
+    "hero1": "De un movimiento",
+    "hero2": "a una sola imagen.",
+    "intro": "Une los fotogramas de una escena para revelar todo el recorrido de la cámara. Explora la demostración y repite el proceso con tu propio GIF o vídeo.",
+    "start": "Empezar el tutorial",
+    "download": "Descargar Framosik",
+    "demo": "Demostración interactiva",
+    "source": "Fotograma original",
+    "panorama": "Imagen compuesta",
+    "scrub": "Arrastra para recorrer los 37 fotogramas.",
+    "contents": "En esta guía",
+    "help": "Preguntas frecuentes",
+    "close": "Cerrar",
+    "enlarge": "Ampliar captura",
+    "releases": "Versiones",
+    "links": "Enlaces del proyecto",
+    "skip": "Ir al tutorial",
+    "language": "Idioma del tutorial",
+    "back": "Volver al inicio"
+  },
+  "sections": [
+    {
+      "title": "Abre Framosik",
+      "p": [
+        "En Windows x64, extrae el ZIP completo y abre {exe}. En Linux x86_64, extrae el .tar.gz y ejecuta {bin} dentro de la carpeta Framosik. Conserva {internal} junto al ejecutable.",
+        "Pulsa {open} o {ctrlO} y elige {demoFile}, incluido en el paquete. El primer fotograma muestra los pies del robot. La cámara recorre la misma ilustración de abajo arriba en 37 fotogramas."
+      ]
+    },
+    {
+      "title": "Delimita una sola escena",
+      "p": [
+        "En {original}, mueve el cursor de la línea de tiempo o usa {play} y las flechas para encontrar los extremos. Pulsa {mark_start} y {mark_end}, o introduce los números en {first} y {last}. Se incluyen ambos extremos.",
+        "Para la demostración, usa del 1 al 37 y deja {step} en 1. En tu vídeo, termina antes de un corte o una transición. Un paso mayor reduce el trabajo, pero también el detalle compartido entre fotogramas."
+      ]
+    },
+    {
+      "title": "Elige la alineación y la mezcla",
+      "p": [
+        "En {movement}, usa {vertical} para el robot, {horizontal} para un recorrido lateral o {free} para una diagonal. Elige {zoom_motion} cuando la cámara se acerque o aleje con un cambio de escala uniforme.",
+        "En {mode}, {preserve} conserva los trazos existentes. {feather} mezcla los bordes en una franja definida por {feather_width}. {average} combina los píxeles comunes y puede duplicar los contornos si el personaje se mueve.",
+        "Empieza con {similarity} al 65% y {overlap} al 20%. El primero exige un grado de coincidencia, el segundo una superficie común mínima. Con {crop} puedes quitar una franja fija de subtítulos de cada fotograma en píxeles de origen."
+      ]
+    },
+    {
+      "title": "Observa cómo crece la imagen",
+      "p": [
+        "Pulsa {stitch}. La pestaña {result} muestra el montaje mientras se procesa. El registro indica la confianza y el desplazamiento de cada fotograma. Usa {fit} para ver la escena completa o {zoom} para inspeccionar los píxeles.",
+        "Gira la rueda sobre la imagen para ampliarla y arrastra para desplazarte. En el panel de opciones, la rueda recorre los controles. {cancel} conserva el resultado parcial. La demostración completa al 100% produce una imagen de 480 × 1080 px."
+      ]
+    },
+    {
+      "title": "Ajusta el acabado y exporta",
+      "p": [
+        "Al terminar el montaje se activa {finish} a la izquierda. Inspecciona una unión al 100%. Prueba un valor bajo de {seam_soft} para suavizar una línea o de {seam_color} para corregir una diferencia de color local. Pulsa {apply_finish}.",
+        "Cada aplicación parte del montaje original. Para comparar, pon ambos valores a cero y vuelve a aplicar. {export} o {ctrlS} guarda el último acabado aplicado, con transparencia en las zonas sin cobertura. {report} guarda los ajustes, los fotogramas aceptados y rechazados y el motivo de una interrupción en un archivo JSON."
+      ]
+    },
+    {
+      "title": "Personaliza la interfaz",
+      "p": [
+        "En {view}, elige {theme} y {language}. {gradients} controla el brillo. Con los degradados activos, {animations} permite activar o desactivar el movimiento del título y los controles. Las preferencias se guardan automáticamente.",
+        "En {about} puedes comprobar la versión instalada y visitar el sitio, el repositorio y la página de donaciones. El idioma de esta guía se elige en la parte superior, independientemente del de la aplicación."
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "El montaje se detuvo en un fotograma. ¿Qué hago?",
+      "Revisa el último fotograma aceptado, acorta el intervalo y vuelve al paso 1. Para un fallo aislado, {skip} intenta alinear los siguientes con el último aceptado. Después de un corte real, inicia otro montaje."
+    ],
+    [
+      "¿Por qué aparecen rayas o contornos dobles al usar zoom?",
+      "Prueba {zoom_motion} con fotogramas próximos y {feather}. Revisa las uniones y aplica un acabado suave. La rotación, la perspectiva, el paralaje y las capas animadas dificultan la alineación simultánea de toda la escena."
+    ],
+    [
+      "He alcanzado el límite de tamaño o no puedo abrir el vídeo.",
+      "Reduce {resolution} o divide el intervalo. {limit} limita los megapíxeles del montaje. La compatibilidad con vídeo depende del códec. Prueba una copia MP4 con vídeo H.264."
+    ]
+  ],
+  "captions": [
+    "Fotograma original de la demostración, con el intervalo del 1 al 37.",
+    "Controles de alineación, mezcla y recorte con el ancho de suavizado visible.",
+    "Robot completo en el montaje, con los controles de acabado y el registro.",
+    "Pestaña de apariencia con el tema claro, el idioma y los controles de animación."
+  ]
+}

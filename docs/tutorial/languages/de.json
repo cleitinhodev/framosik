@@ -1,0 +1,88 @@
+{
+  "ui": {
+    "guide": "Benutzerhandbuch",
+    "hero1": "Vom Kameraschwenk",
+    "hero2": "zum Gesamtbild.",
+    "intro": "Setze die Einzelbilder einer Szene zusammen und mache den gesamten Kameraschwenk sichtbar. Probiere die Demo aus und wiederhole die Schritte mit deinem eigenen GIF oder Video.",
+    "start": "Anleitung starten",
+    "download": "Framosik herunterladen",
+    "demo": "Interaktive Demo",
+    "source": "Einzelbild",
+    "panorama": "Gesamtbild",
+    "scrub": "Ziehe den Regler durch alle 37 Einzelbilder.",
+    "contents": "In diesem Handbuch",
+    "help": "Häufige Fragen",
+    "close": "Schließen",
+    "enlarge": "Bildschirmfoto vergrößern",
+    "releases": "Versionen",
+    "links": "Projektlinks",
+    "skip": "Zur Anleitung springen",
+    "language": "Sprache der Anleitung",
+    "back": "Nach oben"
+  },
+  "sections": [
+    {
+      "title": "Framosik öffnen",
+      "p": [
+        "Entpacke unter Windows x64 die ganze ZIP-Datei und öffne {exe}. Entpacke unter Linux x86_64 die .tar.gz-Datei und starte {bin} im Ordner Framosik. Der Ordner {internal} muss neben der Programmdatei liegen.",
+        "Wähle {open} oder drücke {ctrlO} und öffne die mitgelieferte Datei {demoFile}. Das erste Bild zeigt die Füße des Roboters. In 37 Einzelbildern fährt die Kamera an derselben Zeichnung nach oben."
+      ]
+    },
+    {
+      "title": "Eine Szene eingrenzen",
+      "p": [
+        "Verschiebe in {original} den Regler oder suche mit {play} und den Pfeilen den Anfang und das Ende. Klicke auf {mark_start} und {mark_end} oder trage die Nummern in {first} und {last} ein. Beide Grenzen gehören zur Auswahl.",
+        "Wähle für die Demo 1 bis 37 und lasse {step} auf 1. Beende eine eigene Szene vor dem nächsten Schnitt. Eine größere Schrittweite spart Rechenzeit, verringert aber den gemeinsamen Bildausschnitt."
+      ]
+    },
+    {
+      "title": "Ausrichtung und Überblendung wählen",
+      "p": [
+        "Wähle unter {movement} für den Roboter {vertical}, für einen seitlichen Schwenk {horizontal} und für einen diagonalen {free}. Nutze {zoom_motion}, wenn das Motiv gleichmäßig größer oder kleiner wird.",
+        "Unter {mode} erhält {preserve} bereits zusammengesetzte Konturen. {feather} überblendet die Ränder auf der unter {feather_width} gewählten Breite. {average} mischt die überlappenden Pixel und kann bei bewegten Figuren Doppelkonturen erzeugen.",
+        "Beginne mit 65 % für {similarity} und 20 % für {overlap}. Der erste Wert bestimmt die geforderte Ähnlichkeit, der zweite die gemeinsame Mindestfläche. Über {crop} kannst du einen festen Untertitelstreifen in Quellpixeln von jedem Bild abschneiden."
+      ]
+    },
+    {
+      "title": "Den Aufbau verfolgen",
+      "p": [
+        "Klicke auf {stitch}. Unter {result} wächst das Bild während der Verarbeitung. Das Protokoll zeigt Übereinstimmung und Versatz für jedes Bild. Mit {fit} siehst du die ganze Szene, mit {zoom} prüfst du einzelne Pixel.",
+        "Mit dem Mausrad zoomst du im Bild, durch Ziehen verschiebst du die Ansicht. Über dem Einstellungsbereich scrollt das Rad durch die Optionen. {cancel} erhält das Teilergebnis. Die vollständige Demo ergibt bei 100 % ein Bild mit 480 × 1080 px."
+      ]
+    },
+    {
+      "title": "Übergänge verbessern und exportieren",
+      "p": [
+        "Nach dem Zusammenfügen ist links {finish} verfügbar. Prüfe einen Übergang bei 100 %. Probiere einen niedrigen Wert für {seam_soft} gegen eine sichtbare Linie oder für {seam_color} gegen einen lokalen Farbunterschied. Klicke auf {apply_finish}.",
+        "Jede Anwendung geht vom ursprünglichen Mosaik aus. Setze zum Vergleich beide Werte auf null und wende sie erneut an. {export} oder {ctrlS} speichert die zuletzt angewendete Fassung mit transparenten unbedeckten Bereichen. {report} schreibt Einstellungen, angenommene und verworfene Bilder sowie den Grund eines Abbruchs in eine JSON-Datei."
+      ]
+    },
+    {
+      "title": "Die Oberfläche anpassen",
+      "p": [
+        "Unter {view} wählst du {theme} und {language}. {gradients} steuert den Leuchteffekt. Bei aktiven Farbverläufen schaltet {animations} die Bewegung von Titel und Bedienelementen um. Die Einstellungen werden automatisch gespeichert.",
+        "Unter {about} findest du die installierte Version und Links zu Website, Repository und Spendenseite. Die Sprache dieser Anleitung lässt sich oben auf der Seite unabhängig vom Programm einstellen."
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "Die Verarbeitung stoppt bei einem bestimmten Bild. Was hilft?",
+      "Prüfe das letzte angenommene Bild, verkürze den Bereich und setze die Schrittweite auf 1. Bei einem einzelnen Ausreißer vergleicht {skip} die folgenden Bilder mit dem letzten angenommenen Bild. Beginne nach einem Szenenschnitt ein neues Mosaik."
+    ],
+    [
+      "Warum entstehen Streifen oder Doppelkonturen beim Zoom?",
+      "Probiere {zoom_motion} mit eng aufeinanderfolgenden Bildern und {feather}. Prüfe die Übergänge und bearbeite sie nur leicht. Rotation, Perspektive, Parallaxe und animierte Ebenen erschweren die Ausrichtung mit einer einzigen Transformation."
+    ],
+    [
+      "Das Größenlimit ist erreicht oder das Video lässt sich nicht öffnen.",
+      "Verringere {resolution} oder teile die Szene auf. {limit} begrenzt die Mosaikgröße in Megapixeln. Die Videowiedergabe hängt vom Codec ab. Probiere eine mit H.264 kodierte MP4-Kopie."
+    ]
+  ],
+  "captions": [
+    "Einzelbild der Demo mit dem ausgewählten Bereich von 1 bis 37.",
+    "Ausrichtung, Überblendung und Beschnitt mit sichtbarer Übergangsbreite.",
+    "Vollständiger Roboter im Mosaik mit aktivierter Nachbearbeitung und Protokoll.",
+    "Darstellung im hellen Design mit Sprache, Leuchteffekten und Animationen."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "ui": {
+    "guide": "Guide d’utilisation",
+    "hero1": "D’un mouvement",
+    "hero2": "à une image entière.",
+    "intro": "Assemblez les images d’une scène pour retrouver tout ce que la caméra a parcouru. Essayez la démonstration, puis reprenez les étapes avec votre GIF ou votre vidéo.",
+    "start": "Commencer le tutoriel",
+    "download": "Télécharger Framosik",
+    "demo": "Démonstration interactive",
+    "source": "Image source",
+    "panorama": "Image assemblée",
+    "scrub": "Faites glisser le curseur pour parcourir les 37 images.",
+    "contents": "Dans ce guide",
+    "help": "Questions fréquentes",
+    "close": "Fermer",
+    "enlarge": "Agrandir la capture",
+    "releases": "Versions",
+    "links": "Liens du projet",
+    "skip": "Accéder au tutoriel",
+    "language": "Langue du tutoriel",
+    "back": "Retour en haut"
+  },
+  "sections": [
+    {
+      "title": "Ouvrir Framosik",
+      "p": [
+        "Sous Windows x64, extrayez tout le ZIP et ouvrez {exe}. Sous Linux x86_64, extrayez le .tar.gz et lancez {bin} dans le dossier Framosik. Gardez {internal} à côté de l’exécutable.",
+        "Choisissez {open} ou appuyez sur {ctrlO}, puis ouvrez {demoFile}, fourni avec l’application. La première image montre les pieds du robot. La caméra remonte la même illustration en 37 images."
+      ]
+    },
+    {
+      "title": "Délimiter une seule scène",
+      "p": [
+        "Dans {original}, déplacez le curseur ou utilisez {play} et les flèches pour repérer les deux extrémités. Cliquez sur {mark_start} et {mark_end}, ou saisissez les numéros dans {first} et {last}. Les deux bornes sont incluses.",
+        "Pour la démo, choisissez les images 1 à 37 et laissez {step} à 1. Dans votre vidéo, arrêtez-vous avant un changement de plan. Un pas plus grand réduit le nombre d’images à traiter, mais aussi la zone commune."
+      ]
+    },
+    {
+      "title": "Régler l’alignement et la fusion",
+      "p": [
+        "Dans {movement}, utilisez {vertical} pour le robot, {horizontal} pour un déplacement latéral ou {free} pour une diagonale. Choisissez {zoom_motion} pour un rapprochement ou un éloignement avec un changement d’échelle uniforme.",
+        "Dans {mode}, {preserve} garde les traits déjà assemblés. {feather} fond les bords sur la largeur définie par {feather_width}. {average} mélange les pixels communs et peut dédoubler les contours d’un sujet en mouvement.",
+        "Commencez avec {similarity} à 65 % et {overlap} à 20 %. Le premier règle la ressemblance exigée, le second la surface commune minimale. Avec {crop}, retirez de chaque image une bande de sous-titres fixe, en pixels de la source."
+      ]
+    },
+    {
+      "title": "Suivre l’assemblage",
+      "p": [
+        "Cliquez sur {stitch}. L’onglet {result} montre l’image qui grandit pendant le calcul. Le journal indique la confiance et le déplacement pour chaque image. Utilisez {fit} pour voir toute la scène ou {zoom} pour examiner les pixels.",
+        "La molette zoome sur l’image et le glisser permet de se déplacer. Sur le panneau des réglages, la molette fait défiler les options. {cancel} conserve le résultat partiel. La démo entière à 100 % donne une image de 480 × 1080 px."
+      ]
+    },
+    {
+      "title": "Ajuster la finition et exporter",
+      "p": [
+        "À la fin du calcul, {finish} devient disponible à gauche. Examinez un raccord à 100 %. Essayez une faible valeur de {seam_soft} pour atténuer une ligne, ou de {seam_color} pour corriger un écart de couleur local. Cliquez sur {apply_finish}.",
+        "Chaque application repart de l’assemblage initial. Pour comparer, remettez les deux valeurs à zéro et appliquez à nouveau. {export} ou {ctrlS} enregistre la dernière finition appliquée, avec de la transparence dans les zones non couvertes. {report} crée un JSON contenant les réglages, les images acceptées ou rejetées et la cause d’un arrêt."
+      ]
+    },
+    {
+      "title": "Adapter l’interface",
+      "p": [
+        "Dans {view}, choisissez {theme} et {language}. {gradients} règle les lueurs. Lorsque les dégradés sont actifs, {animations} anime ou immobilise le titre et les commandes. Les préférences sont enregistrées automatiquement.",
+        "Ouvrez {about} pour vérifier la version installée et accéder au site, au dépôt ou à la page de dons. Vous pouvez choisir la langue de ce guide en haut de la page indépendamment de l’application."
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "L’assemblage s’arrête sur une image. Que faire ?",
+      "Repérez la dernière image acceptée, raccourcissez la séquence et ramenez le pas à 1. Pour un échec isolé, {skip} essaie les images suivantes à partir de la dernière acceptée. Après un changement de plan, commencez un autre assemblage."
+    ],
+    [
+      "Pourquoi le zoom laisse-t-il des rayures ou des contours doubles ?",
+      "Essayez {zoom_motion} avec des images rapprochées et {feather}. Examinez les raccords puis appliquez une finition légère. Rotation, perspective, parallaxe et éléments animés peuvent empêcher un alignement uniforme de la scène."
+    ],
+    [
+      "La limite de taille est atteinte ou la vidéo ne s’ouvre pas.",
+      "Réduisez {resolution} ou divisez la séquence. {limit} fixe la taille maximale en mégapixels. La lecture vidéo dépend du codec. Essayez une copie MP4 encodée en H.264."
+    ]
+  ],
+  "captions": [
+    "Image source de la démo avec l’intervalle réglé de 1 à 37.",
+    "Réglages d’alignement, de fusion et de recadrage avec la largeur de transition visible.",
+    "Robot assemblé en entier avec les réglages de finition et le journal.",
+    "Onglet d’apparence en thème clair, avec les réglages de langue, de lueur et d’animation."
+  ]
+}

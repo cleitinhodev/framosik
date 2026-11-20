@@ -1,0 +1,88 @@
+{
+  "ui": {
+    "guide": "User guide",
+    "hero1": "From a camera pan",
+    "hero2": "to one image.",
+    "intro": "Join the frames of a scene to reveal everything the camera travelled across. Explore the demo, then follow the same steps with your own GIF or video.",
+    "start": "Start the tutorial",
+    "download": "Download Framosik",
+    "demo": "Interactive demo",
+    "source": "Source frame",
+    "panorama": "Stitched image",
+    "scrub": "Drag to explore all 37 frames.",
+    "contents": "In this guide",
+    "help": "Troubleshooting",
+    "close": "Close",
+    "enlarge": "Enlarge screenshot",
+    "releases": "Releases",
+    "links": "Project links",
+    "skip": "Skip to the tutorial",
+    "language": "Tutorial language",
+    "back": "Back to top"
+  },
+  "sections": [
+    {
+      "title": "Launch Framosik",
+      "p": [
+        "On Windows x64, extract the entire ZIP and open {exe}. On Linux x86_64, extract the .tar.gz and run {bin} inside the Framosik folder. Keep {internal} next to the executable.",
+        "Choose {open} or press {ctrlO} and open {demoFile} from the package. The first frame shows the robot’s feet. The camera travels up the same illustration over 37 frames."
+      ]
+    },
+    {
+      "title": "Mark a single scene",
+      "p": [
+        "In {original}, scrub the timeline or use {play} and the arrows to find both ends. Click {mark_start} and {mark_end}, or type the numbers into {first} and {last}. Both endpoints are included.",
+        "For the demo, use 1 through 37 and leave {step} at 1. In your own clip, stop before a cut or transition. A larger step processes fewer frames but leaves less shared detail for alignment."
+      ]
+    },
+    {
+      "title": "Choose alignment and blending",
+      "p": [
+        "Under {movement}, pick {vertical} for the robot, {horizontal} for a sideways pan, or {free} for a diagonal pan. Use {zoom_motion} when the view moves closer or farther away with a uniform change in scale.",
+        "Under {mode}, {preserve} keeps existing linework. {feather} blends edges across the distance set by {feather_width}. {average} mixes shared pixels and can double outlines if the subject moves.",
+        "Start with {similarity} at 65% and {overlap} at 20%. The first sets how closely frames must match, the second how much area they must share. Use {crop} to remove a fixed subtitle strip from each frame, measured in source pixels."
+      ]
+    },
+    {
+      "title": "Watch the image grow",
+      "p": [
+        "Click {stitch}. The {result} tab shows the growing image during processing. The log records confidence and displacement for each frame. Use {fit} for the whole scene or {zoom} to inspect individual pixels.",
+        "Scroll over the image to zoom and drag to pan. Over the options panel, the wheel scrolls through the controls. If you need to stop, {cancel} keeps the partial result. The full demo at 100% produces a 480 × 1080 px image."
+      ]
+    },
+    {
+      "title": "Finish and export",
+      "p": [
+        "Once stitching ends, {finish} becomes available on the left. Inspect a seam at 100%. Start with a low {seam_soft} value to soften a line or use {seam_color} for a local colour difference. Click {apply_finish}.",
+        "Each application starts from the original mosaic. To compare, return both values to zero and apply again. {export} or {ctrlS} saves the last applied finish, with transparency in areas no frame covered. {report} writes a JSON file with settings, accepted and rejected frames, and the reason for an interruption."
+      ]
+    },
+    {
+      "title": "Make it your workspace",
+      "p": [
+        "Open {view} to select the {theme} and {language}. {gradients} controls the glow. With gradients enabled, {animations} switches motion in the title and controls on or off. Preferences are saved automatically.",
+        "Open {about} to check the installed version or visit the website, repository and donation page. The language selector at the top of this guide works independently of the app."
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "Stitching stopped at a particular frame. What can I do?",
+      "Check the last accepted frame, shorten the range and return the step to 1. For an isolated mismatch, {skip} tries subsequent frames against the last accepted one. Start a new mosaic after a true scene cut."
+    ],
+    [
+      "Why do I see stripes or double outlines in a zoom?",
+      "Try {zoom_motion} with closely spaced frames and {feather}. Inspect the seams, then apply a light finish. Rotation, perspective, parallax and animated layers can prevent one transform from aligning the entire scene."
+    ],
+    [
+      "I reached the size limit or my video will not open.",
+      "Lower {resolution} or split the range. {limit} caps the mosaic size in megapixels. Video support depends on the codec. If a file will not open, try an MP4 copy encoded with H.264."
+    ]
+  ],
+  "captions": [
+    "The original demo frame with the range set to frames 1 through 37.",
+    "Alignment, blending and crop controls with the feather width visible.",
+    "The complete robot in the stitched view with finishing controls enabled and the processing log below.",
+    "The Appearance tab in the light theme, with language, glow and animation controls."
+  ]
+}

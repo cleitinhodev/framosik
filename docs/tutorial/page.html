@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EDITAR AQUI / EDIT HERE
+     A versão é informada sem o “v”. Os downloads padrão são montados a partir
+     do repositório e da versão. Preencha uma substituição para usar outro endereço.
+     O arquivo pronto funciona sozinho, inclusive com as imagens offline. -->
+<script>
+const FRAMOSIK_CONFIG = {
+  version: "@@version@@",
+  website: "https://www.bugzinho.com/",
+  repository: "https://github.com/cleitinhodev/framosik",
+  donate: "https://www.bugzinho.com/donate",
+  releases: "",    // vazio = repository + /releases
+  download: "",    // vazio = página da versão indicada acima
+  windows: "",     // vazio = ZIP desta versão nos releases
+  linux: ""        // vazio = tar.gz desta versão nos releases
+};
+</script>
+<title>Framosik · Guia de uso</title>
+<meta name="theme-color" content="#100d1e">
+<link rel="icon" href="@@icon@@">
+<style>
+:root{color-scheme:dark;--bg:#100e1b;--panel:#1a1729;--ink:#f7f4ff;--muted:#c2bacc;--line:#393447;--accent:#c9a6ff;--gold:#ffce80;--wrap:1192px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:22px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}button,select,input{font:inherit}button,a,select,input{touch-action:manipulation}a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:.25em}button,select{cursor:pointer}button{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:4px}.wrap{width:min(var(--wrap),calc(100% - 72px));margin:auto}.top{background:#100d1e;border-bottom:1px solid var(--line)}.top-inner,.brand,.nav,.actions,.demo-top,.demo-bar,.figure-foot,.links,.footerline{display:flex;align-items:center}.top-inner{min-height:75px;justify-content:space-between;gap:18px}.brand{gap:10px;font-weight:780;font-size:21px;letter-spacing:-.045em}.brand img{width:40px;height:40px}.nav{gap:22px;font-size:.91rem}.nav a,.footerline{color:var(--muted)}select{background:#241e33;border:1px solid #574866;color:#f8f4ff;border-radius:8px;padding:7px 11px;max-width:100%}.skip{position:fixed;left:1rem;top:-120px;z-index:9;background:var(--gold);color:#211326;padding:.5rem}.skip:focus{top:1rem}
+.hero{background:radial-gradient(ellipse at 76% 42%,#39234d80,transparent 54%),linear-gradient(115deg,#100e1b 18%,#1a142a 90%);border-bottom:1px solid var(--line)}.hero-inner{display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1fr);gap:clamp(30px,5vw,85px);align-items:center;padding-block:clamp(48px,6vw,82px)}.kicker{display:flex;align-items:center;gap:12px;color:#d6c9e5;font-weight:650}.ver{font:650 12px/1.5 ui-monospace,Consolas,monospace;letter-spacing:.04em;padding:2px 8px;border:1px solid #705781;border-radius:5px;color:#e3c5f8}.hero h1{margin:20px 0 18px;font-size:clamp(3rem,5.1vw,4.85rem);line-height:1.02;letter-spacing:-.064em;text-wrap:balance}.hero h1 em{display:block;font-style:normal;color:var(--accent);background:linear-gradient(100deg,#c795ff,#f0b2d3 58%,#ffcc7f);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.lead{max-width:49ch;color:#d0c7db;font-size:1.09rem;margin:0}.actions{gap:12px;flex-wrap:wrap;margin-top:28px}.action{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid #5d4d6c;border-radius:9px;padding:10px 16px;background:#211b2c;font-weight:670}.action.primary{color:#22162b;background:linear-gradient(108deg,#d7bdff,#f1c4d9);border-color:transparent}.action:hover,.shot:hover{filter:brightness(1.09)}.action:after{content:'↓';font-weight:750}.action.primary:after{content:'→'}
+.demo{background:#181426;border:1px solid #59416e;border-radius:17px;box-shadow:0 24px 65px #0005;overflow:hidden;position:relative}.demo-top,.demo-bar{justify-content:space-between;gap:12px;padding:11px 17px}.demo-top{border-bottom:1px solid #443751;font-size:.85rem;font-weight:650}.dots{display:inline-flex;gap:4px}.dots i{width:6px;height:6px;background:#b394ed;border-radius:1px;animation:pixel 5s ease-in-out infinite}.dots i:nth-child(2){background:#e8a7d8;animation-delay:.2s}.dots i:nth-child(3){background:#f9bc68;animation-delay:.4s}@keyframes pixel{0%,18%,100%{transform:translateY(0);opacity:1}8%{transform:translateY(-3px);opacity:.55}}
+.demo-stage{display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr);align-items:center;gap:8px;padding:18px clamp(12px,3vw,30px) 14px;background-color:#1c172b;background-image:radial-gradient(#493851 0.8px,transparent .9px);background-size:13px 13px}.station{display:grid;justify-items:center;gap:8px;min-width:0}.station span{font-size:.78rem;text-align:center;color:#e4d8ec;font-weight:660;line-height:1.25;min-height:1.25em}.tile,.map{position:relative;overflow:hidden;background-color:#131b2e;background-image:var(--art);background-repeat:no-repeat}.tile{width:100%;max-width:215px;aspect-ratio:4/3;background-size:100% auto;border:2px solid #d0b4ff;border-radius:5px;box-shadow:0 0 16px #c08cff29}.map{width:min(100%,95px);aspect-ratio:4/9;background-size:100% 100%;outline:1px solid #65556f;border-radius:3px}.map b{display:block;position:absolute;left:0;right:0;height:33.333333%;border:2px solid var(--gold);background:#ffc26112;box-shadow:0 0 0 200px #0c08164a}.arrow{color:var(--gold);font-size:1.4rem;text-align:center}.demo-bar{flex-wrap:wrap;border-top:1px solid #443751;font-size:.82rem}.demo-bar label{color:var(--muted)}.demo-bar output{color:var(--gold);font:650 .84rem ui-monospace,monospace}.transport{display:inline-flex;align-items:center;gap:9px}.transport button{border:1px solid #695478;border-radius:5px;background:#2b2237;color:var(--ink);padding:2px 8px;font-size:.8rem}.transport button:before{content:"▶";margin-right:6px;color:var(--accent)}.transport button[aria-pressed="true"]:before{content:"Ⅱ"}.demo-bar input{margin:0;width:100%;accent-color:var(--accent);cursor:ew-resize}
+main{padding-bottom:20px}.index{padding:34px 0 32px;border-bottom:1px solid var(--line)}.index h2{font-size:1.28rem;margin:0 0 14px;letter-spacing:-.025em}.index ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none;counter-reset:steps}.index li{counter-increment:steps;min-width:0}.index a{display:flex;align-items:baseline;gap:10px;height:100%;background:#1b1827;border:1px solid #353041;border-radius:7px;padding:8px 11px;font-size:.87rem;line-height:1.4}.index a:before{content:counter(steps,decimal-leading-zero);color:var(--gold);font:600 .76rem ui-monospace,monospace}.chapter{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr);align-items:center;gap:clamp(25px,4vw,56px);padding:48px 0;border-bottom:1px solid var(--line)}.chapter.plain{grid-template-columns:minmax(0,.67fr) minmax(0,1.33fr);align-items:start}.chapter.plain .copy{max-width:75ch}.stephead{display:flex;align-items:baseline;gap:14px;margin:0 0 17px;line-height:1.18;letter-spacing:-.04em;font-size:clamp(1.6rem,2.7vw,2.32rem);text-wrap:balance}.stephead small{font:650 .82rem ui-monospace,monospace;color:var(--gold);letter-spacing:.02em}.copy p,.answer{margin:0 0 12px;color:var(--muted)}.copy p:last-child{margin-bottom:0}.control{font-weight:620;color:#e3d0fc}.localized{color:#d0c6d8}code,kbd{font:85%/1.5 ui-monospace,Consolas,monospace;color:#f3d8ac;background:#292232;border:1px solid #463848;padding:1px 4px;border-radius:4px;overflow-wrap:anywhere}figure{margin:0;min-width:0}.shot{width:100%;display:block;cursor:zoom-in;border:1px solid #51405f;padding:6px;background:#241c31;border-radius:11px;line-height:0;box-shadow:0 14px 34px #0003}.shot img{border-radius:6px;width:100%;height:auto}.figure-foot{align-items:start;gap:12px;justify-content:space-between;margin-top:9px;font-size:.82rem;line-height:1.45;color:var(--muted)}.figure-foot span:last-child{color:var(--accent);flex:none}.packages{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.packages a,.footlinks a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.faq{padding:44px 0}.faq h2,.project h2{margin:0 0 16px;font-size:1.65rem;letter-spacing:-.03em}.faq details{border-top:1px solid var(--line);padding:12px 0}.faq details:last-child{border-bottom:1px solid var(--line)}summary{cursor:pointer;font-weight:630}.answer{margin:10px 0 4px;max-width:78ch}.project{padding:30px 0 38px;border-top:1px solid var(--line);background:#171320}.links{flex-wrap:wrap;gap:10px 24px}.footerline{margin:24px 0 0;gap:13px;font-size:.82rem}.footerline a{margin-left:auto}
+dialog{color:var(--ink);background:#191524;border:1px solid #756186;border-radius:12px;padding:10px;max-width:min(96vw,1320px);width:max-content;max-height:94vh;overflow:auto}dialog::backdrop{background:#07050fe6}dialog img{width:auto;max-width:100%;max-height:76vh;object-fit:contain;display:block;margin:auto}dialog p{margin:8px}.dialogbar{display:flex;justify-content:flex-end;margin-bottom:6px}.dialogbar button{border-radius:6px;background:#30273e;border:1px solid #775e8d;padding:4px 12px}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}noscript{display:block;padding:24px;color:white}
+@media(max-width:850px){.hero-inner{gap:24px}.nav{gap:12px}.chapter{grid-template-columns:1fr 1fr;gap:24px}.index ol{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.wrap{width:calc(100% - 34px)}.top-inner{min-height:62px}.brand{font-size:19px}.brand img{width:33px;height:33px}.nav>a{display:none}.nav select{font-size:.88rem;max-width:155px}.hero-inner,.chapter,.chapter.plain{grid-template-columns:minmax(0,1fr)}.hero-inner{padding:38px 0 26px}.hero h1{font-size:clamp(2.55rem,10.8vw,4rem)}.actions{margin-top:19px}.demo-stage{grid-template-columns:minmax(0,1fr) 20px minmax(0,.8fr);padding:14px 24px}.map{width:74px}.chapter,.chapter.plain{gap:13px;padding:32px 0}.chapter.plain .stephead{margin-bottom:0}.index ol{grid-template-columns:repeat(2,minmax(0,1fr))}.index a{height:100%}.stephead{margin-bottom:10px}.lead{font-size:1rem}.footerline{flex-wrap:wrap}}
+@media(max-width:375px){.index ol{grid-template-columns:1fr}.demo-bar{padding-inline:10px}.actions{gap:8px}.action{padding:8px 10px}}
+@media(prefers-reduced-motion:no-preference){.hero h1 em{animation:assemble .68s steps(12,end) both}@keyframes assemble{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}}.shot{transition:filter .18s,box-shadow .18s}.shot:hover{box-shadow:0 5px 24px #bd8dfa22}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}@media print{.nav,.actions,.packages,.skip,.demo-bar,.dots,.footerline,.index,dialog{display:none}.wrap{width:100%}.hero-inner,.chapter,.chapter.plain{display:block}.hero-inner,.chapter{padding:12px 0}body{color:#111;background:white}.copy p,.answer,.control,.localized,figcaption{color:#222}figure{break-inside:avoid;max-width:55%}.hero,.project{background:white}.hero h1 em{color:#422471;-webkit-text-fill-color:currentColor}.faq details>.answer{display:block}}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#guide" id="skip"></a>
+<header class="top"><div class="wrap top-inner"><a class="brand" href="#top"><img id="brandicon" alt="" width="40" height="40"><span>Framosik</span></a><nav class="nav"><a href="#guide" id="navguide"></a><a href="#help" id="navhelp"></a><label><span class="sr" id="langlabel"></span><select id="language"></select></label></nav></div></header>
+<div class="hero"><div class="wrap hero-inner"><div><div class="kicker"><span id="guideName"></span><span class="ver" id="version"></span></div><h1><span id="hero1"></span> <em id="hero2"></em></h1><p class="lead" id="intro"></p><div class="actions"><a class="action primary" href="#install" id="start"></a><a class="action" id="get"></a></div></div>
+<div class="demo"><div class="demo-top"><strong id="demoName"></strong><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div><div class="demo-stage"><div class="station"><span id="sourceLabel"></span><div class="tile" id="tile" aria-hidden="true"></div></div><span class="arrow" aria-hidden="true">→</span><div class="station"><span id="panLabel"></span><div class="map" aria-hidden="true"><b id="band"></b></div></div></div><div class="demo-bar"><label for="scrub" id="scrubLabel"></label><span class="transport"><output for="scrub" id="position"></output><button id="demoPlay" type="button"></button></span><input id="scrub" type="range" min="1" max="37" value="30"></div></div></div></div>
+<main class="wrap" id="guide" tabindex="-1"><nav class="index" aria-labelledby="indexHeading"><h2 id="indexHeading"></h2><ol id="chapters"></ol></nav><div id="steps"></div><section class="faq" id="help" aria-labelledby="helpHeading"><h2 id="helpHeading"></h2><div id="questions"></div></section></main>
+<footer class="project"><div class="wrap"><h2 id="linkHeading"></h2><nav class="links footlinks" id="external"></nav><p class="footerline"><span>Framosik · CleitinhoDEV / Bugzinho</span><a href="#top" id="back"></a></p></div></footer>
+<dialog id="viewer" aria-labelledby="viewerCaption"><div class="dialogbar"><button type="button" id="close"></button></div><img id="fullshot" alt=""><p id="viewerCaption"></p></dialog>
+<noscript>Ative o JavaScript para usar o guia interativo. Enable JavaScript to use this interactive guide.</noscript>
+<script type="application/json" id="texts">@@locales@@</script>
+<script type="application/json" id="assets">@@images@@</script>
+<script>
+'use strict';
+const {names, app, guides} = JSON.parse(document.getElementById('texts').textContent);
+const assets = JSON.parse(document.getElementById('assets').textContent);
+const $ = id => document.getElementById(id);
+const sectionIds = ['install','range','alignment','stitch','finish','appearance'];
+const shots = {1:['workspace',0],2:['blending',1],4:['result',2],5:['appearance',3]};
+const literals = {exe:'Framosik.exe',bin:'./Framosik',internal:'_internal',demoFile:'examples/demo_vertical.gif',ctrlO:'Ctrl+O',ctrlS:'Ctrl+S'};
+const cfg = FRAMOSIK_CONFIG;
+const repo = cfg.repository.replace(/\/+$/,'');
+const releases = cfg.releases || repo + '/releases';
+const prefix = repo + '/releases/download/v' + cfg.version + '/Framosik-' + cfg.version;
+const urls = {website:cfg.website,repository:repo,donate:cfg.donate,releases,
+  download:cfg.download || repo + '/releases/tag/v' + cfg.version,
+  windows:cfg.windows || prefix + '-Windows-x64.zip',linux:cfg.linux || prefix + '-Linux-x86_64.tar.gz'};
+const tag = {pt:'pt-BR',zh:'zh-CN'};
+function element(name, text, cls) {
+  const node = document.createElement(name);
+  if (text != null) node.textContent = text;
+  if (cls) node.className = cls;
+  return node;
+}
+function link(label, url) {
+  const a = element('a',label); a.href = url; return a;
+}
+function fillText(node, text, lang) {
+  for (const part of text.split(/(\{[A-Za-z_]+\})/g)) {
+    if (!part.startsWith('{')) { node.append(part); continue; }
+    const key = part.slice(1,-1);
+    if (Object.hasOwn(literals,key)) {
+      node.append(element(key.startsWith('ctrl')?'kbd':'code',literals[key]));
+      continue;
+    }
+    const label = element('span',app.en[key],'control');
+    label.lang = 'en'; node.append(label);
+    if (lang !== 'en' && app[lang][key] !== app.en[key]) node.append(element('span',' (' + app[lang][key] + ')','localized'));
+  }
+}
+function figure(key, caption, ui) {
+  const fig = element('figure'), btn = element('button',null,'shot'), im = element('img');
+  btn.type = 'button'; btn.setAttribute('aria-label',ui.enlarge + ' · ' + caption);
+  im.src = assets[key]; im.alt = caption; im.width = 1250; im.height = 840; im.loading = 'lazy';
+  btn.append(im); btn.onclick = () => {
+    $('fullshot').src = assets[key]; $('fullshot').alt = caption;
+    $('viewerCaption').textContent = caption; $('viewer').showModal(); $('close').focus();
+  };
+  const cap = element('figcaption',null,'figure-foot'), magnify = element('span','⤢');
+  magnify.setAttribute('aria-hidden','true'); cap.append(element('span',caption),magnify); fig.append(btn,cap); return fig;
+}
+let playback = null;
+function showPlayState() {
+  const playing = playback !== null;
+  $('demoPlay').setAttribute('aria-pressed',String(playing));
+  $('demoPlay').textContent = app[$('language').value][playing?'pause':'play'];
+}
+function stopDemo() {
+  clearInterval(playback); playback=null; showPlayState();
+}
+function toggleDemo() {
+  if (playback !== null) { stopDemo(); return; }
+  if (Number($('scrub').value) === 37) { $('scrub').value=1; setFrame(); }
+  playback=setInterval(()=>{
+    $('scrub').stepUp(); setFrame();
+    if (Number($('scrub').value) === 37) stopDemo();
+  },140);
+  showPlayState();
+}
+function setFrame() {
+  const frame = Number($('scrub').value), ratio = (37-frame)/36;
+  $('position').textContent = String(frame).padStart(2,'0') + ' / 37';
+  $('tile').style.backgroundPosition = 'center ' + (ratio*100) + '%';
+  $('band').style.top = (ratio*100*2/3) + '%';
+}
+function render(lang) {
+  const {ui,sections,faq,captions} = guides[lang];
+  document.documentElement.lang = tag[lang] || lang;
+  document.title = 'Framosik · ' + ui.guide;
+  $('language').value = lang; showPlayState();
+  const labels = {skip:'skip',guideName:'guide',hero1:'hero1',hero2:'hero2',intro:'intro',start:'start',get:'download',demoName:'demo',sourceLabel:'source',panLabel:'panorama',scrubLabel:'scrub',navguide:'contents',navhelp:'help',langlabel:'language',indexHeading:'contents',helpHeading:'help',linkHeading:'links',back:'back',close:'close'};
+  for (const [id,key] of Object.entries(labels)) $(id).textContent = ui[key];
+  $('version').textContent = 'v' + cfg.version; $('get').href = urls.download;
+  $('chapters').replaceChildren(); $('steps').replaceChildren();
+  sections.forEach(({title,p},i) => {
+    const id = sectionIds[i], li = element('li'); li.append(link(title,'#'+id)); $('chapters').append(li);
+    const s = element('section',null,shots[i]?'chapter':'chapter plain'); s.id = id;
+    const copy = element('div',null,'copy'), h = element('h2',null,'stephead');
+    const num = element('small',String(i+1).padStart(2,'0')); num.setAttribute('aria-hidden','true'); h.append(num,title);
+    if (shots[i]) copy.append(h); else s.append(h);
+    for (const line of p) { const para = element('p'); fillText(para,line,lang); copy.append(para); }
+    if (i === 0) { const d = element('div',null,'packages'); d.append(link('Windows x64 · ZIP',urls.windows),link('Linux x86_64 · tar.gz',urls.linux)); copy.append(d); }
+    s.append(copy);
+    if (shots[i]) { const [key,index] = shots[i]; s.append(figure(key,captions[index],ui)); }
+    $('steps').append(s);
+  });
+  $('questions').replaceChildren();
+  for (const [q,a] of faq) { const d=element('details'), p=element('p',null,'answer'); fillText(p,a,lang); d.append(element('summary',q),p); $('questions').append(d); }
+  $('external').replaceChildren(...['website','repository','releases','donate'].map(k=>link(k==='releases'?ui.releases:app[lang][k],urls[k])));
+}
+const selector = $('language');
+for (const [key,name] of Object.entries(names)) { const opt = element('option',name); opt.value=key; opt.lang=tag[key]||key; selector.append(opt); }
+const normalise = value => (value||'').toLowerCase().split(/[-_]/)[0];
+const prefs = [new URLSearchParams(location.search).get('lang')];
+try { prefs.push(localStorage.getItem('framosik-guide-language')); } catch {}
+prefs.push(...(navigator.languages||[navigator.language]),'pt');
+const initial = prefs.map(normalise).find(l=>Object.hasOwn(guides,l));
+selector.onchange=() => {
+  render(selector.value);
+  try { localStorage.setItem('framosik-guide-language',selector.value); } catch {}
+  try { const u=new URL(location.href); u.searchParams.set('lang',selector.value); history.replaceState(null,'',u); } catch {}
+};
+$('demoPlay').onclick=toggleDemo; $('scrub').oninput=()=>{stopDemo();setFrame();};
+document.addEventListener('visibilitychange',()=>{if(document.hidden) stopDemo();});
+ $('close').onclick=()=>$('viewer').close();
+$('viewer').addEventListener('click',e=>{ if(e.target === $('viewer')) { const r=$('viewer').getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) $('viewer').close(); } });
+$('brandicon').src=document.querySelector('link[rel="icon"]').href;
+document.querySelector('.demo-stage').style.setProperty('--art','url("'+assets.robot+'")');
+render(initial); setFrame();
+</script>
+</body></html>

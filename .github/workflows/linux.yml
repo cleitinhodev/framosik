@@ -8,7 +8,7 @@ on:
       tag:
         description: Existing release tag to package
         required: true
-        default: v0.5.0-beta.3
+        default: v1.0.0
 permissions:
   contents: write
 concurrency:
@@ -44,8 +44,8 @@ jobs:
         run: python -m pytest -q tests
       - name: Build, extract and smoke-test Linux executable
         run: python build_tools/build_linux.py --source release-source
-      - name: Capture the style beta for its release page
-        if: github.ref == 'refs/heads/estilo' && github.event_name == 'push'
+      - name: Capture the release appearance
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         working-directory: release-source
         env:
           QT_QPA_PLATFORM: offscreen
@@ -59,7 +59,7 @@ jobs:
             release-source/dist/*-aparencia.gif
           if-no-files-found: error
       - name: Attach Linux package and checksum to existing release
-        if: github.event_name != 'push'
+        if: env.RELEASE_TAG != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "$RELEASE_TAG" release-source/dist/*.tar.gz release-source/dist/*.sha256

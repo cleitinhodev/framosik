@@ -1,141 +1,114 @@
-# Framosik — beta visual 0.5.0-beta.3
+# Framosik
 
-Projeto em Python com interface PySide6 para reconstruir uma cena estática a partir de um GIF ou vídeo com movimento da câmera. O código da aplicação foi escrito para este projeto; o processamento usa OpenCV, NumPy, Pillow e Qt. Não é um fork do Overmix e não usa IA generativa.
+**Transforme um movimento de câmera em uma imagem inteira.** O Framosik encontra detalhes em comum entre os quadros de um GIF ou vídeo, posiciona cada quadro e amplia a imagem com as áreas que a câmera revelou. Uma cena que vai dos pés à cabeça de um personagem pode virar um retrato de corpo inteiro. A montagem roda localmente no computador.
 
-## Abrir a versão Windows portátil
+[Baixar a versão 1.0.0](https://github.com/cleitinhodev/framosik/releases/tag/v1.0.0) · [Tutorial ilustrado em 10 idiomas (HTML)](https://github.com/cleitinhodev/framosik/releases/download/v1.0.0/Framosik-Tutorial.html) · [Site](https://www.bugzinho.com/) · [Apoiar o projeto](https://www.bugzinho.com/donate)
 
-1. Baixe `Framosik-0.5.0-beta.3-Windows-x64.zip` na release beta.
-2. Extraia o ZIP em uma pasta e abra `Framosik.exe`. Mantenha a pasta `_internal` ao lado do executável.
+![Framosik 1.0.0 em inglês. A imagem montada mostra o robô inteiro, ao lado dos controles de acabamento.](docs/images/result.webp)
 
-O pacote inclui Python e as dependências para Windows x64. A versão estável para comparação está na [release v0.4.1](https://github.com/cleitinhodev/framosik/releases/tag/v0.4.1).
+## Baixar e abrir
 
-## Linux portátil
+| Sistema | Pacote | Como abrir |
+| --- | --- | --- |
+| Windows x64 | [Framosik-1.0.0-Windows-x64.zip](https://github.com/cleitinhodev/framosik/releases/download/v1.0.0/Framosik-1.0.0-Windows-x64.zip) | Extraia o ZIP inteiro e abra `Framosik.exe` dentro da pasta `Framosik`. |
+| Linux x86_64 | [Framosik-1.0.0-Linux-x86_64.tar.gz](https://github.com/cleitinhodev/framosik/releases/download/v1.0.0/Framosik-1.0.0-Linux-x86_64.tar.gz) | Extraia o arquivo e abra `Framosik`, ou execute `./Framosik` na pasta extraída. Base de compatibilidade: Ubuntu 22.04 e glibc 2.35. |
 
-Extraia `Framosik-0.5.0-beta.3-Linux-x86_64.tar.gz` e execute `./Framosik` dentro da pasta extraída. A base de compatibilidade é Ubuntu 22.04 x86_64 com glibc 2.35. Consulte [LINUX.md](LINUX.md) para as bibliotecas gráficas e a verificação do download.
+Os dois pacotes incluem o aplicativo, as dependências, o exemplo e o tutorial offline. Mantenha a pasta `_internal` ao lado do executável. Há instruções de dependências gráficas, execução e verificação do pacote no [guia Linux](https://github.com/cleitinhodev/framosik/blob/main/LINUX.md).
 
-## Identidade e visualização
+## Sua primeira montagem
 
-O ícone fornecido pelo autor aparece no cabeçalho, na janela e na aba Sobre. `assets/icons` contém PNGs de 16, 20, 24, 32, 40, 48, 64, 96, 128, 192, 256, 512 e 1024 pixels, além de ICO multirresolução e ICNS. O ICO revisado pelo autor foi preservado em `assets/icon_source.ico` e é usado diretamente no executável. Suas camadas nativas são usadas quando disponíveis. Os PNGs maiores são redimensionamentos da camada de 256 px, sem criação de detalhes; o enquadramento original é mantido.
+1. Clique em **Open GIF / video (Abrir GIF / vídeo)** ou pressione `Ctrl+O`. Abra `examples/demo_vertical.gif`, incluído nos dois pacotes. O primeiro quadro mostra os pés do robô.
+2. Na aba **Original frame (Frame original)**, navegue com a régua, as setas ou **Play (Reproduzir)**. Para o exemplo, use os quadros **1 a 37** e passo **1**. Em um vídeo maior, use **Set start (Marcar início)** e **Set end (Marcar fim)** para isolar uma única cena. Os dois extremos são incluídos.
+3. Em **Movement (Movimento)**, escolha **Vertical only (Somente vertical)**. Mantenha a resolução em 100% e o modo **Preserve existing (Preservar existente)**.
+4. Clique em **Stitch image (Montar imagem)**. Acompanhe a montagem em tempo real na aba **Stitched image (Imagem montada)**. O exemplo completo produz **480 × 1080 px**. Compare com `examples/resultado_esperado.png`.
+5. Inspecione as emendas com **Zoom 100%**. Se ajustar o acabamento, clique em **Apply to preview (Aplicar à prévia)**. Use **Export PNG (Exportar PNG)** ou `Ctrl+S` para salvar.
 
-Na aba **Visualização**, escolha tema claro/escuro, idioma e efeitos. **Gradientes e brilho** controla o acabamento neon. **Animar nome e controles** controla a formação periódica do título em pixels e as transições de brilho dos botões e barras de rolagem. A animação também pausa quando a janela está inativa/minimizada ou durante uma tarefa. As preferências ficam no registro do Windows (QSettings: Bugzinho/Framosik) ou na configuração do usuário em outros sistemas.
+![Frame original da demonstração, com seleção de intervalo e prévia à direita.](docs/images/workspace.webp)
 
-Idiomas da interface: português, inglês, espanhol, francês, alemão, italiano, japonês, coreano, chinês simplificado e russo. Traduções são locais e podem precisar de revisão por falantes nativos. Detalhes técnicos de exceções/relatórios podem permanecer em português ou inglês. Diálogos nativos de arquivo seguem o idioma do sistema operacional.
+## Escolher o movimento
 
-A aba **Sobre** contém os links:
-- Repositório: https://github.com/cleitinhodev/framosik
-- Site: https://www.bugzinho.com/
-- Apoio: https://www.bugzinho.com/donate
+| Movimento da câmera | Opção na interface inglesa | Quando usar |
+| --- | --- | --- |
+| Vertical | **Vertical only** | A câmera sobe ou desce, sem desvio lateral. |
+| Horizontal | **Horizontal only** | A câmera percorre a imagem da esquerda para a direita ou no sentido inverso. |
+| Diagonal ou livre | **Free (X and Y)** | Há deslocamento nos dois eixos e o tamanho do desenho permanece constante. |
+| Aproximação ou afastamento | **Zoom + X/Y (experimental)** | O tamanho do desenho muda de maneira uniforme. O enquadramento também pode se deslocar nos dois eixos. |
 
-## Primeiro teste
+Os melhores trechos mostram um cenário ou desenho relativamente estático, com detalhes que se repetem entre quadros vizinhos. Um corte, rotação, distorção de perspectiva, paralaxe ou movimento independente dos personagens pode produzir emendas aparentes ou impedir o alinhamento. O Framosik usa pixels da fonte. Áreas sem cobertura podem ficar transparentes.
 
-- Abra `examples/demo_vertical.gif`.
-- Mantenha frames **1 a 37**, passo **1**, resolução **100%**, movimento **Livre**, mesclagem **Preservar existente**.
-- Clique em **Montar imagem** e depois em **Exportar PNG**.
-- A imagem deverá ter **480 × 1080 px**, correspondente a `examples/resultado_esperado.png`.
+## Ajustes para cada cena
 
-O exemplo é uma ilustração sintética própria, estática, com deslocamento vertical conhecido. Não substitui testes em vídeos reais de anime.
+| Controle | Efeito e ponto de partida |
+| --- | --- |
+| Intervalo e passo | As extremidades são inclusivas. O passo **1** usa todos os quadros. Um passo maior reduz o trabalho e pode reduzir a sobreposição. O último quadro escolhido participa mesmo se o passo não cair nele. |
+| Resolução de trabalho | **10–100%**, padrão **100%**. Reduza para testar um trecho rapidamente ou diminuir a memória usada. A resolução também afeta a imagem exportada. |
+| Similaridade e sobreposição mínimas | Os padrões são **65%** e **20%**. Um regula a confiança exigida no alinhamento e o outro a área mínima compartilhada. Valores altos podem interromper um trecho difícil. |
+| Limite da imagem | **1–100 MP**, padrão **24 MP**. Interrompe o crescimento ao atingir o limite. Divida trechos longos ou reduza a resolução se necessário. |
+| Pular frames não alinhados | Se um quadro falhar, os seguintes serão comparados com o último aceito. Com a opção desligada, a montagem para no primeiro quadro rejeitado e preserva o parcial. |
+| Recortar bordas / legendas | Retira pixels da esquerda, do topo, da direita e da base de **cada quadro**, antes do alinhamento. Os valores usam a resolução original. A prévia do frame original continua mostrando a fonte inteira. |
 
-## Como usar em uma cena real
+### Mesclagem e acabamento
 
-1. Abra um GIF, MP4, MKV, AVI, MOV ou WebM. A disponibilidade de codecs depende do backend OpenCV; H.264/MP4 costuma ser uma boa entrada. WebP animado e imagens estáticas também são aceitos.
-2. Navegue pela barra ou pelos botões quadro a quadro. Os números da interface começam em **1**.
-3. No ponto inicial, use **Marcar início**. No final do movimento, use **Marcar fim**. Não inclua cortes para outra cena.
-4. Comece com passo 1, modo Livre e Preservar existente. Para uma subida reta, experimente Somente vertical.
-5. Monte a imagem. A aba de resultado permite zoom com a roda e navegação arrastando.
-6. Exporte o PNG. Áreas sem pixels ficam transparentes; não há preenchimento inventado. O relatório JSON é opcional e registra ajustes, deslocamentos e frames aceitos/rejeitados.
+![Controles de alinhamento e mesclagem, incluindo a faixa de suavização e o início do painel de recorte.](docs/images/blending.webp)
 
-## Parâmetros
+- **Preserve existing (Preservar existente)** mantém os contornos já montados e preenche as áreas novas. É um bom começo para arte com traço nítido.
+- **Soften seams (Suavizar emendas)** mistura gradualmente as bordas da nova área. **Feather width (Faixa de suavização)** define a largura, de **1 a 300 px**, com padrão de **24 px**.
+- **Average overlap (Média na sobreposição)** combina as cores da região comum. Pode deixar contornos duplicados em cenas com movimento.
+- **Finishing (Acabamento)** fica habilitado à esquerda quando há um resultado. **Smoothing (Suavização)** e **Local color repair (Correção de cor local)** atuam na vizinhança das emendas. Para listras em zoom, teste valores baixos e compare a 100%. Cada aplicação parte da montagem original. Para voltar ao resultado inicial, zere os dois campos e aplique novamente.
 
-| Controle | Efeito |
-|---|---|
-| Primeiro/último frame | Intervalo inclusivo. Um único frame também pode ser exportado. |
-| Usar a cada N frames | 1 analisa todos. 2, 3… aceleram, mas podem perder a sobreposição. O último frame sempre é incluído. |
-| Movimento | Translação livre X/Y ou restrita ao eixo vertical/horizontal. Novo modo **Zoom + X/Y (experimental)** para aproximação/afastamento gradual. Não corrige rotação ou perspectiva. |
-| Resolução de trabalho | Reduz os frames antes da montagem. 50% reduz largura e altura pela metade, inclusive na imagem exportada. |
-| Similaridade mínima | Correlação dos pixels compartilhados; não é probabilidade. Aumente para rejeitar montagens duvidosas. Reduzir demais pode juntar cenas erradas. |
-| Sobreposição mínima | Parcela mínima do frame que precisa estar em comum. Se falhar, tente passo menor. |
-| Limite da imagem | Proteção pelo número de pixels da tela final, não um limite absoluto de RAM. Padrão: 24 megapixels. |
-| Preservar existente | Mantém o que já está montado e acrescenta apenas pixels em regiões ainda vazias. Mais fiel à sua proposta. |
-| Suavizar emendas | Mescla uma faixa próxima à borda da área nova. O restante da imagem anterior é conservado. |
-| Média na sobreposição | Média de 50% com o frame anterior na região compartilhada. É uma média incremental, não a média uniforme de todos os frames. Pode criar fantasmas em partes animadas. |
-| Faixa de suavização | Largura aproximada em pixels de trabalho. Só se aplica a Suavizar emendas. |
-| Recortar bordas | Remove margens fixas antes do alinhamento: útil para legendas, logos e barras pretas. Medidas na imagem original. A prévia da origem continua sem recorte. |
-| Pular frames não alinhados | Tenta o próximo frame contra o último aceito. Desmarcado, interrompe e permite exportar a montagem parcial. |
+### Prévia, navegação e exportação
 
-Cancelamento é cooperativo: termina o processamento do frame atual e conserva o resultado parcial. Carregamento/exportação não são canceláveis. Enquanto há uma tarefa ativa, a janela aguarda seu término para fechar. A reprodução usa duração por frame no GIF; vídeo usa FPS nominal e não reproduz áudio.
+A aba de resultado é atualizada durante a montagem. O registro mostra os quadros aceitos ou rejeitados, a confiança e o deslocamento. **Cancel (Cancelar)** permite conservar e exportar o que já foi montado. Na imagem, a roda aproxima ou afasta e o arraste move a vista. No painel de opções, a roda rola o painel sem alterar os campos sob o ponteiro.
 
-## Como funciona
+**Export PNG** salva a imagem em RGBA, incluindo o último acabamento aplicado. **Save report (Salvar relatório)** gera um JSON com os parâmetros, o estado da montagem, os quadros aceitos e rejeitados, dimensões, tempo e os dados de alinhamento disponíveis. O relatório ajuda a identificar onde a montagem perdeu a referência.
 
-1. Lê um frame por vez, aplica recorte e escala.
-2. Localiza detalhes semelhantes por SIFT e filtra correspondências inconsistentes com RANSAC.
-3. Estima a **translação** entre o frame atual e o último aceito. No modo Zoom + X/Y, estima também uma escala uniforme usando detalhes SIFT; nos modos de translação, correlação de fase oferece uma segunda estimativa.
-4. Valida a semelhança na área sobreposta e escolhe a melhor estimativa.
-5. Compõe a transformação com a do último frame aceito e expande a tela apenas quando necessário, inclusive para coordenadas negativas.
-6. Insere a área nova e aplica o modo de mesclagem escolhido.
+### Aparência e idiomas
 
-Nos modos sem zoom, os deslocamentos são arredondados para pixels inteiros para preservar o traço sem reamostragem em cada passo. Os detalhes para alinhamento são analisados em uma resolução limitada; a exportação usa a resolução de trabalho escolhida. A máscara alpha distingue preto legítimo de área vazia.
+Na aba **Appearance (Visualização)**, escolha tema claro ou escuro, gradientes e brilho, animação do nome em pixels e dos controles, e idioma. As preferências são salvas automaticamente. Em **About (Sobre)** ficam a versão e os links do projeto.
 
-## Limitações conhecidas
+![Aba Appearance na versão 1.0.0, em inglês e no tema claro.](docs/images/appearance.webp)
 
-- Melhor resultado: ilustração parada e câmera apenas deslizando. Movimentos do corpo, cabelo e fundo podem causar emendas.
-- O modo Zoom + X/Y corrige escala uniforme gradual (0,5–2× por par, 0,05–20× acumulada), com detalhes suficientes e sobreposição. Cada frame original é reamostrado uma vez para a escala do primeiro frame; não recupera detalhes perdidos no vídeo. Rotação, perspectiva e parallax não são corrigidos. O algoritmo pode interromper nesses casos ou, se o limiar estiver baixo, produzir alinhamento imperfeito.
-- Áreas lisas/repetitivas podem impedir o alinhamento. A similaridade não garante uma correspondência correta.
-- Pode acumular erro em sequências longas. Não há otimização global nem editor manual de emendas nesta primeira versão.
-- GIF perde cores por sua própria paleta; vídeo comprimido pode trazer ruído. Não há super-resolução.
-- Vídeos com taxa variável usam índices de decodificação e FPS nominal; não há edição por timecode preciso.
-- O arquivo inteiro não fica na RAM, mas a imagem final, máscaras e cópias temporárias ocupam memória. Use 50% e limite menor para cenas grandes.
-- Transparência do arquivo de origem é mantida no modo preservar; a mesclagem foi pensada principalmente para frames opacos de anime.
+A interface e o tutorial estão disponíveis em **português do Brasil, inglês, espanhol, francês, alemão, italiano, japonês, coreano, chinês simplificado e russo**. O tutorial usa os nomes dos controles em inglês acompanhados da tradução local para facilitar a leitura das capturas.
 
-## Executar o código-fonte
+## Formatos e problemas comuns
 
-Recomendado: Python **3.12 x64**. No Windows, `INICIAR_WINDOWS.bat` cria um ambiente local e instala as dependências na primeira execução (precisa de internet). Ou use:
+- **Entrada** — GIF e WebP animados, além de PNG, JPG e JPEG. O seletor de vídeo inclui MP4, MKV, AVI, MOV, WebM e M4V. A leitura depende do codec disponível no OpenCV. Uma imagem estática permite inspecionar um único quadro.
+- **Um quadro foi rejeitado** — volte o passo para 1, recorte bordas ou legendas fixas e confira se o intervalo atravessa um corte de cena. Tente o modo de movimento que corresponde ao trecho.
+- **Surgiram listras ou bordas duplas no zoom** — use quadros próximos, teste **Soften seams** e só depois ajuste o acabamento. O afastamento pode revelar áreas em resolução menor. Uma camada animada sobre um fundo estático pode exigir outro intervalo de montagem.
+- **O vídeo não abriu** — experimente uma cópia em MP4 com vídeo H.264. O arquivo de mídia original é apenas lido.
+
+## Rodar pelo código-fonte
+
+Use Python 3.12. No Windows, execute `.venv\Scripts\activate`; no Linux, `source .venv/bin/activate`, após criar o ambiente.
 
 ```sh
 python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-# source .venv/bin/activate
+```
+
+Com o ambiente ativo, instale as dependências e abra o programa.
+
+```sh
 python -m pip install -r requirements.txt
 python main.py
 ```
 
-No Linux, Qt exige as bibliotecas gráficas da distribuição. Em ambiente sem tela, os testes podem usar `QT_QPA_PLATFORM=offscreen`.
+O projeto usa PySide6, OpenCV, NumPy e Pillow. A interface está em `gui.py`, o motor de alinhamento e acabamento em `engine.py`, a leitura de mídia em `media.py`, os temas em `appearance.py` e os textos da interface em `i18n.py`. Créditos e avisos de componentes estão em [THIRD_PARTY.md](THIRD_PARTY.md).
 
-## Gerar uma distribuição no Windows
-
-Execute `BUILD_WINDOWS.bat` com Python 3.12 x64 instalado. O script `build_tools/build_windows.py` inclui os assets, aplica o ICO e verifica o EXE com `--smoke-test`. Ele usa PyInstaller e produz `dist/Framosik/Framosik.exe`. Distribua **a pasta inteira**. Esse é um caminho alternativo à distribuição portátil com Python embutido entregue junto do projeto.
-
-O iniciador da distribuição portátil está em `build_tools/launcher.c`. É um programa mínimo que encontra sua própria pasta e chama `runtime/pythonw.exe app/main.py`; não depende do diretório de trabalho e aceita caminhos com espaços/acentos. As instruções para reproduzir esse pacote estão em `build_tools/build_portable.py`.
-
-## Estrutura
-
-- `main.py`: inicialização e registro de falhas.
-- `gui.py`: interface e tarefas em segundo plano.
-- `appearance.py`: temas e borda animada.
-- `i18n.py`: dez catálogos de idioma.
-- `app_info.py`: versão, caminhos e links.
-- `media.py`: leitura incremental de GIF/imagem/vídeo.
-- `engine.py`: alinhamento, validação, tela e mesclagem.
-- `tests/`: testes de algoritmo, entrada/saída e fluxo da interface.
-- `examples/`: GIF sintético e resultado esperado.
-- `build_tools/`: código do iniciador e empacotamento portátil.
-
-## Testes
+### Testar, compilar e editar o tutorial
 
 ```sh
 python -m pip install pytest
 python -m pytest -q tests
+python main.py --smoke-test
+python build_tools/build_tutorial.py
 ```
 
-Os testes cobrem deslocamento vertical, horizontal/diagonal, corte de cena, frames idênticos, modos de mesclagem, pixels pretos/transparência, seleção de intervalo, cancelamento, GIF, vídeo, limites e fluxo de carregar/montar/exportar pela interface.
+O último comando gera `dist/Framosik-Tutorial.html`. O HTML é independente, com capturas WebP incorporadas. Para usá-lo no seu site, basta publicar esse arquivo. Para trocar links ou versão, edite **FRAMOSIK_CONFIG**, no início do HTML. Para editar o guia no repositório, altere [o modelo e os textos](https://github.com/cleitinhodev/framosik/tree/main/docs/tutorial) e gere o arquivo novamente. As capturas podem ser refeitas com `python build_tools/capture_docs.py`.
 
-## Dependências e autoria
+Os builds nativos usam `pyinstaller==6.22.3` e os scripts `build_tools/build_windows.py` e `build_tools/build_linux.py`. O fluxo de release testa a interface e o algoritmo nos dois sistemas, monta os pacotes e abre os executáveis produzidos antes da publicação.
 
-A aplicação é um código novo entregue para você desenvolver e renomear. Nenhuma licença de publicação foi escolhida para o código da aplicação; o repositório inicial é privado. Dependências mantêm suas próprias licenças; consulte `THIRD_PARTY.md` e os arquivos de licença distribuídos junto dos pacotes.
+## Histórico
 
-## Zoom / afastamento (0.3.0)
+A **v1.0.0** promove a **v0.5.0-beta.3 · Estilo** a versão principal. A antiga `main` está guardada na branch **legado**, no mesmo commit da **v0.4.1**.
 
-Em **Alinhamento → Movimento**, selecione **Zoom + X/Y (experimental)**. Comece com passo 1 e mesclagem **Preservar existente**; escolha o intervalo de uma mesma cena estática. O modo funciona nos dois sentidos e aceita deslocamento simultâneo. A resolução do primeiro frame é a referência; começar pelo enquadramento mais próximo pode preservar mais detalhe, mas aumenta o tamanho da montagem. O limite em megapixels é verificado antes da transformação. O relatório JSON registra escala relativa, acumulada e matriz por frame aceito. Frames rejeitados não alteram a referência.
-
-A versão v0.2.0 permanece disponível com seu código e executável originais como ponto de retorno.
+[Versão legado v0.4.1](https://github.com/cleitinhodev/framosik/releases/tag/v0.4.1) · [Branch legado](https://github.com/cleitinhodev/framosik/tree/legado) · [Beta de origem](https://github.com/cleitinhodev/framosik/releases/tag/v0.5.0-beta.3) · [Histórico de mudanças](CHANGELOG.md)

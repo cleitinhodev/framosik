@@ -1,38 +1,50 @@
-name: Publish style beta
+name: Publish stable release
 on:
   push:
-    branches: [estilo]
+    branches: [main]
     paths: [app_info.py]
 permissions:
   contents: write
+concurrency:
+  group: publish-stable
+  cancel-in-progress: false
 jobs:
   windows:
     uses: ./.github/workflows/release.yml
   linux:
     uses: ./.github/workflows/linux.yml
+  tutorial:
+    uses: ./.github/workflows/guide.yml
   publish:
-    needs: [linux, windows]
+    needs: [linux, windows, tutorial]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
+          pattern: Framosik-*
           path: packages
           merge-multiple: true
-      - name: Publish beta from the tested commit
+      - name: Verify downloads and publish the tested revision
+        working-directory: packages
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          version=$(python -c 'from app_info import VERSION; print(VERSION)')
-          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]
+          version=$(cd .. && python -c 'from app_info import VERSION; print(VERSION)')
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           prefix="Framosik-$version"
-          (cd packages && sha256sum -c "$prefix-Linux-x86_64.tar.gz.sha256")
-          files=("packages/$prefix-Windows-x64.zip" "packages/$prefix-Linux-x86_64.tar.gz"
-                 "packages/$prefix-Linux-x86_64.tar.gz.sha256" "packages/$prefix-aparencia.gif")
-          for file in "${files[@]}"; do test -s "$file"; done
-          if [[ "$version" == "0.5.0-beta.1" ]]; then
-            gh release edit v0.4.1 --prerelease=false --latest
+          win="$prefix-Windows-x64.zip"
+          linux="$prefix-Linux-x86_64.tar.gz"
+          guide=Framosik-Tutorial.html
+          sha256sum --check "$linux.sha256"
+          unzip -p "$win" "Framosik/$guide" | cmp "$guide" -
+          tar -xOzf "$linux" "Framosik/$guide" | cmp "$guide" -
+          sha256sum "$win" "$linux" "$guide" > SHA256SUMS.txt
+          gh release create "v$version" --target "$GITHUB_SHA" --latest \
+            --title "Framosik v$version" --notes-file ../RELEASE_NOTES.md \
+            "$win" "$linux" "$linux.sha256" "$prefix-aparencia.gif" "$guide" SHA256SUMS.txt
+          if [[ "$version" == "1.0.0" ]]; then
+            gh release edit v0.4.1 --title "Framosik v0.4.1 · Legado" --latest=false
           fi
-          gh release create "v$version" --target "$GITHUB_SHA" --prerelease --latest=false \
-            --title "Framosik v$version · Estilo" --notes-file RELEASE_NOTES.md "${files[@]}"

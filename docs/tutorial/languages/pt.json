@@ -1,0 +1,88 @@
+{
+  "ui": {
+    "guide": "Guia de uso",
+    "hero1": "Do movimento",
+    "hero2": "à imagem inteira.",
+    "intro": "Junte os quadros de uma cena para revelar o que a câmera percorreu. Experimente a demonstração e depois repita a montagem com seu próprio GIF ou vídeo.",
+    "start": "Começar o tutorial",
+    "download": "Baixar Framosik",
+    "demo": "Demonstração interativa",
+    "source": "Quadro original",
+    "panorama": "Imagem montada",
+    "scrub": "Arraste para explorar os 37 quadros.",
+    "contents": "Neste guia",
+    "help": "Dúvidas frequentes",
+    "close": "Fechar",
+    "enlarge": "Ampliar captura",
+    "releases": "Releases",
+    "links": "Links do projeto",
+    "skip": "Pular para o tutorial",
+    "language": "Idioma do tutorial",
+    "back": "Voltar ao início"
+  },
+  "sections": [
+    {
+      "title": "Abra o Framosik",
+      "p": [
+        "No Windows x64, extraia o ZIP inteiro e abra {exe}. No Linux x86_64, extraia o arquivo .tar.gz e execute {bin} dentro da pasta Framosik. Mantenha a pasta {internal} ao lado do executável.",
+        "Use {open} ou {ctrlO} e escolha {demoFile}, incluído no pacote. O primeiro quadro mostra os pés do robô. A câmera sobe pela mesma ilustração ao longo de 37 quadros."
+      ]
+    },
+    {
+      "title": "Marque uma única cena",
+      "p": [
+        "Em {original}, arraste a régua ou use {play} e as setas para encontrar as extremidades. Clique em {mark_start} e {mark_end}, ou digite os números em {first} e {last}. Os dois limites entram na montagem.",
+        "Para a demonstração, use 1 a 37 e mantenha {step} em 1. No seu vídeo, termine antes de um corte ou transição. Um passo maior acelera a leitura, mas deixa menos área em comum entre os quadros."
+      ]
+    },
+    {
+      "title": "Escolha como alinhar e mesclar",
+      "p": [
+        "Em {movement}, use {vertical} para o robô, {horizontal} para um movimento lateral ou {free} para diagonais. Escolha {zoom_motion} quando o enquadramento se aproxima ou se afasta com escala uniforme.",
+        "Em {mode}, {preserve} mantém o traço já montado. {feather} mistura as bordas em uma faixa definida por {feather_width}. {average} combina os pixels da área comum e pode duplicar contornos se o personagem se mover.",
+        "Comece com {similarity} em 65% e {overlap} em 20%. A primeira define a exigência de correspondência, a segunda define a área comum mínima. Use {crop} para retirar uma legenda fixa de cada quadro, em pixels da fonte."
+      ]
+    },
+    {
+      "title": "Acompanhe a montagem",
+      "p": [
+        "Clique em {stitch}. A aba {result} mostra a imagem crescendo durante o processamento. O registro indica a confiança e o deslocamento de cada quadro. Use {fit} para ver a cena inteira ou {zoom} para conferir os pixels.",
+        "A roda do mouse amplia a imagem e o arraste desloca a vista. No painel de opções, a roda percorre os controles. Se precisar parar, {cancel} conserva o resultado parcial. Com a demonstração completa a 100%, espere uma imagem de 480 × 1080 px."
+      ]
+    },
+    {
+      "title": "Dê acabamento e exporte",
+      "p": [
+        "Quando a montagem termina, {finish} fica disponível à esquerda. Inspecione uma emenda a 100%. Comece com um valor baixo de {seam_soft} para suavizar o risco ou de {seam_color} para corrigir uma diferença de cor local. Clique em {apply_finish}.",
+        "Cada aplicação parte da montagem original. Para comparar, volte ambos os valores a zero e aplique outra vez. {export} ou {ctrlS} salva o último acabamento aplicado, com transparência onde nenhum quadro alcançou. {report} grava um JSON com parâmetros, quadros aceitos e rejeitados e o motivo de uma interrupção."
+      ]
+    },
+    {
+      "title": "Personalize a interface",
+      "p": [
+        "Em {view}, escolha {theme} e {language}. {gradients} controla os brilhos. {animations} ativa ou desativa a animação do título e dos controles quando os gradientes estão ligados. As preferências são salvas automaticamente.",
+        "Abra {about} para conferir a versão instalada e acessar o site, o repositório e a página de apoio. O idioma deste tutorial pode ser alterado no topo da página, independentemente do idioma do aplicativo."
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "A montagem parou em determinado quadro. E agora?",
+      "Confira o último quadro aceito, encurte o intervalo e volte o passo para 1. Se o problema for isolado, {skip} tenta os próximos quadros usando o último aceito como referência. Um corte real de cena pede uma nova montagem."
+    ],
+    [
+      "Por que aparecem listras ou contornos duplos no zoom?",
+      "Teste {zoom_motion} com quadros próximos e {feather}. Depois, inspecione as emendas e aplique um acabamento leve. Rotação, perspectiva, paralaxe e partes animadas podem impedir que uma única transformação alinhe a cena inteira."
+    ],
+    [
+      "Atingi o limite de tamanho ou o vídeo não abre.",
+      "Reduza {resolution} ou divida o trecho. {limit} controla o tamanho máximo do mosaico em megapixels. A leitura de vídeo depende do codec. Se o arquivo não abrir, tente uma cópia em MP4 com vídeo H.264."
+    ]
+  ],
+  "captions": [
+    "Quadro original da demonstração, com o intervalo de 1 a 37 à esquerda.",
+    "Painéis de alinhamento, mesclagem e recorte, com a faixa de suavização visível.",
+    "Robô inteiro na imagem montada, com o acabamento habilitado e o registro da montagem.",
+    "Aba de visualização em tema claro, com idioma, gradientes e animações."
+  ]
+}

@@ -1,3 +1,9 @@
+# 1.0.0
+
+- A v0.5.0-beta.3 · Estilo tornou-se a base estável. A janela, a aba Sobre e os metadados do executável Windows mostram 1.0.0.
+- README ilustrado e tutorial offline em dez idiomas, com capturas WebP da aplicação e uma demonstração interativa usando o exemplo do robô.
+- Pacotes Windows x64 e Linux x86_64 com o guia e o exemplo. A antiga `main` está preservada na branch `legado` e na release v0.4.1.
+
 # 0.5.0-beta.3
 
 - Texto em negrito em todos os botões de ação, com o mesmo tamanho de fonte, dimensões e cores da beta anterior.

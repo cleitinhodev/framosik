@@ -31,6 +31,11 @@ def main():
     out = root/'dist/Framosik'
     for directory in ['examples', 'licenses']:
         shutil.copytree(root/directory, out/directory, dirs_exist_ok=True)
+    # Older release tags can still be packaged by the manual workflow.
+    guide = root / 'build_tools' / 'build_tutorial.py'
+    if guide.is_file():
+        subprocess.run([sys.executable, str(guide), '--output', str(out/'Framosik-Tutorial.html')], check=True)
+        shutil.copytree(root/'docs/images', out/'docs/images', dirs_exist_ok=True)
     for name in ['README.md', 'THIRD_PARTY.md', 'CHANGELOG.md']:
         shutil.copy2(root/name, out/name)
     packaging = Path(__file__).resolve().parent
