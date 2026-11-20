@@ -1,17 +1,17 @@
-# Framosik — beta visual 0.5.0-beta.2
+# Framosik — beta visual 0.5.0-beta.3
 
 Projeto em Python com interface PySide6 para reconstruir uma cena estática a partir de um GIF ou vídeo com movimento da câmera. O código da aplicação foi escrito para este projeto; o processamento usa OpenCV, NumPy, Pillow e Qt. Não é um fork do Overmix e não usa IA generativa.
 
 ## Abrir a versão Windows portátil
 
-1. Baixe `Framosik-0.5.0-beta.2-Windows-x64.zip` na release beta.
+1. Baixe `Framosik-0.5.0-beta.3-Windows-x64.zip` na release beta.
 2. Extraia o ZIP em uma pasta e abra `Framosik.exe`. Mantenha a pasta `_internal` ao lado do executável.
 
 O pacote inclui Python e as dependências para Windows x64. A versão estável para comparação está na [release v0.4.1](https://github.com/cleitinhodev/framosik/releases/tag/v0.4.1).
 
 ## Linux portátil
 
-Extraia `Framosik-0.5.0-beta.2-Linux-x86_64.tar.gz` e execute `./Framosik` dentro da pasta extraída. A base de compatibilidade é Ubuntu 22.04 x86_64 com glibc 2.35. Consulte [LINUX.md](LINUX.md) para as bibliotecas gráficas e a verificação do download.
+Extraia `Framosik-0.5.0-beta.3-Linux-x86_64.tar.gz` e execute `./Framosik` dentro da pasta extraída. A base de compatibilidade é Ubuntu 22.04 x86_64 com glibc 2.35. Consulte [LINUX.md](LINUX.md) para as bibliotecas gráficas e a verificação do download.
 
 ## Identidade e visualização
 

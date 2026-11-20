@@ -7,12 +7,46 @@ os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PySide6.QtCore import QEvent, QPoint, QPointF, QSettings, Qt
-from PySide6.QtGui import QMouseEvent, QWheelEvent
+from PySide6.QtGui import QFont, QMouseEvent, QWheelEvent
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QStyle, QStyleOptionSlider, QWidget
+from PySide6.QtWidgets import (QApplication, QPushButton, QStyle, QStyleOptionButton,
+                               QStyleOptionSlider, QWidget)
 
 from appearance import NeonButton, NeonScrollBar, stylesheet
 from gui import MainWindow
+from i18n import LANGUAGES
+
+
+def test_bold_actions_keep_their_previous_dimensions_in_every_language(tmp_path):
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow(QSettings(str(tmp_path / 'sizes.ini'), QSettings.IniFormat))
+    window.show()
+    try:
+        # Plain Qt buttons still use the original padding and layout font weights.
+        references = {name: QPushButton(window) for name in ('', 'primary')}
+        for name, reference in references.items():
+            reference.setObjectName(name)
+            reference.ensurePolished()
+        for theme in ('dark', 'light'):
+            window.theme_box.setCurrentIndex(window.theme_box.findData(theme))
+            for language in LANGUAGES:
+                window.language_box.setCurrentIndex(window.language_box.findData(language))
+                app.processEvents()
+                for button in window.findChildren(NeonButton):
+                    reference = references[button.objectName()]
+                    reference.setText(button.text())
+                    assert button.font().weight() == QFont.Bold
+                    assert button.font().pixelSize() == reference.font().pixelSize()
+                    assert button.sizeHint() == reference.sizeHint(), (language, button.text())
+                    assert button.minimumSizeHint() == reference.minimumSizeHint()
+                    opt = QStyleOptionButton()
+                    button.initStyleOption(opt)
+                    opt.rect.setSize(button.sizeHint())
+                    area = button.style().subElementRect(QStyle.SE_PushButtonContents, opt, button)
+                    label = button.fontMetrics().size(Qt.TextShowMnemonic, button.text())
+                    assert label.width() <= area.width(), (language, button.text())
+    finally:
+        window.close()
 
 
 def test_title_assembles_and_returns_to_a_static_word(tmp_path):

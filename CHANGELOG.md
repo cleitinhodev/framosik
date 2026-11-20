@@ -1,3 +1,7 @@
+# 0.5.0-beta.3
+
+- Texto em negrito em todos os botões de ação, com o mesmo tamanho de fonte, dimensões e cores da beta anterior.
+
 # 0.5.0-beta.2
 
 - Realce roxo inspirado no Aero, com texto escuro e cursor de mão nos botões habilitados. Com os gradientes desligados, o realce é sólido.

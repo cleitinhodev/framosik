@@ -3,7 +3,7 @@ from math import ceil
 
 from PySide6.QtCore import (Qt, QElapsedTimer, QEasingCurve, QEvent, QObject,
                             QPointF, QRectF, QSize, QTimer, QVariantAnimation, Signal)
-from PySide6.QtGui import (QColor, QFont, QLinearGradient, QPainter, QPainterPath,
+from PySide6.QtGui import (QColor, QFont, QFontMetrics, QLinearGradient, QPainter, QPainterPath,
                            QPalette, QPen, QPixmap, QRadialGradient)
 from PySide6.QtWidgets import (QFrame, QLabel, QPushButton, QScrollBar, QStyle,
                                QStyleOptionSlider)
@@ -20,6 +20,10 @@ PALETTES = {
                   amber='#a85f13', rail='#e3dfee', thumb='#8d73a8', top='#f0e7ff',
                   end='#fff1e6', tint='#f0eafa', label='#332047'),
 }
+
+# Keep the existing button footprint. Wider bold glyphs may use its side margins.
+BUTTON_SIDE_PADDING = 13
+LABEL_SIDE_PADDING = 3
 
 
 def gradient(first, last, vertical=False):
@@ -47,12 +51,13 @@ QLabel#brand {{font-size:30px;font-weight:700;color:{p['label']};}}
 QLabel#wordmark {{font-size:34px;font-weight:700;background:transparent;color:{p['label']};}}
 QLabel#version {{color:{p['accent']};background:{p['panel']};border:1px solid {p['border']};
     border-radius:8px;padding:4px 8px;font-weight:600;}}
-QPushButton {{background:{button};border:1px solid {p['border']};padding:8px 13px;border-radius:7px;}}
+QPushButton {{background:{button};border:1px solid {p['border']};padding:8px {BUTTON_SIDE_PADDING}px;border-radius:7px;}}
 QPushButton:hover:enabled {{border-color:{p['accent']};background:{p['tint']};}}
 QPushButton:focus {{border-color:{p['accent']};}}
 QPushButton:pressed {{background:{p['rail']};}}
 QPushButton:disabled {{background:{p['input']};color:{p['disabled']};}}
 QPushButton#primary {{background:{primary};color:white;border:1px solid {p['primary']};font-weight:600;}}
+NeonButton, NeonButton#primary {{font-weight:700;padding-left:{LABEL_SIDE_PADDING}px;padding-right:{LABEL_SIDE_PADDING}px;}}
 QPushButton#primary:focus {{border-color:{p['light']};}}
 QPushButton#primary:disabled {{background:{p['rail']};border-color:{p['border']};color:{p['disabled']};}}
 NeonButton:hover:enabled, NeonButton#primary:hover:enabled {{background:{aero};color:#241332;border-color:#8057ad;}}
@@ -154,6 +159,19 @@ class NeonButton(QPushButton):
         super().__init__(text)
         self.setCursor(Qt.PointingHandCursor)
         self.light = InteractionLight(self)
+
+    def sizeHint(self):
+        size = super().sizeHint()
+        if not self.font().bold():
+            return size
+        # Measure the layout with the same weights as beta.2, including its
+        # semibold primary action. Qt still draws the real bold font normally.
+        layout_font = QFont(self.font())
+        layout_font.setWeight(QFont.DemiBold if self.objectName() == 'primary' else QFont.Normal)
+        label = self.text() or 'XXXX'  # Qt's intrinsic label for an empty button.
+        previous = QFontMetrics(layout_font, self).size(Qt.TextShowMnemonic, label)
+        current = self.fontMetrics().size(Qt.TextShowMnemonic, label)
+        return size + previous - current + QSize(2 * (BUTTON_SIDE_PADDING - LABEL_SIDE_PADDING), 0)
 
     def changeEvent(self, event):
         super().changeEvent(event)
