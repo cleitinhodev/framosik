@@ -23,7 +23,6 @@ PALETTES = {
 
 # Keep the existing button footprint. Wider bold glyphs may use its side margins.
 BUTTON_SIDE_PADDING = 13
-LABEL_SIDE_PADDING = 3
 
 
 def gradient(first, last, vertical=False):
@@ -57,7 +56,7 @@ QPushButton:focus {{border-color:{p['accent']};}}
 QPushButton:pressed {{background:{p['rail']};}}
 QPushButton:disabled {{background:{p['input']};color:{p['disabled']};}}
 QPushButton#primary {{background:{primary};color:white;border:1px solid {p['primary']};font-weight:600;}}
-NeonButton, NeonButton#primary {{font-weight:700;padding-left:{LABEL_SIDE_PADDING}px;padding-right:{LABEL_SIDE_PADDING}px;}}
+NeonButton, NeonButton#primary {{font-weight:700;padding-left:0;padding-right:0;}}
 QPushButton#primary:focus {{border-color:{p['light']};}}
 QPushButton#primary:disabled {{background:{p['rail']};border-color:{p['border']};color:{p['disabled']};}}
 NeonButton:hover:enabled, NeonButton#primary:hover:enabled {{background:{aero};color:#241332;border-color:#8057ad;}}
@@ -171,7 +170,7 @@ class NeonButton(QPushButton):
         label = self.text() or 'XXXX'  # Qt's intrinsic label for an empty button.
         previous = QFontMetrics(layout_font, self).size(Qt.TextShowMnemonic, label)
         current = self.fontMetrics().size(Qt.TextShowMnemonic, label)
-        return size + previous - current + QSize(2 * (BUTTON_SIDE_PADDING - LABEL_SIDE_PADDING), 0)
+        return size + previous - current + QSize(2 * BUTTON_SIDE_PADDING, 0)
 
     def changeEvent(self, event):
         super().changeEvent(event)
