@@ -1,3 +1,7 @@
+# 0.5.0-beta.2
+
+- Realce roxo inspirado no Aero, com texto escuro e cursor de mão nos botões habilitados. Com os gradientes desligados, o realce é sólido.
+
 # 0.5.0-beta.1 — 2026-11-19
 
 Beta da branch `estilo`, baseada na v0.4.1. O título se recompõe em pixels. Botões e barras de rolagem ganham brilho nos temas claro e escuro. Os controles de Visualização permitem usar o estilo estático ou desligar os efeitos.

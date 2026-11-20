@@ -7,6 +7,7 @@ import time
 from PIL import Image
 from PySide6.QtCore import Qt, QSettings
 from PySide6.QtGui import QImage
+from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,8 +55,14 @@ def main():
             window.header.timer.stop()
             window.header.progress = 1.
             window.header.assembly.emit(1.)
+            QTest.mouseMove(window.open_button)
+            QTest.qWait(180)
             palette = capture(window).quantize(colors=256)
+            QTest.mouseMove(window.wordmark)
             for step in range(21):
+                if step == 8:
+                    QTest.mouseMove(window.open_button)
+                    QTest.qWait(180)
                 progress = step / 20
                 window.header.progress = progress
                 window.header.assembly.emit(progress)

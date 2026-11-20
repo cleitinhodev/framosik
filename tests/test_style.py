@@ -9,9 +9,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from PySide6.QtCore import QEvent, QPoint, QPointF, QSettings, Qt
 from PySide6.QtGui import QMouseEvent, QWheelEvent
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QStyle, QStyleOptionSlider
+from PySide6.QtWidgets import QApplication, QStyle, QStyleOptionSlider, QWidget
 
-from appearance import NeonButton, NeonScrollBar
+from appearance import NeonButton, NeonScrollBar, stylesheet
 from gui import MainWindow
 
 
@@ -87,3 +87,42 @@ def test_neon_controls_keep_click_keyboard_drag_and_wheel():
         QTest.mouseRelease(bar, Qt.LeftButton, Qt.NoModifier, end)
         assert bar.value() > before
         bar.close()
+
+
+def test_button_hover_uses_dark_ink_and_only_enabled_actions_get_a_hand():
+    app = QApplication.instance() or QApplication([])
+    panel = QWidget()
+    panel.setGeometry(30, 30, 380, 80)
+    buttons = [NeonButton('Abrir GIF / vídeo'), NeonButton('Montar imagem')]
+    buttons[1].setObjectName('primary')
+    for i, button in enumerate(buttons):
+        button.setParent(panel)
+        button.setGeometry(8 + i*184, 12, 176, 46)
+    panel.show()
+    try:
+        for theme in ('dark', 'light'):
+            for decorated in (True, False):
+                panel.setStyleSheet(stylesheet(theme, decorated))
+                app.processEvents()
+                for button in buttons:
+                    QTest.mouseMove(panel, QPoint(3, 3))
+                    QTest.mouseMove(button, button.rect().center())
+                    app.processEvents()
+                    image = button.grab().toImage()
+                    w, h = image.width(), image.height()
+                    upper = image.pixelColor(w//12, h//3)
+                    lower = image.pixelColor(w//12, 2*h//3)
+                    assert lower.blue() > lower.red() > lower.green() > 105
+                    if decorated:
+                        assert upper.lightness() > lower.lightness() + 8
+                    else:
+                        assert upper == lower
+                    assert any(image.pixelColor(x, y).lightness() < 65
+                               for x in range(w//3, 2*w//3) for y in range(h//3, 2*h//3))
+                    assert button.cursor().shape() == Qt.PointingHandCursor
+        panel.setEnabled(False)
+        assert all(b.cursor().shape() == Qt.ArrowCursor for b in buttons)
+        panel.setEnabled(True)
+        assert all(b.cursor().shape() == Qt.PointingHandCursor for b in buttons)
+    finally:
+        panel.close()

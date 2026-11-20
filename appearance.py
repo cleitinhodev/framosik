@@ -11,12 +11,12 @@ from PySide6.QtWidgets import (QFrame, QLabel, QPushButton, QScrollBar, QStyle,
 PALETTES = {
     'dark': dict(bg='#0e1020', panel='#191c32', input='#101425', text='#eff0ff',
                  muted='#bbc0d8', border='#3a405a', accent='#c4a0ff', primary='#6236b3',
-                 hover='#7143c3', disabled='#8f96b0', light='#e8d9ff', flare='#f6adcb',
+                 disabled='#8f96b0', light='#e8d9ff', flare='#f6adcb',
                  amber='#ffc975', rail='#262b46', thumb='#8e71be', top='#2d2148',
                  end='#342335', tint='#27223c', label='#f7f1ff'),
     'light': dict(bg='#f2f3fa', panel='#ffffff', input='#f8f8fd', text='#22243b',
                   muted='#555d78', border='#c5c8d9', accent='#6038a4', primary='#6033a9',
-                  hover='#7041b9', disabled='#737887', light='#8b51c5', flare='#a54573',
+                  disabled='#737887', light='#8b51c5', flare='#a54573',
                   amber='#a85f13', rail='#e3dfee', thumb='#8d73a8', top='#f0e7ff',
                   end='#fff1e6', tint='#f0eafa', label='#332047'),
 }
@@ -32,6 +32,10 @@ def stylesheet(theme, decorated=True):
     button = gradient(p['tint'], p['panel'], True) if decorated else p['panel']
     primary = gradient(p['primary'], '#903c83') if decorated else p['primary']
     progress = gradient(p['primary'], '#a74b94') if decorated else p['primary']
+    # A sharp reflection at the midpoint gives the lilac surface its glass finish.
+    aero = ('qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f2e7ff,'
+            'stop:0.46 #ddc5ff,stop:0.49 #d2b4fa,stop:0.50 #ad85e6,'
+            'stop:0.83 #bf99f0,stop:1 #d8bcff)') if decorated else '#c6a5ed'
     return f'''
 QWidget {{color:{p['text']}; font-family:"Segoe UI","Noto Sans",sans-serif; font-size:13px;}}
 QMainWindow, QDialog, QWidget#page {{background:{p['bg']};}}
@@ -49,9 +53,10 @@ QPushButton:focus {{border-color:{p['accent']};}}
 QPushButton:pressed {{background:{p['rail']};}}
 QPushButton:disabled {{background:{p['input']};color:{p['disabled']};}}
 QPushButton#primary {{background:{primary};color:white;border:1px solid {p['primary']};font-weight:600;}}
-QPushButton#primary:hover:enabled {{background:{p['hover']};border-color:{p['accent']};}}
 QPushButton#primary:focus {{border-color:{p['light']};}}
 QPushButton#primary:disabled {{background:{p['rail']};border-color:{p['border']};color:{p['disabled']};}}
+NeonButton:hover:enabled, NeonButton#primary:hover:enabled {{background:{aero};color:#241332;border-color:#8057ad;}}
+NeonButton:hover:pressed:enabled, NeonButton#primary:hover:pressed:enabled {{background:#b594e2;color:#241332;border-color:#704699;}}
 QSpinBox,QComboBox {{background:{p['input']};border:1px solid {p['border']};border-radius:5px;padding:5px;min-height:20px;}}
 QSpinBox:focus,QComboBox:focus {{border-color:{p['accent']};}}
 QComboBox QAbstractItemView {{background:{p['panel']};color:{p['text']};selection-background-color:{p['primary']};selection-color:white;}}
@@ -147,7 +152,13 @@ class InteractionLight(QObject):
 class NeonButton(QPushButton):
     def __init__(self, text=''):
         super().__init__(text)
+        self.setCursor(Qt.PointingHandCursor)
         self.light = InteractionLight(self)
+
+    def changeEvent(self, event):
+        super().changeEvent(event)
+        if event.type() == QEvent.EnabledChange:
+            self.setCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ArrowCursor)
 
     def paintEvent(self, event):
         super().paintEvent(event)
